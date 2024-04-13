@@ -9,8 +9,16 @@ START - pages skellital
 - log in authentication 
 
 In progress 
-- implementing bottom navigation
+- CRUD plus application class
 
 
 Completed
+- implementing bottom navigation
 
+
+Design idea: 
+
+![img.png](img.png)
+
+Design simplified to include like button 
+![img_1.png](img_1.png)
