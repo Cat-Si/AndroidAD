@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AndroidAD</string>
+    <string name="home_button">Home</string>
+    <string name="search_button">Search</string>
+    <string name="logout_button">LogOut</string>
+    <string name="login_button">LogIn</string>
+
 </resources>
