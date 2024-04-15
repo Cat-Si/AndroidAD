@@ -12,28 +12,44 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.androidad.presentation.components.BottomNavBar
-import com.example.androidad.navigation.NavigationGraph
+import com.example.androidad.presentation.navigation.NavigationGraph
 
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun OverallDisplay(modifier: Modifier = Modifier,
-                   navController: NavHostController = rememberNavController()
-) {
-    val context = LocalContext.current.applicationContext  //context only needed for pop up as it refers to itself (pg 9 Bottom Nav pdf)
-    var loginAuthenticated by remember { mutableStateOf(false) }
+                   navController: NavHostController = rememberNavController()) {
 
+    //lecture example:
+    val context = LocalContext.current.applicationContext
     Scaffold(
-        modifier = modifier,
+        modifier =modifier,
         bottomBar = {
-            BottomNavBar(navController = navController, loginAuthenticated)
+            BottomNavBar(navController = navController)
         }
     ) {
         NavigationGraph(navController = navController,
-            context, //context only needed for the pop up box
-            simulateLogin = {loginAuthenticated=true
-                navController.navigate("home")},
+            context,
             modifier)
     }
+
+    //application code
+//    val context = LocalContext.current.applicationContext  //context only needed for pop up as it refers to itself (pg 9 Bottom Nav pdf)
+//    var loginAuthenticated by remember { mutableStateOf(false) }
+//
+//    Scaffold(
+//        modifier = modifier,
+//        bottomBar = {
+//            BottomNavBar(navController = navController, loginAuthenticated)
+//        }
+//    ) {
+//        NavigationGraph(navController = navController,
+//            context, //context only needed for the pop up box
+//            simulateLogin = {loginAuthenticated=true
+//                navController.navigate("home")},
+//            modifier)
+//    }
 }
+
+

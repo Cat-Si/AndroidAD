@@ -1,4 +1,4 @@
-package com.example.androidad.presentation.screens
+package com.example.androidad.presentation.screens.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -10,9 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.androidad.presentation.screens.view_delete.HomeViewModel
 
 @Composable
-fun LoginScreen(text:String,
+fun LoginScreen(vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory), text:String,
                 clickAction: () -> Unit,
                 modifier: Modifier = Modifier
 ) {

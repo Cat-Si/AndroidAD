@@ -1,4 +1,4 @@
-package com.example.androidad.presentation.screens
+package com.example.androidad.presentation.screens.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -9,10 +9,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.androidad.presentation.screens.view_delete.HomeViewModel
 
 @Composable
-fun SearchScreen(text:String,
-              modifier: Modifier = Modifier
+fun SearchScreen(vm: SearchViewModel = viewModel(factory = SearchViewModel.Factory),
+                 text:String,
+                 modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
