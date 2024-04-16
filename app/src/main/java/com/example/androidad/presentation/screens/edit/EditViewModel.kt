@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.bottomnav1.core.ContactApplication
-import com.example.bottomnav1.data.Contact
-import com.example.bottomnav1.data.InMemoryRepository
+import com.example.androidad.core.ContactApplication
+import com.example.androidad.data.Contact
+import com.example.androidad.data.InMemoryRepository
 
 class EditViewModel (private val repo: InMemoryRepository) : ViewModel() {
     private var selectedContact : Contact? = null

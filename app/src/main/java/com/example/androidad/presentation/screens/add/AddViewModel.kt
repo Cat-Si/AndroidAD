@@ -9,9 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidad.data.InMemoryRepository
-import com.example.bottomnav1.core.ContactApplication
-import com.example.bottomnav1.data.Contact
-import com.example.bottomnav1.data.InMemoryRepository
+import com.example.androidad.core.ContactApplication
+import com.example.androidad.data.Contact
 import java.util.UUID
 
 class AddViewModel (private val repo: InMemoryRepository) : ViewModel() {
