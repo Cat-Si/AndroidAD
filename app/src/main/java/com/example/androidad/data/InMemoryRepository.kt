@@ -1,5 +1,7 @@
 package com.example.androidad.data
 
+import com.example.androidad.data.contact.Contact
+
 class InMemoryRepository (private val contactsRepository:
                                  MutableList<Contact>) {
 

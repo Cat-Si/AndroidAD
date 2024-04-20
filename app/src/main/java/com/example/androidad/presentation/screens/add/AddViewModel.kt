@@ -1,6 +1,5 @@
-package com.example.bottomnav1.presentation.screens.add
+package com.example.androidad.presentation.screens.add
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,15 +7,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.androidad.data.InMemoryRepository
 import com.example.androidad.core.ContactApplication
-import com.example.androidad.data.Contact
-import java.util.UUID
+import com.example.androidad.data.auth.AuthRepo
+import com.example.androidad.data.contact.Contact
+import com.example.androidad.data.contact.ContactRepo
 
-class AddViewModel (private val repo: InMemoryRepository) : ViewModel() {
-    var firstName by mutableStateOf("")
-    var surname by mutableStateOf("")
-    var telNo by mutableStateOf("")
+class AddViewModel (private val authRepo: AuthRepo,
+                    private val contactRepo: ContactRepo
+) : ViewModel() {
+    var firstName by mutableStateOf(String())
+    var surname by mutableStateOf(String())
+    var telNo by mutableStateOf(String())
 
     fun firstNameIsValid():Boolean{
         return firstName.isNotBlank()
@@ -33,30 +34,28 @@ class AddViewModel (private val repo: InMemoryRepository) : ViewModel() {
     fun addContact(){
         if(firstNameIsValid() && surnameIsValid() && telNoIsValid()) {
             var newContact = Contact(
-                UUID.randomUUID(),
                 firstName,
                 surname,
                 telNo
             )
-            repo.addContact(newContact)
-            Log.v("OK", repo.getAllContacts().size.toString())
+            contactRepo.add(newContact, authRepo.currentUser!!.uid)
             clear()
         }
     }
 
     private fun clear(){
-        firstName = String()
+        firstName =String()
         surname=String()
         telNo=String()
     }
-
 
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 AddViewModel(
-                    repo = ContactApplication.contactInMemoryRepository
+                    authRepo = ContactApplication.container.authRepository,
+                    contactRepo = ContactApplication.container.contactRepository
                 )
             }
         }

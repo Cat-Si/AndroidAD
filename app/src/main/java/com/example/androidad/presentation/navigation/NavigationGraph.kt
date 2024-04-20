@@ -1,79 +1,78 @@
 package com.example.androidad.presentation.navigation
 
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.androidad.R
-import com.example.androidad.presentation.screens.view_delete.HomeScreen
+import com.example.androidad.core.ContactApplication
+import com.example.androidad.data.contact.Contact
+import com.example.androidad.presentation.screens.home.HomeScreen
 import com.example.androidad.presentation.screens.login.LoginScreen
-import com.example.androidad.presentation.screens.search.SearchScreen
-import com.example.androidad.presentation.screens.view_delete.HomeViewModel
-import com.example.bottomnav1.presentation.screens.add.AddScreen
-import com.example.bottomnav1.presentation.screens.edit.EditScreen
+import com.example.androidad.presentation.screens.add.AddScreen
+import com.example.androidad.presentation.screens.edit.EditScreen
+import com.example.androidad.presentation.screens.signup.SignUpScreen
 import kotlin.system.exitProcess
 
-open class NavScreen(var icon:Int, var route:String){
-    object Login : NavScreen(R.drawable.home, "Login")
-    object Home : NavScreen(R.drawable.home, "Home")
-    object Search: NavScreen(R.drawable.computer_search, "Search")
-    object Exit: NavScreen(R.drawable.logout, "Logout")
-
-    //lecture example:
+sealed class NavScreen(var icon:Int, var route:String){
+    data object Home: NavScreen(R.drawable.home, "Home")
     data object Add: NavScreen(R.drawable.add, "Add")
     data object Edit: NavScreen(R.drawable.add, "Edit")//drawable is not relevant
+    data object Exit: NavScreen(R.drawable.logout, "Logout")
+    data object Login: NavScreen(R.drawable.home, "Login")
+    data object SignUp: NavScreen(R.drawable.home, "SignUp")
 }
 
-//Lecture example:
 @Composable
-fun NavigationGraph(navController: NavHostController,
-                    context:Context,
-                    modifier: Modifier = Modifier.testTag("TestNavGraph")) {
-    //Avoid Bundle/Parcelable here - just store index of selected Contact
-    var selectedContactIndex by remember{ mutableIntStateOf(-1) }
-
+fun NavigationGraph(navController: NavHostController = rememberNavController()) {
+    var selectedContact: Contact? =null
     NavHost(navController,
-        startDestination = NavScreen.Home.route) {
+        startDestination = NavScreen.Login.route) {
+
+        composable(NavScreen.Login.route) {
+            LoginScreen(
+                navigateToSignUpScreen = {
+                    navController.navigate(NavScreen.SignUp.route)
+                },
+                navigateToHomeScreen = {
+                    navController.navigate(NavScreen.Home.route)
+                }
+            )
+        }
+        composable(NavScreen.SignUp.route) {
+            SignUpScreen(
+                navigateBack = {navController.popBackStack()}
+            )
+        }
         composable(NavScreen.Home.route) {
             HomeScreen(
-                context = context,
-                selectedIndex = selectedContactIndex,
+                navController = navController,
                 onIndexChange = {
-                    Log.v("OK","index change event called")
-                    selectedContactIndex = it
+                    selectedContact = it
                 },
                 onClickToEdit = {
-                    if (selectedContactIndex != -1) navController.navigate("edit")
-                    else{
-                        Toast.makeText(context,
-                            context.getString(R.string.no_selection),
-                            Toast.LENGTH_LONG).show();
-                    }
-                }
-            );
+                    if(selectedContact!=null) navController.navigate("edit")
+                },
+
+                )
         }
         composable(NavScreen.Add.route) {
-            AddScreen(
-                onClickToHome ={navController.navigate("home")})
+            AddScreen(navController = navController,
+                onClickToHome ={ navController.popBackStack()})
         }
         composable(NavScreen.Edit.route) {
-            EditScreen(selectedContactIndex=selectedContactIndex,
-                onClickToHome = {if(selectedContactIndex!=-1)
-                    navController.navigate("home")
+            EditScreen(navController = navController,
+                selectedContact=selectedContact!!,
+                onClickToHome = {
+                    if(selectedContact!=null) {
+                        navController.navigate("home")
+                    }
                 })
         }
-        composable(NavScreen.Exit.route){
-            exitProcess(0);
+        composable(NavScreen.Exit.route) {
+            ContactApplication.container.authRepository.signOut()
+            exitProcess(0)
         }
     }
 }

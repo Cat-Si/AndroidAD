@@ -1,6 +1,5 @@
-package com.example.navigation1.presentation.screens.edit
+package com.example.androidad.presentation.screens.edit
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,15 +8,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidad.core.ContactApplication
-import com.example.androidad.data.Contact
-import com.example.androidad.data.InMemoryRepository
+import com.example.androidad.data.auth.AuthRepo
+import com.example.androidad.data.contact.Contact
+import com.example.androidad.data.contact.ContactRepo
 
-class EditViewModel (private val repo: InMemoryRepository) : ViewModel() {
+class EditViewModel (private val authRepo: AuthRepo, private val repo: ContactRepo) : ViewModel() {
     private var selectedContact : Contact? = null
 
-    var firstName by mutableStateOf("")
-    var surname by mutableStateOf("")
-    var telNo by mutableStateOf("")
+    var id by mutableStateOf(String())
+    var firstName by mutableStateOf(String())
+    var surname by mutableStateOf(String())
+    var telNo by mutableStateOf(String())
+
+    fun setSelectedContact(contact: Contact){
+        id = contact.id.toString()
+        firstName = contact.firstName.toString()
+        surname = contact.surname.toString()
+        telNo = contact.telNo.toString()
+        selectedContact = contact
+    }
 
     fun firstNameIsValid():Boolean{
         return firstName.isNotBlank()
@@ -31,29 +40,26 @@ class EditViewModel (private val repo: InMemoryRepository) : ViewModel() {
         return telNo.isNotBlank()
     }
 
-    fun getContacts(selectedIndex: Int){//Display when screen loads
-        if(selectedContact==null) {
-            selectedContact = repo.getAllContacts()[selectedIndex]
-            Log.v("OK",selectedContact!!.toString())
-            firstName = selectedContact!!.firstName
-            surname = selectedContact!!.surname
-            telNo = selectedContact!!.telNo
-        }
-    }
-
     fun updateContact(){
-        selectedContact!!.firstName = firstName
-        selectedContact!!.surname = surname
-        selectedContact!!.telNo = telNo
-        repo.edit(selectedContact!!)
+        if (selectedContact!=null
+            && firstNameIsValid()
+            && surnameIsValid()
+            && telNoIsValid())  {
+            selectedContact!!.firstName = firstName
+            selectedContact!!.surname = surname
+            selectedContact!!.telNo = telNo
+            repo.edit(selectedContact!!, authRepo.currentUser!!.uid)
+        }
     }
 
     // Define ViewModel factory in a companion object
     companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
+        val Factory: ViewModelProvider.Factory= viewModelFactory() {
             initializer {
                 EditViewModel(
-                    repo = ContactApplication.contactInMemoryRepository)
+                    authRepo = ContactApplication.container.authRepository,
+                    repo = ContactApplication.container.contactRepository
+                )
             }
         }
     }

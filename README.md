@@ -22,3 +22,13 @@ Design idea:
 
 Design simplified to include like button 
 ![img_1.png](img_1.png)
+
+
+
+create = add a location to favourites 
+delete = remove a location from favourites 
+read = view favourites 
+update = add location first time assessing app, add button to go back to screen to change location 
+
+
+Use Material Design Cards for each room location  https://m2.material.io/components/cards/android#using-dividers  https://m3.material.io/components/cards/guidelines

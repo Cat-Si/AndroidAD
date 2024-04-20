@@ -1,19 +1,6 @@
 <resources>
     <string name="app_name">AndroidAD</string>
-<!--    <string name="home_button">Home</string>-->
-    <string name="search_button">Search</string>
-    <string name="logout_button">LogOut</string>
-    <string name="login_button">LogIn</string>
 
-
-    //Lecture examples
-    <string name="home">Home</string>
-    //Buttons
-    <string name="add">Add</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    //Errors
-    <string name="no_selection">No item selected</string>
     <string name="id_hint">Id</string>
     <string name="id_error_message">Id is blank</string>
     <string name="first_name_hint">First Name</string>
@@ -22,5 +9,26 @@
     <string name="surname_error_message">Surname is blank</string>
     <string name="tel_no_hint">Telephone number</string>
     <string name="tel_no_error_message">Telephone number is blank</string>
+    <!-- Add Screen -->
+    <string name="add">Add</string>
+    <!-- Edit Screen -->
+    <string name="edit">Edit</string>
+    <!-- Home Screen -->
+    <string name="home">Home</string>
+    <string name="delete">Delete</string>
+    <!-- Search Screen -->
+    <string name="search">Search</string>
+    <!-- LoginScreen -->
+    <string name="email">Email</string>
+    <string name="email_error_message">Please insert a valid email.</string>
+    <string name="password">Password</string>
+    <string name="password_error_message">Please insert a valid password</string>
+    <!-- Sign Up Screen -->
+    <string name="verify_email">Verify email</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="sign_up_button">Sign Up</string>
 
-</resources>
+    <string name="back_button">Back</string>
+    <string name="submit_button">Submit</string>
+
+</resources> 

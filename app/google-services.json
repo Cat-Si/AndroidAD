@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1079916080507",
+    "project_id": "androidad-bdfae",
+    "storage_bucket": "androidad-bdfae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079916080507:android:0d10fa0e415dfef165e1de",
+        "android_client_info": {
+          "package_name": "com.example.androidad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkKWFbm6Nf1LYAUpnFqsDQhFGZwdnKXwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
