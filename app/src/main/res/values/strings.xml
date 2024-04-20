@@ -5,8 +5,8 @@
     <string name="id_error_message">Id is blank</string>
     <string name="first_name_hint">First Name</string>
     <string name="first_name_error_message">Firstname is blank</string>
-    <string name="surname_hint">Surname</string>
-    <string name="surname_error_message">Surname is blank</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="last_name_error_message">Last Name is blank</string>
     <string name="tel_no_hint">Telephone number</string>
     <string name="tel_no_error_message">Telephone number is blank</string>
     <!-- Add Screen -->

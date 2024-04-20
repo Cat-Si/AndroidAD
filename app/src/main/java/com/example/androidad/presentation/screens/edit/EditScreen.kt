@@ -63,10 +63,10 @@ fun EditScreen(vm: EditViewModel = viewModel(factory = EditViewModel.Factory),
                 )
 
                 CustomTextField(
-                    stringResource(R.string.surname_hint),
+                    stringResource(R.string.last_name_hint),
                     text = vm.surname,
                     onValueChange = { vm.surname = it },
-                    errorMessage = stringResource(R.string.surname_error_message),
+                    errorMessage = stringResource(R.string.last_name_error_message),
                     errorPresent = vm.surnameIsValid()
                 )
 

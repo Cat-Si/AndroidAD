@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +51,24 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                     onValueChange = { vm.password = it },
                     stringResource(R.string.password_error_message),
                     errorPresent = vm.passwordIsValid()
+                )
+                SmallSpacer(8)
+                CustomTextField(
+                    stringResource(R.string.first_name_hint),
+                    text = vm.firstName,
+                    isPasswordField = false,
+                    onValueChange = { vm.firstName = it },
+                    stringResource(R.string.first_name_error_message),
+                    errorPresent = vm.firstNameIsValid()
+                )
+                SmallSpacer(8)
+                CustomTextField(
+                    stringResource(R.string.last_name_hint),
+                    text = vm.lastName,
+                    isPasswordField = false,
+                    onValueChange = { vm.lastName = it },
+                    stringResource(R.string.last_name_error_message),
+                    errorPresent = vm.lastNameIsValid()
                 )
                 SmallSpacer(8)
                 CustomButton(

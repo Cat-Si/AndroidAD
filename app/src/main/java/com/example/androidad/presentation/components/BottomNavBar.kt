@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.androidad.R
 import com.example.androidad.presentation.navigation.NavScreen
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 
 
 @Composable
