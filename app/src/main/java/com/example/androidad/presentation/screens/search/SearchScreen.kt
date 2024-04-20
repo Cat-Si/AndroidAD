@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.androidad.presentation.screens.view_delete.HomeViewModel
+import com.example.androidad.presentation.screens.home.HomeViewModel
 
 @Composable
 fun SearchScreen(vm: SearchViewModel = viewModel(factory = SearchViewModel.Factory),

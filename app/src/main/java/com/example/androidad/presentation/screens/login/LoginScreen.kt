@@ -50,7 +50,7 @@ fun LoginScreen(vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
                 stringResource(R.string.email_error_message),
                 vm.emailIsValid()
             )
-            SmallSpacer()
+            SmallSpacer(8)
             CustomTextField(
                 hintText = stringResource(R.string.password),
                 text = vm.password,
@@ -59,7 +59,7 @@ fun LoginScreen(vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
                 stringResource(R.string.password_error_message),
                 vm.passwordIsValid()
             )
-            SmallSpacer()
+            SmallSpacer(8)
             CustomButton(
                 stringResource(R.string.submit_button),
                 clickButton = {
@@ -67,7 +67,7 @@ fun LoginScreen(vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
                     vm.signInWithEmailAndPassword()
                 }
             )
-            SmallSpacer()
+            SmallSpacer(8)
             CustomButton(
                 stringResource(R.string.forgot_password),
                 clickButton = {
@@ -78,7 +78,7 @@ fun LoginScreen(vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
                     }
                 }
             )
-            SmallSpacer()
+            SmallSpacer(8)
             CustomButton(
                 stringResource(R.string.sign_up_button),
                 clickButton = {

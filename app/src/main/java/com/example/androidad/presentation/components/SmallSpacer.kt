@@ -7,8 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SmallSpacer() {
+fun SmallSpacer(value:Int) {
     Spacer(
-        modifier = Modifier.height(8.dp)
+        modifier = Modifier.height(value.dp)
     )
 }
