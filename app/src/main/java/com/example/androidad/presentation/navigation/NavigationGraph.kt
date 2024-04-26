@@ -1,18 +1,28 @@
 package com.example.androidad.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotApplyResult
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.androidad.R
 import com.example.androidad.core.ContactApplication
+import com.example.androidad.data.DatabaseResult
+import com.example.androidad.data.Response
+import com.example.androidad.data.auth.AuthRepository
 import com.example.androidad.data.contact.Contact
+import com.example.androidad.data.user.UserRepo
 import com.example.androidad.presentation.screens.home.HomeScreen
 import com.example.androidad.presentation.screens.login.LoginScreen
 import com.example.androidad.presentation.screens.add.AddScreen
 import com.example.androidad.presentation.screens.edit.EditScreen
 import com.example.androidad.presentation.screens.signup.SignUpScreen
+import com.example.androidad.presentation.screens.signup.SignUpViewModel
+import com.example.androidad.presentation.screens.signup.components.SignUp
+import com.example.androidad.presentation.screens.userDetails.UserDetailsScreen
 import kotlin.system.exitProcess
 
 sealed class NavScreen(var icon:Int, var route:String){
@@ -22,12 +32,15 @@ sealed class NavScreen(var icon:Int, var route:String){
     data object Exit: NavScreen(R.drawable.logout, "Logout")
     data object Login: NavScreen(R.drawable.home, "Login")
     data object SignUp: NavScreen(R.drawable.home, "SignUp")
+    data object UserDetails: NavScreen(R.drawable.home, "UserDetails")
+    data object Search: NavScreen(R.drawable.home, "Search")
 }
 
 @Composable
 fun NavigationGraph(navController: NavHostController = rememberNavController()) {
     var selectedContact: Contact? =null
-    NavHost(navController,
+
+            NavHost(navController,
         startDestination = NavScreen.Login.route) {
 
         composable(NavScreen.Login.route) {
