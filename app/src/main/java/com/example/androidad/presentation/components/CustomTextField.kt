@@ -19,18 +19,20 @@ fun CustomTextField(hintText: String,
                     isPasswordField: Boolean = false,
                     onValueChange: (String) -> Unit,
                     errorMessage: String,
-                    errorPresent: Boolean){
+                    errorPresent: Boolean,
+                    singleLine: Boolean = true
+){
 
     Surface(modifier = Modifier.padding(10.dp)) {
         OutlinedTextField(
             value = text,
             onValueChange = onValueChange,
             isError = errorPresent,
-            singleLine = true,
             label = {
                 Text(hintText)
             },
-            visualTransformation =  if (isPasswordField) PasswordVisualTransformation('*') else VisualTransformation.None
+            visualTransformation =  if (isPasswordField) PasswordVisualTransformation('*') else VisualTransformation.None,
+            singleLine = singleLine
         )
         Text(
             modifier = Modifier.padding(10.dp),
