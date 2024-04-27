@@ -22,7 +22,6 @@ import com.example.androidad.presentation.screens.edit.EditScreen
 import com.example.androidad.presentation.screens.signup.SignUpScreen
 import com.example.androidad.presentation.screens.signup.SignUpViewModel
 import com.example.androidad.presentation.screens.signup.components.SignUp
-import com.example.androidad.presentation.screens.userDetails.UserDetailsScreen
 import kotlin.system.exitProcess
 
 sealed class NavScreen(var icon:Int, var route:String){
@@ -32,7 +31,6 @@ sealed class NavScreen(var icon:Int, var route:String){
     data object Exit: NavScreen(R.drawable.logout, "Logout")
     data object Login: NavScreen(R.drawable.home, "Login")
     data object SignUp: NavScreen(R.drawable.home, "SignUp")
-    data object UserDetails: NavScreen(R.drawable.home, "UserDetails")
     data object Search: NavScreen(R.drawable.home, "Search")
 }
 
