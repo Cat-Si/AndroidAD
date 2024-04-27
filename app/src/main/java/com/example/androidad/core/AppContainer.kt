@@ -2,7 +2,6 @@ package com.example.androidad.core
 
 import com.example.androidad.data.auth.AuthRepo
 import com.example.androidad.data.auth.AuthRepository
-import com.example.androidad.data.contact.Contact
 import com.example.androidad.data.contact.ContactDAO
 import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.contact.ContactRepository
@@ -11,7 +10,6 @@ import com.example.androidad.data.user.UserRepo
 import com.example.androidad.data.user.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.core.Repo
 
 private const val CONTACT_ROOT_FOLDER = "contacts"
 private const val USER_ROOT_FOLDER = "users"

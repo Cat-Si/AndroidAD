@@ -1,6 +1,5 @@
 package com.example.androidad.presentation.screens.signup.components
 
-import android.widget.ProgressBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.example.androidad.data.Response

@@ -1,9 +1,6 @@
 package com.example.androidad.data.report
 
 import com.example.androidad.data.DatabaseResult
-import com.example.androidad.data.contact.Contact
-import com.example.androidad.data.contact.ContactDAO
-import com.example.androidad.data.contact.ContactRepo
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 

@@ -3,6 +3,7 @@ package com.example.androidad.presentation.components
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -13,7 +14,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.androidad.R
 import com.example.androidad.presentation.navigation.NavScreen
-import androidx.compose.material3.Text
 
 
 @Composable

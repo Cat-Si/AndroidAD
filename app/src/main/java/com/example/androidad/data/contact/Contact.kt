@@ -1,7 +1,5 @@
 package com.example.androidad.data.contact
 
-import java.util.*
-
 data class Contact(
     var firstName: String? =null,
     var surname: String? =null,
