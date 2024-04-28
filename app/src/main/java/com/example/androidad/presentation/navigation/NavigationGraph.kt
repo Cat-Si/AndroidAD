@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.androidad.R
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.contact.Contact
+import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.screens.add.AddScreen
 import com.example.androidad.presentation.screens.edit.EditScreen
 import com.example.androidad.presentation.screens.home.HomeScreen
@@ -27,7 +28,7 @@ sealed class NavScreen(var icon:Int, var route:String){
 
 @Composable
 fun NavigationGraph(navController: NavHostController = rememberNavController()) {
-    var selectedContact: Contact? =null
+    var selectedReport: Report? =null
 
             NavHost(navController,
         startDestination = NavScreen.Login.route) {
@@ -51,10 +52,10 @@ fun NavigationGraph(navController: NavHostController = rememberNavController()) 
             HomeScreen(
                 navController = navController,
                 onIndexChange = {
-                    selectedContact = it
+                    selectedReport = it
                 },
                 onClickToEdit = {
-                    if(selectedContact!=null) navController.navigate("edit")
+                    if(selectedReport!=null) navController.navigate("edit")
                 },
 
                 )
@@ -65,9 +66,9 @@ fun NavigationGraph(navController: NavHostController = rememberNavController()) 
         }
         composable(NavScreen.Edit.route) {
             EditScreen(navController = navController,
-                selectedContact=selectedContact!!,
+                selectedReport=selectedReport!!,
                 onClickToHome = {
-                    if(selectedContact!=null) {
+                    if(selectedReport!=null) {
                         navController.navigate("home")
                     }
                 })

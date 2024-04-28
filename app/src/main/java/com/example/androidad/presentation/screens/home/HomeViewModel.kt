@@ -11,25 +11,27 @@ import com.example.androidad.data.DatabaseState
 import com.example.androidad.data.auth.AuthRepo
 import com.example.androidad.data.contact.Contact
 import com.example.androidad.data.contact.ContactRepo
+import com.example.androidad.data.report.Report
+import com.example.androidad.data.report.ReportRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val authRepo: AuthRepo, private val repo: ContactRepo) : ViewModel() {
-    private val _userState = MutableStateFlow(DatabaseState<Contact>())
-    val userState: StateFlow<DatabaseState<Contact>> = _userState.asStateFlow()//Monitored by component for recomposition on change
+class HomeViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo) : ViewModel() {
+    private val _userState = MutableStateFlow(DatabaseState<Report>())
+    val userState: StateFlow<DatabaseState<Report>> = _userState.asStateFlow()//Monitored by component for recomposition on change
 
-    var selectedContact: Contact?= null
+    var selectedReport: Report?= null
 
     init {
-        getListOfContacts(authRepo.currentUser!!.uid)
+        getListOfReports(authRepo.currentUser!!.uid)
     }
 
-    fun contactHasBeenSelected(): Boolean = selectedContact!=null
+    fun reportHasBeenSelected(): Boolean = selectedReport!=null
 
-    private fun getListOfContacts(userId: String) = viewModelScope.launch {
+    private fun getListOfReports(userId: String) = viewModelScope.launch {
         repo.getAll(userId).collect { result ->
             when(result) {
                 is DatabaseResult.Success -> {
@@ -46,10 +48,10 @@ class HomeViewModel(private val authRepo: AuthRepo, private val repo: ContactRep
             }
         }
     }
-    fun deleteContact(){
-        if (contactHasBeenSelected()) {
-            repo.delete(selectedContact!!)
-            selectedContact = null
+    fun deleteReport(){
+        if (reportHasBeenSelected()) {
+            repo.delete(selectedReport!!)
+            selectedReport = null
         }
     }
 
@@ -59,7 +61,7 @@ class HomeViewModel(private val authRepo: AuthRepo, private val repo: ContactRep
             initializer {
                 HomeViewModel(
                     authRepo = ContactApplication.container.authRepository,
-                    repo = ContactApplication.container.contactRepository
+                    repo = ContactApplication.container.reportRepository
                 )
             }
         }

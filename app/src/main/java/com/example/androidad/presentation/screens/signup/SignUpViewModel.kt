@@ -20,9 +20,8 @@ class SignUpViewModel (private val repo: AuthRepo,
 ) : ViewModel() {
     var email by mutableStateOf(String())
     var password by mutableStateOf(String())
-    var firstName by mutableStateOf(String())
-    var lastName by mutableStateOf(String())
-    var campus by mutableStateOf(String())
+/*    var firstName by mutableStateOf(String())
+    var lastName by mutableStateOf(String())*/
 
     fun emailIsValid():Boolean{
         return email.isNotBlank()
@@ -31,13 +30,13 @@ class SignUpViewModel (private val repo: AuthRepo,
     fun passwordIsValid():Boolean{
         return password.isNotBlank()
     }
-    fun firstNameIsValid():Boolean{
+/*    fun firstNameIsValid():Boolean{
         return firstName.isNotBlank()
     }
 
     fun lastNameIsValid():Boolean{
         return lastName.isNotBlank()
-    }
+    }*/
 
     var signUpResponse by mutableStateOf<Response<Boolean>>(Response.Success(false))
         private set

@@ -11,7 +11,7 @@
     <string name="tel_no_error_message">Telephone number is blank</string>
     <!-- Add Screen -->
     <string name="add">Add</string>
-    <string name="new_form">Report a new incident</string>
+    <string name="add_form">Report a new incident</string>
     <!-- Edit Screen -->
     <string name="edit">Edit</string>
     <string name="edit_form">Change a incident report</string>
@@ -33,10 +33,17 @@
     
     <!-- First Aid Form -->
     <string name="location">Location</string>
+    <string name="location_error">Location can not be blank</string>
     <string name="date">Date</string>
+    <string name="date_error">Date not entered</string>
     <string name="time">Time</string>
+    <string name="time_error">Time of incident not entered</string>
     <string name="injured_party">Name of Injured Party</string>
+    <string name="injured_party_error">The name of the person injured can not be blank</string>
     <string name="injury">Injury</string>
+    <string name="injury_error">Injury can not be blank</string>
     <string name="treatment">Treatment Provided</string>
+    <string name="treatment_error">Treatment provided can not be blank</string>
     <string name="advice">Advice Provided</string>
+    <string name="advice_error">Advice provided can not be blank</string>
 </resources>

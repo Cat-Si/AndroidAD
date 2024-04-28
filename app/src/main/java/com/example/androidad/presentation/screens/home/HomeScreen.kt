@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.androidad.R
 import com.example.androidad.data.contact.Contact
+import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
 import com.example.androidad.presentation.screens.home.components.LazyColumnWithSelection
@@ -31,7 +32,7 @@ import com.example.androidad.presentation.utils.Util.Companion.showMessage
 @Composable
 fun HomeScreen(vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
                modifier: Modifier = Modifier,
-               onIndexChange: (Contact?) -> Unit,//function to change the selected contact
+               onIndexChange: (Report?) -> Unit,//function to change the selected contact
                onClickToEdit: () -> Unit,
                navController: NavHostController) {
     val context = LocalContext.current
@@ -67,11 +68,11 @@ fun HomeScreen(vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
             CustomButton(stringResource(R.string.edit), onClickToEdit)
 
             CustomButton(stringResource(R.string.delete)) {
-                if (!vm.contactHasBeenSelected()) {
-                    Toast.makeText(context, "You need to select a contact", Toast.LENGTH_LONG)
+                if (!vm.reportHasBeenSelected()) {
+                    Toast.makeText(context, "You need to select a report", Toast.LENGTH_LONG)
                         .show()
                 } else {
-                    vm.deleteContact()
+                    vm.deleteReport()
                     onIndexChange(null)
                 }
             }

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.androidad.R
-import com.example.androidad.data.contact.Contact
+import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
 import com.example.androidad.presentation.components.CustomTextField
@@ -27,11 +27,11 @@ import com.example.androidad.presentation.components.CustomTextField
 fun EditScreen(vm: EditViewModel = viewModel(factory = EditViewModel.Factory),
                modifier: Modifier = Modifier,
                navController: NavHostController,
-               selectedContact: Contact,
+               selectedReport: Report,
                onClickToHome: () -> Unit){
 
     LaunchedEffect(key1 = Unit) {//Called on launch
-        vm.setSelectedContact(selectedContact)
+        vm.setSelectedReport(selectedReport)
     }
 
     Scaffold(
@@ -55,33 +55,64 @@ fun EditScreen(vm: EditViewModel = viewModel(factory = EditViewModel.Factory),
             )
             Column {
                 CustomTextField(
-                    stringResource(R.string.first_name_hint),
-                    text = vm.firstName,
-                    onValueChange = { vm.firstName = it },
-                    errorMessage = stringResource(R.string.first_name_error_message),
-                    errorPresent = vm.firstNameIsValid()
+                    stringResource(R.string.location),
+                    text = vm.location,
+                    onValueChange = { vm.location = it },
+                    errorMessage = stringResource(R.string.location_error),
+                    errorPresent = vm.locationIsValid()
                 )
 
                 CustomTextField(
-                    stringResource(R.string.last_name_hint),
-                    text = vm.surname,
-                    onValueChange = { vm.surname = it },
-                    errorMessage = stringResource(R.string.last_name_error_message),
-                    errorPresent = vm.surnameIsValid()
+                    stringResource(R.string.date),
+                    text = vm.date,
+                    onValueChange = { vm.date = it },
+                    errorMessage = stringResource(R.string.date_error),
+                    errorPresent = vm.dateIsValid()
                 )
 
                 CustomTextField(
-                    stringResource(R.string.tel_no_hint),
-                    text = vm.telNo,
-                    onValueChange = { vm.telNo = it },
-                    errorMessage = stringResource(R.string.tel_no_error_message),
-                    errorPresent = vm.telNoIsValid()
+                    stringResource(R.string.time),
+                    text = vm.time,
+                    onValueChange = { vm.time = it },
+                    errorMessage = stringResource(R.string.time_error),
+                    errorPresent = vm.timeIsValid()
+                )
+                CustomTextField(
+                    stringResource(R.string.injured_party),
+                    text = vm.injuredParty,
+                    onValueChange = { vm.injuredParty = it },
+                    errorMessage = stringResource(R.string.injured_party_error),
+                    errorPresent = vm.injuredPartyIsValid()
+                )
+                CustomTextField(
+                    stringResource(R.string.injury),
+                    text = vm.injury,
+                    onValueChange = { vm.injury = it },
+                    errorMessage = stringResource(R.string.injury_error),
+                    errorPresent = vm.injuryIsValid(),
+                    singleLine = false
+                )
+                CustomTextField(
+                    stringResource(R.string.treatment),
+                    text = vm.treatment,
+                    onValueChange = { vm.treatment = it },
+                    errorMessage = stringResource(R.string.treatment_error),
+                    errorPresent = vm.treatmentIsValid(),
+                    singleLine = false
+                )
+                CustomTextField(
+                    stringResource(R.string.advice),
+                    text = vm.advice,
+                    onValueChange = { vm.advice = it },
+                    errorMessage = stringResource(R.string.advice_error),
+                    errorPresent = vm.adviceIsValid(),
+                    singleLine = false
                 )
 
                 CustomButton(
                     stringResource(R.string.edit),
                     clickButton = {
-                        vm.updateContact()
+                        vm.updateReport()
                         onClickToHome()
                     })
             }

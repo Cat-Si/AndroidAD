@@ -43,7 +43,7 @@ fun AddScreen(vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
 
             Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(R.string.add),
+                text = stringResource(R.string.add_form),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -52,32 +52,63 @@ fun AddScreen(vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
             Column {
 
                 CustomTextField(
-                    stringResource(R.string.first_name_hint),
-                    text = vm.firstName,
-                    onValueChange = { vm.firstName = it },
-                    errorMessage = stringResource(R.string.first_name_error_message),
-                    errorPresent = vm.firstNameIsValid()
+                    stringResource(R.string.location),
+                    text = vm.location,
+                    onValueChange = { vm.location = it },
+                    errorMessage = stringResource(R.string.location_error),
+                    errorPresent = vm.locationIsValid()
                 )
 
                 CustomTextField(
-                    stringResource(R.string.last_name_hint),
-                    text = vm.surname,
-                    onValueChange = { vm.surname = it },
-                    errorMessage = stringResource(R.string.last_name_error_message),
-                    errorPresent = vm.surnameIsValid()
+                    stringResource(R.string.date),
+                    text = vm.date,
+                    onValueChange = { vm.date = it },
+                    errorMessage = stringResource(R.string.date_error),
+                    errorPresent = vm.dateIsValid()
                 )
 
                 CustomTextField(
-                    stringResource(R.string.tel_no_hint),
-                    text = vm.telNo,
-                    onValueChange = { vm.telNo = it },
-                    errorMessage = stringResource(R.string.tel_no_error_message),
-                    errorPresent = vm.telNoIsValid()
+                    stringResource(R.string.time),
+                    text = vm.time,
+                    onValueChange = { vm.time = it },
+                    errorMessage = stringResource(R.string.time_error),
+                    errorPresent = vm.timeIsValid()
+                )
+                CustomTextField(
+                    stringResource(R.string.injured_party),
+                    text = vm.injuredParty,
+                    onValueChange = { vm.injuredParty = it },
+                    errorMessage = stringResource(R.string.injured_party_error),
+                    errorPresent = vm.injuredPartyIsValid()
+                )
+                CustomTextField(
+                    stringResource(R.string.injury),
+                    text = vm.injury,
+                    onValueChange = { vm.injury = it },
+                    errorMessage = stringResource(R.string.injury_error),
+                    errorPresent = vm.injuryIsValid(),
+                    singleLine = false
+                )
+                CustomTextField(
+                    stringResource(R.string.treatment),
+                    text = vm.treatment,
+                    onValueChange = { vm.treatment = it },
+                    errorMessage = stringResource(R.string.treatment_error),
+                    errorPresent = vm.treatmentIsValid(),
+                    singleLine = false
+                )
+                CustomTextField(
+                    stringResource(R.string.advice),
+                    text = vm.advice,
+                    onValueChange = { vm.advice = it },
+                    errorMessage = stringResource(R.string.advice_error),
+                    errorPresent = vm.adviceIsValid(),
+                    singleLine = false
                 )
                 CustomButton(
                     stringResource(R.string.add),
                     clickButton = {
-                        vm.addContact()
+                        vm.addReport()
                         keyboardController?.hide()
                         onClickToHome()
                     })
