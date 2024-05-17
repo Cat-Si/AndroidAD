@@ -5,6 +5,7 @@ import android.app.Dialog
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -32,7 +33,7 @@ fun AddScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     onClickToHome: () -> Unit,
-    datePicker: Dialog
+    datePickerState: DatePickerState
               ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -84,7 +85,7 @@ fun AddScreen(
                     stringResource(R.string.date),
                     clickButton = {
                         keyboardController?.hide()
-                        datePicker.onCreateDialog(null)
+                        datePickerState.displayMode
                     })
 
 

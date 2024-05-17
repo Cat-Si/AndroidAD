@@ -1,6 +1,8 @@
 package com.example.androidad.presentation.navigation
 
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -30,7 +32,9 @@ sealed class NavScreen(var icon:Int, var route:String){
 @Composable
 fun NavigationGraph(
     navController: NavHostController = rememberNavController(),
-    datePicker: DatePickerFragment = ) {
+    datePickerState: DatePickerState = rememberDatePickerState(),
+
+    ) {
     var selectedReport: Report? =null
 
     NavHost(navController, startDestination = NavScreen.Login.route) {
@@ -66,7 +70,7 @@ fun NavigationGraph(
             AddScreen(
                 navController = navController,
                 onClickToHome ={ navController.popBackStack()},
-                datePicker = datePicker.onCreateDialog()
+                datePickerState = datePickerState
             )
         }
         composable(NavScreen.Edit.route) {
