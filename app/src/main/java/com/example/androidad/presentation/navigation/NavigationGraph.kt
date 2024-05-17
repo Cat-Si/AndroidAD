@@ -1,8 +1,6 @@
 package com.example.androidad.presentation.navigation
 
-import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -16,7 +14,6 @@ import com.example.androidad.presentation.screens.edit.EditScreen
 import com.example.androidad.presentation.screens.home.HomeScreen
 import com.example.androidad.presentation.screens.login.LoginScreen
 import com.example.androidad.presentation.screens.signup.SignUpScreen
-import com.example.androidad.presentation.utils.DatePickerFragment
 import kotlin.system.exitProcess
 
 sealed class NavScreen(var icon:Int, var route:String){
@@ -32,7 +29,7 @@ sealed class NavScreen(var icon:Int, var route:String){
 @Composable
 fun NavigationGraph(
     navController: NavHostController = rememberNavController(),
-    datePickerState: DatePickerState = rememberDatePickerState(),
+//    datePickerState: DatePickerState = rememberDatePickerState(),
 
     ) {
     var selectedReport: Report? =null
@@ -70,7 +67,7 @@ fun NavigationGraph(
             AddScreen(
                 navController = navController,
                 onClickToHome ={ navController.popBackStack()},
-                datePickerState = datePickerState
+//                datePickerState = datePickerState
             )
         }
         composable(NavScreen.Edit.route) {
