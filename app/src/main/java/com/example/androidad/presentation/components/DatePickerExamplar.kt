@@ -23,7 +23,6 @@ fun DatePickerDialogSample() {
     val snackScope = rememberCoroutineScope()
     SnackbarHost(hostState = snackState, Modifier)
     val openDialog = remember { mutableStateOf(true) }
-    // TODO demo how to read the selected date from the state.
     if (openDialog.value) {
         val datePickerState = rememberDatePickerState()
         val confirmEnabled = remember {
