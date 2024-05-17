@@ -11,6 +11,7 @@ import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.auth.AuthRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
+import com.example.androidad.presentation.components.datePickerWithDialog
 
 class AddViewModel (private val authRepo: AuthRepo,
                     private val reportRepo: ReportRepo
@@ -22,6 +23,7 @@ class AddViewModel (private val authRepo: AuthRepo,
     var injury by mutableStateOf(String())
     var treatment by mutableStateOf(String())
     var advice by mutableStateOf(String())
+    
 
     fun locationIsValid():Boolean{
         return location.isNotBlank()

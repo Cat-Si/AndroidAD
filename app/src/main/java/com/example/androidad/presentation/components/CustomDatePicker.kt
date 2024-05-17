@@ -27,9 +27,9 @@ import com.example.androidad.presentation.utils.DateUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerWithDialog(
-    modifier: Modifier = Modifier
-) {
+fun datePickerWithDialog(
+    modifier: Modifier = Modifier,
+): String{
     val dateState = rememberDatePickerState()
     val millisToLocalDate = dateState.selectedDateMillis?.let {
         DateUtil().convertMillisToLocalDate(it)
@@ -37,9 +37,7 @@ fun DatePickerWithDialog(
     val dateToString = millisToLocalDate?.let {
         DateUtil().dateToString(millisToLocalDate)
     } ?: "Choose Date"
-
     var showDialog by remember { mutableStateOf(false) }
-
 Surface(modifier = Modifier.padding(10.dp)) {
     InputChip(
         modifier = Modifier,
@@ -51,9 +49,8 @@ Surface(modifier = Modifier.padding(10.dp)) {
         selected = showDialog,
         onClick = { showDialog = true },
         label = { Text(dateToString) },
-    shape =   OutlinedTextFieldDefaults.shape
+        shape =   OutlinedTextFieldDefaults.shape,
     )
-
 }
         if (showDialog) {
             DatePickerDialog(
@@ -79,5 +76,6 @@ Surface(modifier = Modifier.padding(10.dp)) {
                 )
             }
         }
+    return dateToString
     }
 

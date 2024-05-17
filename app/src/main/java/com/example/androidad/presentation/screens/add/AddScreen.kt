@@ -33,8 +33,7 @@ import com.example.androidad.R
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
 import com.example.androidad.presentation.components.CustomTextField
-import com.example.androidad.presentation.components.DatePickerWithDialog
-
+import com.example.androidad.presentation.components.datePickerWithDialog
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,11 +44,9 @@ fun AddScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     onClickToHome: () -> Unit,
-//    datePickerState: DatePickerState
               ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    var datePickerState = remember{ mutableStateOf(false)
-    }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
@@ -87,7 +84,8 @@ fun AddScreen(
 //                    errorPresent = vm.dateIsValid(),
 //                 )
 
-                DatePickerWithDialog()
+                datePickerWithDialog(
+                )
 
                 CustomTextField(
                     stringResource(R.string.time),
