@@ -3,10 +3,10 @@ package com.example.androidad.data.contact
 data class Contact(
     var firstName: String? =null,
     var surname: String? =null,
-    var telNo: String? =null
+    var userName: String? =null
 ) {
     var id:String? =null //uuid
-    override fun toString(): String = "$firstName $surname $telNo"
+    override fun toString(): String = "$firstName $surname $userName"
 
 //    override fun equals(other: Any?): Boolean {
 //        if (this === other) return true

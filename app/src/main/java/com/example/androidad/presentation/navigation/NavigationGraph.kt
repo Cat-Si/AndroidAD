@@ -23,15 +23,13 @@ sealed class NavScreen(var icon:Int, var route:String){
     data object Exit: NavScreen(R.drawable.logout, "Logout")
     data object Login: NavScreen(R.drawable.home, "Login")
     data object SignUp: NavScreen(R.drawable.home, "SignUp")
-    data object Search: NavScreen(R.drawable.home, "Search")
 }
 
 @Composable
 fun NavigationGraph(navController: NavHostController = rememberNavController()) {
     var selectedReport: Report? =null
 
-            NavHost(navController,
-        startDestination = NavScreen.Login.route) {
+    NavHost(navController, startDestination = NavScreen.Login.route) {
 
         composable(NavScreen.Login.route) {
             LoginScreen(
@@ -56,7 +54,7 @@ fun NavigationGraph(navController: NavHostController = rememberNavController()) 
                 },
                 onClickToEdit = {
                     if(selectedReport!=null) navController.navigate("edit")
-                },
+                }
 
                 )
         }

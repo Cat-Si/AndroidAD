@@ -52,7 +52,7 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                     stringResource(R.string.password_error_message),
                     errorPresent = vm.passwordIsValid()
                 )
-                /*SmallSpacer(8)
+                SmallSpacer(8)
                 CustomTextField(
                     stringResource(R.string.first_name_hint),
                     text = vm.firstName,
@@ -69,7 +69,7 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                     onValueChange = { vm.lastName = it },
                     stringResource(R.string.last_name_error_message),
                     errorPresent = vm.lastNameIsValid()
-                )*/
+                )
                 SmallSpacer(8)
                 CustomButton(
                     stringResource(R.string.submit_button),

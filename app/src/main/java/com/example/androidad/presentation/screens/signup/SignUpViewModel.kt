@@ -11,17 +11,19 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.Response
 import com.example.androidad.data.auth.AuthRepo
+import com.example.androidad.data.contact.Contact
+import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.user.User
 import com.example.androidad.data.user.UserRepo
 import kotlinx.coroutines.launch
 
 class SignUpViewModel (private val repo: AuthRepo,
-                       private val userRepo: UserRepo
+                       private val userRepo: UserRepo, private val contactRepo: ContactRepo
 ) : ViewModel() {
     var email by mutableStateOf(String())
     var password by mutableStateOf(String())
-/*    var firstName by mutableStateOf(String())
-    var lastName by mutableStateOf(String())*/
+    var firstName by mutableStateOf(String())
+    var lastName by mutableStateOf(String())
 
     fun emailIsValid():Boolean{
         return email.isNotBlank()
@@ -30,13 +32,13 @@ class SignUpViewModel (private val repo: AuthRepo,
     fun passwordIsValid():Boolean{
         return password.isNotBlank()
     }
-/*    fun firstNameIsValid():Boolean{
+    fun firstNameIsValid():Boolean{
         return firstName.isNotBlank()
     }
 
     fun lastNameIsValid():Boolean{
         return lastName.isNotBlank()
-    }*/
+    }
 
     var signUpResponse by mutableStateOf<Response<Boolean>>(Response.Success(false))
         private set
@@ -59,13 +61,25 @@ class SignUpViewModel (private val repo: AuthRepo,
         //save user record - trusts user will sign up
         val user = User(repo.currentUser?.email)
         userRepo.add(user, repo.currentUser!!.uid)
+        addContact()
+    }
+
+    fun addContact(){
+        if(firstNameIsValid() && lastNameIsValid() ) {
+            var newContact = Contact(
+                firstName,
+                lastName
+            )
+            contactRepo.add(newContact, repo.currentUser!!.uid)
+        }
     }
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 SignUpViewModel(repo = ContactApplication.container.authRepository,
-                    userRepo = ContactApplication.container.userRepository)
+                    userRepo = ContactApplication.container.userRepository,
+                    contactRepo = ContactApplication.container.contactRepository)
             }
         }
     }

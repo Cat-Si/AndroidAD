@@ -17,6 +17,7 @@ import com.example.androidad.data.report.ReportRepo
 class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRepo) : ViewModel() {
     private var selectedReport : Report? = null
 
+    var id by mutableStateOf(String())
     var location by mutableStateOf(String())
     var date by mutableStateOf(String())
     var time by mutableStateOf(String())
@@ -26,6 +27,7 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
     var advice by mutableStateOf(String())
 
     fun setSelectedReport(report: Report){
+        id = report.id.toString()
        location = report.location.toString()
         date = report.date.toString()
         time = report.time.toString()
