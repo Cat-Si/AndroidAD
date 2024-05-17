@@ -33,7 +33,7 @@ import com.example.androidad.R
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
 import com.example.androidad.presentation.components.CustomTextField
-import com.example.androidad.presentation.components.datePickerWithDialog
+import com.example.androidad.presentation.components.DatePickerWithDialog
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,7 +84,8 @@ fun AddScreen(
 //                    errorPresent = vm.dateIsValid(),
 //                 )
 
-                datePickerWithDialog(
+                DatePickerWithDialog(
+//                    text = vm.dateAsString(rememberDatePickerState())
                 )
 
                 CustomTextField(
