@@ -1,10 +1,16 @@
 package com.example.androidad.presentation.screens.add
 
 import android.annotation.SuppressLint
+import android.text.format.DateUtils
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,15 +25,21 @@ import androidx.navigation.NavHostController
 import com.example.androidad.R
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
+import com.example.androidad.presentation.components.CustomDatePickerDialog
 import com.example.androidad.presentation.components.CustomTextField
+import com.example.androidad.presentation.components.DatePickerDialogSample
+import com.example.androidad.presentation.utils.DatePickerFragment
+import com.example.androidad.presentation.utils.DateUtil
 
+
+
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AddScreen(vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
               modifier: Modifier = Modifier,
               navController: NavHostController,
-              onClickToHome: () -> Unit
-) {
+              onClickToHome: () -> Unit ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
@@ -67,6 +79,37 @@ fun AddScreen(vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
                     errorPresent = vm.dateIsValid()
                 )
 
+             /*   CustomDatePickerDialog(
+                    dateState = rememberDatePickerState(),
+                    modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = {
+                            onCreateDialog()
+                        }),
+                    stringResource(R.string.date),
+
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineMedium
+                )*/
+
+                CustomButton(
+                    stringResource(R.string.date),
+                    clickButton = {
+                            DatePickerExamplar()
+
+                    })
+                DatePickerDialogSample()
+
+               /* CustomTextField(
+                    text = dateToString,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = {
+                            showDialog = true
+                        }),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineMedium
+                )*/
                 CustomTextField(
                     stringResource(R.string.time),
                     text = vm.time,
@@ -112,6 +155,7 @@ fun AddScreen(vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
                         keyboardController?.hide()
                         onClickToHome()
                     })
+
             }
         }
     }

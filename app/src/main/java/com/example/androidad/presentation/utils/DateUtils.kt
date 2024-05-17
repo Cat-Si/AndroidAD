@@ -1,4 +1,4 @@
-package com.example.androidad.presentation.components
+package com.example.androidad.presentation.utils
 
 import java.time.Instant
 import java.time.LocalDate
@@ -6,7 +6,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class DateUtils {
+class DateUtil {
     fun convertMillisToLocalDate(millis: Long) : LocalDate {
         return Instant
             .ofEpochMilli(millis)
@@ -34,5 +34,6 @@ class DateUtils {
         val dateInMillis = convertMillisToLocalDateWithFormatter(date, dateFormatter)
         return dateFormatter.format(dateInMillis)
     }
+
 
 }
