@@ -3,6 +3,7 @@ package com.example.androidad.presentation.screens.home
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -65,7 +66,9 @@ fun HomeScreen(  vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
             if (vm.userState.value.errorMessage.isNotBlank()) { // Problem retrieving data
                 showMessage(context, vm.userState.value.errorMessage)
             }
-
+        Row(
+            modifier = Modifier
+        ) {
             CustomButton(stringResource(R.string.edit), onClickToEdit)
 
             CustomButton(stringResource(R.string.delete)) {
@@ -76,6 +79,7 @@ fun HomeScreen(  vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
                     onIndexChange(null)
                 }
             }
+        }
         }
     }
 }
