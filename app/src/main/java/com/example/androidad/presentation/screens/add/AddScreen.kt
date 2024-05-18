@@ -1,11 +1,23 @@
 package com.example.androidad.presentation.screens.add
 
 import android.annotation.SuppressLint
+import android.text.format.DateUtils
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,6 +25,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -20,14 +33,18 @@ import com.example.androidad.R
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
 import com.example.androidad.presentation.components.CustomTextField
+import com.example.androidad.presentation.components.DatePickerWithDialog
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AddScreen(vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
-              modifier: Modifier = Modifier,
-              navController: NavHostController,
-              onClickToHome: () -> Unit
-) {
+fun AddScreen(
+    vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    onClickToHome: () -> Unit,
+              ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
@@ -59,13 +76,21 @@ fun AddScreen(vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
                     errorPresent = vm.locationIsValid()
                 )
 
-                CustomTextField(
-                    stringResource(R.string.date),
-                    text = vm.date,
-                    onValueChange = { vm.date = it },
-                    errorMessage = stringResource(R.string.date_error),
-                    errorPresent = vm.dateIsValid()
+//                CustomTextField(
+//                    stringResource(R.string.date),
+//                    text = vm.date,
+//                    onValueChange = { vm.date = it },
+//                    errorMessage = stringResource(R.string.date_error),
+//                    errorPresent = vm.dateIsValid(),
+//                 )
+
+                DatePickerWithDialog(
+                    onDateSelected = { selectedDate ->
+                        vm.date = selectedDate
+                    }
+
                 )
+
 
                 CustomTextField(
                     stringResource(R.string.time),
@@ -112,6 +137,7 @@ fun AddScreen(vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
                         keyboardController?.hide()
                         onClickToHome()
                     })
+
             }
         }
     }

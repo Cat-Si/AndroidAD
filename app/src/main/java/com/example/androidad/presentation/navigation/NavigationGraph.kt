@@ -1,5 +1,6 @@
 package com.example.androidad.presentation.navigation
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -7,7 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.androidad.R
 import com.example.androidad.core.ContactApplication
-import com.example.androidad.data.contact.Contact
 import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.screens.add.AddScreen
 import com.example.androidad.presentation.screens.edit.EditScreen
@@ -25,8 +25,13 @@ sealed class NavScreen(var icon:Int, var route:String){
     data object SignUp: NavScreen(R.drawable.home, "SignUp")
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavigationGraph(navController: NavHostController = rememberNavController()) {
+fun NavigationGraph(
+    navController: NavHostController = rememberNavController(),
+//    datePickerState: DatePickerState = rememberDatePickerState(),
+
+    ) {
     var selectedReport: Report? =null
 
     NavHost(navController, startDestination = NavScreen.Login.route) {
@@ -59,8 +64,11 @@ fun NavigationGraph(navController: NavHostController = rememberNavController()) 
                 )
         }
         composable(NavScreen.Add.route) {
-            AddScreen(navController = navController,
-                onClickToHome ={ navController.popBackStack()})
+            AddScreen(
+                navController = navController,
+                onClickToHome ={ navController.popBackStack()},
+//                datePickerState = datePickerState
+            )
         }
         composable(NavScreen.Edit.route) {
             EditScreen(navController = navController,
