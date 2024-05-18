@@ -85,8 +85,12 @@ fun AddScreen(
 //                 )
 
                 DatePickerWithDialog(
-//                    text = vm.dateAsString(rememberDatePickerState())
+                    onDateSelected = { selectedDate ->
+                        vm.date = selectedDate
+                    }
+
                 )
+
 
                 CustomTextField(
                     stringResource(R.string.time),

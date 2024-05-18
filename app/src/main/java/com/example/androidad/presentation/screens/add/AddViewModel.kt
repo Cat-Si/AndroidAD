@@ -16,6 +16,7 @@ import com.example.androidad.data.auth.AuthRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
 import com.example.androidad.presentation.utils.DateUtil
+import java.time.LocalDate
 
 class AddViewModel (private val authRepo: AuthRepo,
                     private val reportRepo: ReportRepo
@@ -56,28 +57,6 @@ class AddViewModel (private val authRepo: AuthRepo,
     }
 
 
-  /*  @OptIn(ExperimentalMaterial3Api::class)
-    fun dateAsString(dateState: DatePickerState): String {
-        val millisToLocalDate = dateState.selectedDateMillis?.let {
-            DateUtil().convertMillisToLocalDate(it)
-        }
-        val dateToString = millisToLocalDate?.let {
-            DateUtil().dateToString(millisToLocalDate)
-        } ?: "Choose Date"
-
-        return dateToString
-    }*/
-/*    fun checkFormIsValid():Boolean{
-      if(location.isBlank()) return false
-        if (date.isBlank()) return false
-        if (time.isBlank()) return false
-        if (injuredParty.isBlank()) return false
-        if (injury.isBlank()) return false
-        if (treatment.isBlank()) return false
-        if (advice.isBlank()) return false
-        return true
-    }*/
-
     fun addReport(){
         if(locationIsValid()
             && dateIsValid()
@@ -117,3 +96,26 @@ class AddViewModel (private val authRepo: AuthRepo,
 
     }
 }
+
+
+/*  @OptIn(ExperimentalMaterial3Api::class)
+  fun dateAsString(dateState: DatePickerState): String {
+      val millisToLocalDate = dateState.selectedDateMillis?.let {
+          DateUtil().convertMillisToLocalDate(it)
+      }
+      val dateToString = millisToLocalDate?.let {
+          DateUtil().dateToString(millisToLocalDate)
+      } ?: "Choose Date"
+
+      return dateToString
+  }*/
+/*    fun checkFormIsValid():Boolean{
+      if(location.isBlank()) return false
+        if (date.isBlank()) return false
+        if (time.isBlank()) return false
+        if (injuredParty.isBlank()) return false
+        if (injury.isBlank()) return false
+        if (treatment.isBlank()) return false
+        if (advice.isBlank()) return false
+        return true
+    }*/
