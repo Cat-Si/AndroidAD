@@ -29,7 +29,7 @@ class AddViewModel (private val authRepo: AuthRepo,
     var treatment by mutableStateOf(String())
     var advice by mutableStateOf(String())
 
-
+    var submissionFailed by mutableStateOf(false)
     fun locationIsValid():Boolean{
         return location.isNotBlank()
     }
@@ -69,7 +69,10 @@ class AddViewModel (private val authRepo: AuthRepo,
                 location, date, time, injuredParty, injury, treatment, advice
             )
             reportRepo.add(newReport, authRepo.currentUser!!.uid)
+            submissionFailed = false
             clear()
+        } else {
+            submissionFailed = true
         }
     }
 
@@ -81,6 +84,7 @@ class AddViewModel (private val authRepo: AuthRepo,
         injury = String()
         treatment = String()
         advice = String()
+        submissionFailed = false
     }
 
     // Define ViewModel factory in a companion object

@@ -21,6 +21,9 @@ class LoginViewModel(private val repo: AuthRepo) : ViewModel() {
     var email by mutableStateOf(String())
     var password by mutableStateOf(String())
 
+    var submissionFailed by mutableStateOf(false)
+
+
     val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
 
     var signInResponse by mutableStateOf<Response<Boolean>>(Response.Startup)
@@ -53,6 +56,8 @@ class LoginViewModel(private val repo: AuthRepo) : ViewModel() {
     fun signInWithEmailAndPassword() = viewModelScope.launch {
         signInResponse = Response.Loading
         signInResponse = repo.firebaseSignInWithEmailAndPassword(email, password)
+
+
     }
 
     companion object {

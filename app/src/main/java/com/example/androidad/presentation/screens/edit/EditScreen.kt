@@ -59,7 +59,8 @@ fun EditScreen(vm: EditViewModel = viewModel(factory = EditViewModel.Factory),
                     text = vm.location,
                     onValueChange = { vm.location = it },
                     errorMessage = stringResource(R.string.location_error),
-                    errorPresent = vm.locationIsValid()
+                    errorPresent = !vm.locationIsValid(),
+                    showError = vm.submissionFailed
                 )
 
                 CustomTextField(
@@ -67,7 +68,8 @@ fun EditScreen(vm: EditViewModel = viewModel(factory = EditViewModel.Factory),
                     text = vm.date,
                     onValueChange = { vm.date = it },
                     errorMessage = stringResource(R.string.date_error),
-                    errorPresent = vm.dateIsValid()
+                    errorPresent = !vm.dateIsValid(),
+                    showError = vm.submissionFailed
                 )
 
                 CustomTextField(
@@ -75,38 +77,43 @@ fun EditScreen(vm: EditViewModel = viewModel(factory = EditViewModel.Factory),
                     text = vm.time,
                     onValueChange = { vm.time = it },
                     errorMessage = stringResource(R.string.time_error),
-                    errorPresent = vm.timeIsValid()
+                    errorPresent = !vm.timeIsValid(),
+                    showError = vm.submissionFailed
                 )
                 CustomTextField(
                     stringResource(R.string.injured_party),
                     text = vm.injuredParty,
                     onValueChange = { vm.injuredParty = it },
                     errorMessage = stringResource(R.string.injured_party_error),
-                    errorPresent = vm.injuredPartyIsValid()
+                    errorPresent = !vm.injuredPartyIsValid(),
+                    showError = vm.submissionFailed
                 )
                 CustomTextField(
                     stringResource(R.string.injury),
                     text = vm.injury,
                     onValueChange = { vm.injury = it },
                     errorMessage = stringResource(R.string.injury_error),
-                    errorPresent = vm.injuryIsValid(),
-                    singleLine = false
+                    errorPresent = !vm.injuryIsValid(),
+                    singleLine = false,
+                    showError = vm.submissionFailed
                 )
                 CustomTextField(
                     stringResource(R.string.treatment),
                     text = vm.treatment,
                     onValueChange = { vm.treatment = it },
                     errorMessage = stringResource(R.string.treatment_error),
-                    errorPresent = vm.treatmentIsValid(),
-                    singleLine = false
+                    errorPresent = !vm.treatmentIsValid(),
+                    singleLine = false,
+                    showError = vm.submissionFailed
                 )
                 CustomTextField(
                     stringResource(R.string.advice),
                     text = vm.advice,
                     onValueChange = { vm.advice = it },
                     errorMessage = stringResource(R.string.advice_error),
-                    errorPresent = vm.adviceIsValid(),
-                    singleLine = false
+                    errorPresent = !vm.adviceIsValid(),
+                    singleLine = false,
+                    showError = vm.submissionFailed
                 )
 
                 CustomButton(

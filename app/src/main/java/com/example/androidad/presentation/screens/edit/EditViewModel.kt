@@ -26,6 +26,8 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
     var treatment by mutableStateOf(String())
     var advice by mutableStateOf(String())
 
+    var submissionFailed by mutableStateOf(false)
+
     fun setSelectedReport(report: Report){
         id = report.id.toString()
        location = report.location.toString()
@@ -81,6 +83,9 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
             selectedReport!!.advice = advice
 
             repo.edit(selectedReport!!, authRepo.currentUser!!.uid)
+            submissionFailed = false
+        } else {
+            submissionFailed = true
         }
     }
 

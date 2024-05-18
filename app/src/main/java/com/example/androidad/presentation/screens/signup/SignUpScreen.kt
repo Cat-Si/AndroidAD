@@ -41,7 +41,8 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                     isPasswordField = false,
                     onValueChange = { vm.email = it },
                     stringResource(R.string.email_error_message),
-                    errorPresent = vm.emailIsValid()
+                    errorPresent = !vm.emailIsValid(),
+                    showError = vm.submissionFailed
                 )
                 SmallSpacer(8)
                 CustomTextField(
@@ -50,7 +51,8 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                     isPasswordField = true,
                     onValueChange = { vm.password = it },
                     stringResource(R.string.password_error_message),
-                    errorPresent = vm.passwordIsValid()
+                    errorPresent = !vm.passwordIsValid(),
+                    showError = vm.submissionFailed
                 )
                 SmallSpacer(8)
                 CustomTextField(
@@ -59,7 +61,8 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                     isPasswordField = false,
                     onValueChange = { vm.firstName = it },
                     stringResource(R.string.first_name_error_message),
-                    errorPresent = vm.firstNameIsValid()
+                    errorPresent = !vm.firstNameIsValid(),
+                    showError = vm.submissionFailed
                 )
                 SmallSpacer(8)
                 CustomTextField(
@@ -68,7 +71,9 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                     isPasswordField = false,
                     onValueChange = { vm.lastName = it },
                     stringResource(R.string.last_name_error_message),
-                    errorPresent = vm.lastNameIsValid()
+                    errorPresent = !vm.lastNameIsValid(),
+                    showError = vm.submissionFailed
+
                 )
                 SmallSpacer(8)
                 CustomButton(
