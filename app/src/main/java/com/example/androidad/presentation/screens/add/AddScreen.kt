@@ -76,13 +76,6 @@ fun AddScreen(
                     errorPresent = vm.locationIsValid()
                 )
 
-//                CustomTextField(
-//                    stringResource(R.string.date),
-//                    text = vm.date,
-//                    onValueChange = { vm.date = it },
-//                    errorMessage = stringResource(R.string.date_error),
-//                    errorPresent = vm.dateIsValid(),
-//                 )
 
                 DatePickerWithDialog(
                     onDateSelected = { selectedDate ->
