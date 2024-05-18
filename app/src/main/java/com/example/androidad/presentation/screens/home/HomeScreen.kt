@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,11 +31,12 @@ import com.example.androidad.presentation.utils.Util.Companion.showMessage
     "UnusedMaterial3ScaffoldPaddingParameter"
 )
 @Composable
-fun HomeScreen(vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
-               modifier: Modifier = Modifier,
-               onIndexChange: (Report?) -> Unit,//function to change the selected contact
-               onClickToEdit: () -> Unit,
-               navController: NavHostController) {
+fun HomeScreen(  vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
+                 modifier: Modifier = Modifier,
+                 onIndexChange: (Report?) -> Unit, // function to change the selected report
+                 onClickToEdit: () -> Unit,
+                 navController: NavHostController
+) {
     val context = LocalContext.current
 
     Scaffold(
@@ -42,13 +44,12 @@ fun HomeScreen(vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
         bottomBar = {
             BottomNavBar(navController = navController)
         }
-    )
-    {
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            androidx.compose.material.Text(
+            Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 text = "Home",
                 textAlign = TextAlign.Center,
@@ -58,25 +59,23 @@ fun HomeScreen(vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
             )
             val userState by vm.userState.collectAsState()
 
-            if (userState.data.isNotEmpty()) //Some data to display
+            if (userState.data.isNotEmpty()) // Some data to display
                 LazyColumnWithSelection(vm, onIndexChange)
 
-            if(vm.userState.value.errorMessage.isNotBlank()){ //Problem retrieving data
-                showMessage(context,vm.userState.value.errorMessage)
+            if (vm.userState.value.errorMessage.isNotBlank()) { // Problem retrieving data
+                showMessage(context, vm.userState.value.errorMessage)
             }
 
             CustomButton(stringResource(R.string.edit), onClickToEdit)
 
             CustomButton(stringResource(R.string.delete)) {
                 if (!vm.reportHasBeenSelected()) {
-                    Toast.makeText(context, "You need to select a report", Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(context, "You need to select a report", Toast.LENGTH_LONG).show()
                 } else {
                     vm.deleteReport()
                     onIndexChange(null)
                 }
             }
-
         }
     }
 }
