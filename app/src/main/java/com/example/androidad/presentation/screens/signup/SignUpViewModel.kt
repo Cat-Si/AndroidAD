@@ -25,6 +25,8 @@ class SignUpViewModel (private val repo: AuthRepo,
     var firstName by mutableStateOf(String())
     var lastName by mutableStateOf(String())
 
+    var submissionFailed by mutableStateOf(false)
+
     fun emailIsValid():Boolean{
         return email.isNotBlank()
     }
@@ -71,7 +73,11 @@ class SignUpViewModel (private val repo: AuthRepo,
                 lastName
             )
             contactRepo.add(newContact, repo.currentUser!!.uid)
+            submissionFailed = false
+        } else {
+            submissionFailed = true
         }
+
     }
     // Define ViewModel factory in a companion object
     companion object {

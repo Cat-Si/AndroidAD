@@ -19,6 +19,7 @@ fun CustomTextField(hintText: String,
                     onValueChange: (String) -> Unit,
                     errorMessage: String,
                     errorPresent: Boolean,
+                    showError: Boolean,
                     singleLine: Boolean = true
 ){
 
@@ -26,16 +27,17 @@ fun CustomTextField(hintText: String,
         OutlinedTextField(
             value = text,
             onValueChange = onValueChange,
-            isError = errorPresent,
+            isError = errorPresent && showError,
             label = {
                 Text(hintText)
             },
             visualTransformation =  if (isPasswordField) PasswordVisualTransformation('*') else VisualTransformation.None,
             singleLine = singleLine
         )
+        if(errorPresent && showError)
         Text(
             modifier = Modifier.padding(10.dp),
-            text =  if (errorPresent) "" else errorMessage,
+            text =  errorMessage,
             fontSize = 14.sp,
             color = Color.Red
         )
