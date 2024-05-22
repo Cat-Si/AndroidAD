@@ -77,6 +77,7 @@ class AddViewModel (private val authRepo: AuthRepo,
     }
 
     private fun clear(){
+        firstAider = String()
         location = String()
         date = String()
         time = String()
