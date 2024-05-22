@@ -69,6 +69,14 @@ fun AddScreen(
             Column {
 
                 CustomTextField(
+                    stringResource(R.string.firstAider),
+                    text = vm.firstAider,
+                    onValueChange = { vm.firstAider = it },
+                    errorMessage = stringResource(R.string.firstAider_error),
+                    errorPresent = !vm.firstAiderIsValid(),
+                    showError = vm.submissionFailed
+                )
+                CustomTextField(
                     stringResource(R.string.location),
                     text = vm.location,
                     onValueChange = { vm.location = it },

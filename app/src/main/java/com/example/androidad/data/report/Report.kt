@@ -1,6 +1,7 @@
 package com.example.androidad.data.report
 
 data class Report(
+    var firstAider: String? =null,
     var location: String? =null,
     var date: String? =null,
     var time: String? =null,
@@ -10,5 +11,5 @@ data class Report(
     var advice: String? =null,
 ) {
     var id:String? =null //uuid
-    override fun toString(): String = "$location $date $time $injuredParty $injury $treatment $advice"
+    override fun toString(): String = "$firstAider $location $date $time $injuredParty $injury $treatment $advice"
 }
