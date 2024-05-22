@@ -3,12 +3,11 @@
 
     <string name="id_hint">Id</string>
     <string name="id_error_message">Id is blank</string>
-    <string name="first_name_hint">First Name</string>
-    <string name="first_name_error_message">Firstname is blank</string>
-    <string name="last_name_hint">Last Name</string>
-    <string name="last_name_error_message">Last Name is blank</string>
     <string name="tel_no_hint">Telephone number</string>
     <string name="tel_no_error_message">Telephone number is blank</string>
+    <string name="back_button">Back</string>
+    <string name="submit_button">Submit</string>
+
     <!-- Add Screen -->
     <string name="add">Add</string>
     <string name="add_form">Report a new incident</string>
@@ -27,11 +26,14 @@
     <string name="verify_email">Verify email</string>
     <string name="forgot_password">Forgot password</string>
     <string name="sign_up_button">Sign Up</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="first_name_error_message">Firstname is blank</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="last_name_error_message">Last Name is blank</string>
 
-    <string name="back_button">Back</string>
-    <string name="submit_button">Submit</string>
-    
     <!-- First Aid Form -->
+    <string name="firstAider">Name of Responding First Aider</string>
+    <string name="firstAider_error">First Aider can not be blank</string>
     <string name="location">Location</string>
     <string name="location_error">Location can not be blank</string>
     <string name="date">Date</string>

@@ -9,8 +9,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.auth.AuthRepo
-import com.example.androidad.data.contact.Contact
-import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
 
@@ -18,6 +16,7 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
     private var selectedReport : Report? = null
 
     var id by mutableStateOf(String())
+    var firstAider by mutableStateOf(String())
     var location by mutableStateOf(String())
     var date by mutableStateOf(String())
     var time by mutableStateOf(String())
@@ -30,6 +29,7 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
 
     fun setSelectedReport(report: Report){
         id = report.id.toString()
+        firstAider = report.firstAider.toString()
        location = report.location.toString()
         date = report.date.toString()
         time = report.time.toString()
@@ -40,6 +40,9 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
         selectedReport = report
     }
 
+    fun firstAiderIsValid():Boolean{
+        return firstAider.isNotBlank()
+    }
     fun locationIsValid():Boolean{
         return location.isNotBlank()
     }
@@ -67,7 +70,8 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
     }
 
     fun updateReport(){
-        if (locationIsValid()
+        if (firstAiderIsValid()
+            &&locationIsValid()
             && dateIsValid()
             && timeIsValid()
             && injuredPartyIsValid()
