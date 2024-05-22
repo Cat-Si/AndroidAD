@@ -21,6 +21,7 @@ import java.time.LocalDate
 class AddViewModel (private val authRepo: AuthRepo,
                     private val reportRepo: ReportRepo
 ) : ViewModel() {
+    var firstAider by mutableStateOf(String())
     var location by mutableStateOf(String())
     var date by mutableStateOf(String())
     var time by mutableStateOf(String())
@@ -30,6 +31,11 @@ class AddViewModel (private val authRepo: AuthRepo,
     var advice by mutableStateOf(String())
 
     var submissionFailed by mutableStateOf(false)
+
+    fun firstAiderIsValid():Boolean{
+        return firstAider.isNotBlank()
+    }
+
     fun locationIsValid():Boolean{
         return location.isNotBlank()
     }
@@ -58,7 +64,8 @@ class AddViewModel (private val authRepo: AuthRepo,
 
 
     fun addReport(){
-        if(locationIsValid()
+        if(firstAiderIsValid()
+            &&locationIsValid()
             && dateIsValid()
             && timeIsValid()
             && injuredPartyIsValid()
@@ -66,7 +73,14 @@ class AddViewModel (private val authRepo: AuthRepo,
             && treatmentIsValid()
             && adviceIsValid()) {
             var newReport = Report(
-                location, date, time, injuredParty, injury, treatment, advice
+                firstAider,
+                location,
+                date,
+                time,
+                injuredParty,
+                injury,
+                treatment,
+                advice
             )
             reportRepo.add(newReport, authRepo.currentUser!!.uid)
             submissionFailed = false
