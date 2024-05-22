@@ -1,5 +1,6 @@
 package com.example.androidad.presentation.screens.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -9,8 +10,6 @@ import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.DatabaseResult
 import com.example.androidad.data.DatabaseState
 import com.example.androidad.data.auth.AuthRepo
-import com.example.androidad.data.contact.Contact
-import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,8 +48,10 @@ class HomeViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
         }
     }
     fun deleteReport(){
+//        Log.v("OK","calling delete")
         if (reportHasBeenSelected()) {
-            repo.delete(selectedReport!!)
+//            Log.v("OK",selectedReport.toString())
+            repo.delete(selectedReport!!, authRepo.currentUser!!.uid)
             selectedReport = null
         }
     }

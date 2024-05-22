@@ -5,7 +5,7 @@ import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 
 interface ReportRepo{
-    fun delete(report: Report): Task<Void>
+    fun delete(report: Report, uid: String): Task<Void>
 
     fun add(report: Report, reportUUID: String)
 
@@ -15,7 +15,7 @@ interface ReportRepo{
 }
 
 class ReportRepository(private val reportDAO: ReportDAO) : ReportRepo {
-    override fun delete(report: Report) = reportDAO.delete(report)
+    override fun delete(report: Report, uid: String) = reportDAO.delete(report, uid)
 
     override fun add(report: Report, reportUUID: String) { reportDAO.insert(report, reportUUID)}
 
