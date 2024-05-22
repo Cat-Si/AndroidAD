@@ -43,5 +43,5 @@ class ReportDAO(private val database: DatabaseReference) {
         database.child(userAuthUUID).child(reportID).setValue(editReport)
     }
 
-    fun delete(report: Report) = database.child(report.id.toString()).removeValue()
+    fun delete(report: Report, uid: String) = database.child(uid).child(report.id.toString()).removeValue()
 }
