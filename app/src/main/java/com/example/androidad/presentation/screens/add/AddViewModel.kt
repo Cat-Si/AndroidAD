@@ -60,7 +60,6 @@ class AddViewModel (private val authRepo: AuthRepo,
     fun addReport(){
         if(firstAiderIsValid()
             &&locationIsValid()
-            && dateIsValid()
             && timeIsValid()
             && injuredPartyIsValid()
             && injuryIsValid()

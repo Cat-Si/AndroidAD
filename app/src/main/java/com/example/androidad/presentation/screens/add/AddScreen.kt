@@ -76,6 +76,12 @@ fun AddScreen(
                     onDateSelected = { selectedDate ->
                         vm.date = selectedDate
                     },
+                    text = vm.date,
+                    onValueChange = {vm.date = it},
+                    label = { Text(stringResource(R.string.date)) },
+                    errorMessage = stringResource(R.string.date_error),
+                    errorPresent = !vm.dateIsValid(),
+                    showError = vm.submissionFailed
                 )
                 CustomTextField(
                     stringResource(R.string.time),

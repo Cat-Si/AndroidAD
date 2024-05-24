@@ -72,7 +72,6 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
     fun updateReport(){
         if (firstAiderIsValid()
             &&locationIsValid()
-            && dateIsValid()
             && timeIsValid()
             && injuredPartyIsValid()
             && injuryIsValid()

@@ -15,17 +15,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.androidad.presentation.screens.add.AddViewModel
 import com.example.androidad.presentation.utils.DateUtil
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerWithDialog(
-    vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
     modifier: Modifier = Modifier,
     onDateSelected: (String) -> Unit,
+    text: String,
+    onValueChange: (String) -> Unit,
+    label: @Composable () -> Unit,
+    errorMessage: String,
+    errorPresent: Boolean,
+    showError: Boolean,
 
 ){
     val dateState = rememberDatePickerState()
@@ -38,10 +41,14 @@ fun DatePickerWithDialog(
     var showDialog by remember { mutableStateOf(false) }
     Surface(modifier = Modifier.padding(10.dp)) {
     ReadOnlyTextField(
-        text = vm.date,
-        onValueChange = {vm.date = it},
+        text = text,
+        onValueChange = onValueChange,
+        label = label,
         onClick = { showDialog = true },
-        label = { Text("Enter Date") })
+        errorMessage = errorMessage,
+        errorPresent = errorPresent,
+        showError = showError
+    )
 }
         if (showDialog) {
             DatePickerDialog(
