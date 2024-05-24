@@ -21,6 +21,7 @@ import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
 import com.example.androidad.presentation.components.CustomTextField
+import com.example.androidad.presentation.components.DatePickerWithDialog
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -71,10 +72,12 @@ fun EditScreen(vm: EditViewModel = viewModel(factory = EditViewModel.Factory),
                     showError = vm.submissionFailed
                 )
 
-                CustomTextField(
-                    stringResource(R.string.date),
+                DatePickerWithDialog(
+                    onDateSelected = { selectedDate ->
+                        vm.date = selectedDate },
                     text = vm.date,
-                    onValueChange = { vm.date = it },
+                    onValueChange = {vm.date = it},
+                    label = { Text(stringResource(R.string.date)) },
                     errorMessage = stringResource(R.string.date_error),
                     errorPresent = !vm.dateIsValid(),
                     showError = vm.submissionFailed

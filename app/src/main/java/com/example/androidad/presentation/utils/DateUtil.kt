@@ -1,6 +1,5 @@
 package com.example.androidad.presentation.utils
 
-import androidx.annotation.RequiresApi
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -39,4 +38,15 @@ class DateUtil {
             val dateInMillis = convertMillisToLocalDateWithFormatter(date, dateFormatter)
             return dateFormatter.format(dateInMillis)
         }
+
+    fun dateToMillis(date: LocalDate): Long {
+        return date
+            .atStartOfDay(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
+    }
+    fun stringToDate(dateString: String): LocalDate {
+        val dateFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy", Locale.getDefault())
+        return LocalDate.parse(dateString, dateFormatter)
+    }
     }
