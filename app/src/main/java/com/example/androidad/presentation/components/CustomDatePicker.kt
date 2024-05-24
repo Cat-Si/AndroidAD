@@ -1,16 +1,11 @@
 package com.example.androidad.presentation.components
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.InputChip
-import androidx.compose.material3.InputChipDefaults
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -19,11 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.androidad.R
 import com.example.androidad.presentation.screens.add.AddViewModel
 import com.example.androidad.presentation.utils.DateUtil
 
@@ -34,7 +26,6 @@ fun DatePickerWithDialog(
     vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
     modifier: Modifier = Modifier,
     onDateSelected: (String) -> Unit,
-    isError: Boolean
 
 ){
     val dateState = rememberDatePickerState()
@@ -49,9 +40,6 @@ fun DatePickerWithDialog(
     ReadOnlyTextField(
         text = vm.date,
         onValueChange = {vm.date = it},
-        errorMessage = stringResource(R.string.date_error),
-        errorPresent = isError,
-        showError = !vm.submissionFailed,
         onClick = { showDialog = true },
         label = { Text("Enter Date") })
 }

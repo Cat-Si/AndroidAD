@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.androidad.R
-import com.example.androidad.data.contact.Contact
 import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton

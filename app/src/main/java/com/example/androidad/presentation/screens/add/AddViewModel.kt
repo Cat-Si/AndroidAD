@@ -1,9 +1,5 @@
 package com.example.androidad.presentation.screens.add
 
-import androidx.compose.material3.DatePickerState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,8 +11,6 @@ import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.auth.AuthRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
-import com.example.androidad.presentation.utils.DateUtil
-import java.time.LocalDate
 
 class AddViewModel (private val authRepo: AuthRepo,
                     private val reportRepo: ReportRepo
