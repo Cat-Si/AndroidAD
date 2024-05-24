@@ -34,6 +34,7 @@ fun ItemView(
         //elevation =
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
+            Text(text = "First Aider: ${report.firstAider ?: "N/A"}", style = MaterialTheme.typography.bodyMedium)
             Text(text = "Date: ${report.date ?: "N/A"}", style = MaterialTheme.typography.bodyMedium)
             Text(text = "Location: ${report.location ?: "N/A"}", style = MaterialTheme.typography.bodyMedium)
             Text(text = "Injury: ${report.injury ?: "N/A"}", style = MaterialTheme.typography.bodyMedium)
