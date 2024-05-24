@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.text.format.DateUtils
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -84,12 +85,23 @@ fun AddScreen(
                     errorPresent = !vm.locationIsValid(),
                     showError = vm.submissionFailed
                 )
-                DatePickerWithDialog(
+                Row{
+                    CustomTextField(
+                        stringResource(R.string.date),
+                        text = vm.date,
+                        onValueChange = { vm.date = it },
+                        errorMessage = stringResource(R.string.date_error),
+                        errorPresent = !vm.dateIsValid(),
+                        showError = vm.submissionFailed
+                    )
+                    DatePickerWithDialog(
                     onDateSelected = { selectedDate ->
                         vm.date = selectedDate
                     }
 
                 )
+
+                }
                 CustomTextField(
                     stringResource(R.string.time),
                     text = vm.time,
