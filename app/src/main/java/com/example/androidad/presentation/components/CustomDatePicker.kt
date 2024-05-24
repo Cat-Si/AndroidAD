@@ -20,16 +20,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidad.R
+import com.example.androidad.presentation.screens.add.AddViewModel
 import com.example.androidad.presentation.utils.DateUtil
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerWithDialog(
-   modifier: Modifier = Modifier,
-   onDateSelected: (String) -> Unit
+    vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
+    modifier: Modifier = Modifier,
+    onDateSelected: (String) -> Unit,
+    isError: Boolean
 
 ){
     val dateState = rememberDatePickerState()
@@ -41,18 +46,14 @@ fun DatePickerWithDialog(
     } ?: "Choose Date"
     var showDialog by remember { mutableStateOf(false) }
     Surface(modifier = Modifier.padding(10.dp)) {
-    InputChip(
-        modifier = Modifier,
-        leadingIcon = {
-            Icon(
-                painterResource(id = R.drawable.calander),
-                contentDescription = "Select Date",
-                Modifier.size(InputChipDefaults.IconSize) ) },
-        selected = showDialog,
+    ReadOnlyTextField(
+        text = vm.date,
+        onValueChange = {vm.date = it},
+        errorMessage = stringResource(R.string.date_error),
+        errorPresent = isError,
+        showError = !vm.submissionFailed,
         onClick = { showDialog = true },
-        label = { Text(dateToString) },
-        shape =   OutlinedTextFieldDefaults.shape,
-    )
+        label = { Text("Enter Date") })
 }
         if (showDialog) {
             DatePickerDialog(

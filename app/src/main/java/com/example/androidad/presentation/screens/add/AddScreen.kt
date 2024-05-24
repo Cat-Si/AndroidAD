@@ -8,8 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
@@ -85,23 +84,13 @@ fun AddScreen(
                     errorPresent = !vm.locationIsValid(),
                     showError = vm.submissionFailed
                 )
-                Row{
-                    CustomTextField(
-                        stringResource(R.string.date),
-                        text = vm.date,
-                        onValueChange = { vm.date = it },
-                        errorMessage = stringResource(R.string.date_error),
-                        errorPresent = !vm.dateIsValid(),
-                        showError = vm.submissionFailed
-                    )
-                    DatePickerWithDialog(
+                DatePickerWithDialog(
                     onDateSelected = { selectedDate ->
                         vm.date = selectedDate
-                    }
+                    },
+                    isError = !vm.dateIsValid()
 
                 )
-
-                }
                 CustomTextField(
                     stringResource(R.string.time),
                     text = vm.time,

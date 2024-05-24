@@ -13,14 +13,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomTextField(hintText: String,
+fun CustomTextField(
+                    hintText: String,
                     text: String,
                     isPasswordField: Boolean = false,
                     onValueChange: (String) -> Unit,
                     errorMessage: String,
                     errorPresent: Boolean,
                     showError: Boolean,
-                    singleLine: Boolean = true
+                    singleLine: Boolean = true,
+                    readOnly: Boolean = false
 ){
 
     Surface(modifier = Modifier.padding(10.dp)) {
@@ -32,7 +34,8 @@ fun CustomTextField(hintText: String,
                 Text(hintText)
             },
             visualTransformation =  if (isPasswordField) PasswordVisualTransformation('*') else VisualTransformation.None,
-            singleLine = singleLine
+            singleLine = singleLine,
+            readOnly = readOnly
         )
         if(errorPresent && showError)
         Text(
