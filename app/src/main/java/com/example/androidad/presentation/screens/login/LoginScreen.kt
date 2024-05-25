@@ -4,15 +4,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidad.R
 import com.example.androidad.presentation.components.CustomButton
@@ -22,13 +28,15 @@ import com.example.androidad.presentation.screens.login.components.LogIn
 import com.example.androidad.presentation.utils.Util.Companion.showMessage
 
 @Composable
-fun LoginScreen(vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
-                navigateToSignUpScreen: () -> Unit,
-                navigateToHomeScreen: () -> Unit) {
+fun LoginScreen(
+    vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
+    navigateToSignUpScreen: () -> Unit,
+    navigateToHomeScreen: () -> Unit
+) {
     val context = LocalContext.current
     val message: String by vm.message.observeAsState(String())
 
-    if (message.length>0){ //Only changes when vm message is updated
+    if (message.length > 0) { //Only changes when vm message is updated
         showMessage(context, vm.message.value)
     }
 
@@ -42,6 +50,16 @@ fun LoginScreen(vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 15.dp),
+                text = "First Aid Report Portal",
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+            )
             CustomTextField(
                 hintText = stringResource(R.string.email),
                 text = vm.email,
@@ -91,7 +109,8 @@ fun LoginScreen(vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
         }
     }
 
-    LogIn(vm=vm,
+    LogIn(
+        vm = vm,
         showErrorMessage = { errorMessage ->
             showMessage(context, errorMessage)
         },

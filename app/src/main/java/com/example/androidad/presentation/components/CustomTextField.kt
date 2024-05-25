@@ -1,5 +1,6 @@
 package com.example.androidad.presentation.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -14,16 +15,17 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun CustomTextField(
-                    hintText: String,
-                    text: String,
-                    isPasswordField: Boolean = false,
-                    onValueChange: (String) -> Unit,
-                    errorMessage: String,
-                    errorPresent: Boolean,
-                    showError: Boolean,
-                    singleLine: Boolean = true,
-                    readOnly: Boolean = false
-){
+    hintText: String,
+    text: String,
+    isPasswordField: Boolean = false,
+    onValueChange: (String) -> Unit,
+    errorMessage: String,
+    errorPresent: Boolean,
+    showError: Boolean,
+    singleLine: Boolean = true,
+    readOnly: Boolean = false,
+    modifier: Modifier = Modifier,
+) {
 
     Surface(modifier = Modifier.padding(10.dp)) {
         OutlinedTextField(
@@ -33,16 +35,18 @@ fun CustomTextField(
             label = {
                 Text(hintText)
             },
-            visualTransformation =  if (isPasswordField) PasswordVisualTransformation('*') else VisualTransformation.None,
+            visualTransformation = if (isPasswordField) PasswordVisualTransformation('*') else VisualTransformation.None,
             singleLine = singleLine,
-            readOnly = readOnly
+            readOnly = readOnly,
+            modifier = Modifier.fillMaxWidth(.8f)
         )
-        if(errorPresent && showError)
-        Text(
-            modifier = Modifier.padding(10.dp),
-            text =  errorMessage,
-            fontSize = 14.sp,
-            color = Color.Red
-        )
+        if (errorPresent && showError) {
+            Text(
+                modifier = Modifier.padding(10.dp),
+                text = errorMessage,
+                fontSize = 14.sp,
+                color = Color.Red
+            )
+        }
     }
 }
