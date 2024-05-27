@@ -70,6 +70,7 @@ fun AddScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 16.dp)
+                        .weight(1f)
                 ) {
                     item {
                         CustomToolTip(
@@ -194,27 +195,26 @@ fun AddScreen(
                             text = stringResource(R.string.advice_tooltip)
                         )
                     }
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CustomButton(
-                                stringResource(R.string.add),
-                                clickButton = {
-                                    vm.addReport()
-                                    keyboardController?.hide()
-                                    if (!vm.submissionFailed) {
-                                        onClickToHome()
-                                    }
-                                }
-                            )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 5.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    CustomButton(
+                        stringResource(R.string.add),
+                        clickButton = {
+                            vm.addReport()
+                            keyboardController?.hide()
+                            if (!vm.submissionFailed) {
+                                onClickToHome()
+                            }
                         }
-                    }
+                    )
                 }
             }
         }
     }
 }
+

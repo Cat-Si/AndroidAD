@@ -1,8 +1,7 @@
 [README
 
 Design idea:
-![img_2.png](img_2.png)
-
+![img_1.png](img_1.png)
 colours/styling not definitive
 
 create = create a new first aid report

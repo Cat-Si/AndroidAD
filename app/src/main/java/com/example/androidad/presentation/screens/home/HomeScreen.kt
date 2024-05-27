@@ -98,18 +98,26 @@ fun HomeScreen(
 
             Row(
                 modifier = Modifier
-                    .padding(top = 10.dp)
+                    .padding(top = 5.dp, bottom = 5.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
-                CustomButton(stringResource(R.string.edit), clickButton = {
+                CustomButton(
+                    stringResource(R.string.edit),
+                    clickButton = {
 
-                    if (!vm.reportHasBeenSelected()) {
-                        Toast.makeText(context, "No reports available to edit", Toast.LENGTH_LONG)
-                            .show()
-                    } else {
-                        onClickToEdit()
-                    }
-                })
+                        if (!vm.reportHasBeenSelected()) {
+                            Toast.makeText(
+                                context,
+                                "No reports available to edit",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        } else {
+                            onClickToEdit()
+                        }
+                    },
+//                    modifier.padding(bottom = 5.dp)
+                )
             }
 
 
