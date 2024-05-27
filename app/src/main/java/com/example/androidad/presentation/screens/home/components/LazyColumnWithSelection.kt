@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.screens.home.HomeViewModel
 
@@ -20,7 +19,7 @@ fun LazyColumnWithSelection(
 ) {
     var selectedIndexToHighlight by remember { mutableStateOf(-1) }
 
-    LazyColumn() {
+    LazyColumn {
         itemsIndexed(vm.userState.value.data) { index, item ->
             if (item != null) {
                 ItemView(

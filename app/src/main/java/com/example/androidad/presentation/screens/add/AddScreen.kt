@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -71,6 +70,7 @@ fun AddScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 16.dp)
+                        .weight(1f)
                 ) {
                     item {
                         CustomToolTip(
@@ -195,27 +195,26 @@ fun AddScreen(
                             text = stringResource(R.string.advice_tooltip)
                         )
                     }
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CustomButton(
-                                stringResource(R.string.add),
-                                clickButton = {
-                                    vm.addReport()
-                                    keyboardController?.hide()
-                                    if (!vm.submissionFailed) {
-                                        onClickToHome()
-                                    }
-                                }
-                            )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 5.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    CustomButton(
+                        stringResource(R.string.add),
+                        clickButton = {
+                            vm.addReport()
+                            keyboardController?.hide()
+                            if (!vm.submissionFailed) {
+                                onClickToHome()
+                            }
                         }
-                    }
+                    )
                 }
             }
         }
     }
 }
+

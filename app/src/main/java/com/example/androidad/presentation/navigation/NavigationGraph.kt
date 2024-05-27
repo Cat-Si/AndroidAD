@@ -73,10 +73,9 @@ fun NavigationGraph(
         composable(NavScreen.Edit.route) {
             EditScreen(navController = navController,
                 selectedReport = selectedReport!!,
+
                 onClickToHome = {
-                    if (selectedReport != null) {
-                        navController.navigate("home")
-                    }
+                    navController.navigate(NavScreen.Home.route)
                 })
         }
         composable(NavScreen.Exit.route) {

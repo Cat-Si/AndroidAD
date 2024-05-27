@@ -30,7 +30,7 @@ fun DatePickerWithDialog(
     errorPresent: Boolean,
     showError: Boolean,
 
-){
+    ) {
     val dateState = rememberDatePickerState()
     val millisToLocalDate = dateState.selectedDateMillis?.let {
         DateUtil().convertMillisToLocalDate(it)
@@ -40,43 +40,43 @@ fun DatePickerWithDialog(
     } ?: "Choose Date"
     var showDialog by remember { mutableStateOf(false) }
     Surface(modifier = Modifier.padding(10.dp)) {
-    ReadOnlyTextField(
-        text = text,
-        onValueChange = onValueChange,
-        label = label,
-        onClick = { showDialog = true },
-        errorMessage = errorMessage,
-        errorPresent = errorPresent,
-        showError = showError
-    )
-}
-        if (showDialog) {
-            DatePickerDialog(
-                onDismissRequest = { showDialog = false },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            showDialog = false
-                            dateToString?.let { onDateSelected(it) }
-                        }
-                    ) {
-                        Text(text = "OK")
-                    }
-                },
-                dismissButton = {
-                    Button(
-                        onClick = { showDialog = false }
-                    ) {
-                        Text(text = "Cancel")
-                    }
-                }
-            ) {
-                DatePicker(
-                    state = dateState,
-                    showModeToggle = true
-                )
-            }
-        }
-
+        ReadOnlyTextField(
+            text = text,
+            onValueChange = onValueChange,
+            label = label,
+            onClick = { showDialog = true },
+            errorMessage = errorMessage,
+            errorPresent = errorPresent,
+            showError = showError
+        )
     }
+    if (showDialog) {
+        DatePickerDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDialog = false
+                        dateToString.let { onDateSelected(it) }
+                    }
+                ) {
+                    Text(text = "OK")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { showDialog = false }
+                ) {
+                    Text(text = "Cancel")
+                }
+            }
+        ) {
+            DatePicker(
+                state = dateState,
+                showModeToggle = true
+            )
+        }
+    }
+
+}
 

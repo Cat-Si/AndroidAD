@@ -2,12 +2,9 @@ package com.example.androidad.presentation.screens.home
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -33,7 +30,6 @@ import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
 import com.example.androidad.presentation.screens.home.components.ItemView
-import com.example.androidad.presentation.screens.home.components.LazyColumnWithSelection
 import com.example.androidad.presentation.utils.Util.Companion.showMessage
 
 @SuppressLint(
@@ -65,7 +61,7 @@ fun HomeScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp, bottom = 10.dp),
-                text = "Home",
+                text = "Submitted Reports",
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -102,21 +98,30 @@ fun HomeScreen(
 
             Row(
                 modifier = Modifier
-                    .padding(top = 10.dp)
+                    .padding(top = 5.dp, bottom = 5.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
-                CustomButton(stringResource(R.string.edit), onClickToEdit)
+                CustomButton(
+                    stringResource(R.string.edit),
+                    clickButton = {
 
-                CustomButton(stringResource(R.string.delete), clickButton = {
-                    if (!vm.reportHasBeenSelected()) {
-                        Toast.makeText(context, "You need to select a report", Toast.LENGTH_LONG)
-                            .show()
-                    } else {
-                        vm.deleteReport()
-                        onIndexChange(null)
-                    }
-                })
+                        if (!vm.reportHasBeenSelected()) {
+                            Toast.makeText(
+                                context,
+                                "No reports available to edit",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        } else {
+                            onClickToEdit()
+                        }
+                    },
+//                    modifier.padding(bottom = 5.dp)
+                )
             }
+
+
         }
     }
 }
+

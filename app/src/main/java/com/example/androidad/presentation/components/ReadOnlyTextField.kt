@@ -23,7 +23,8 @@ fun ReadOnlyTextField(
     errorMessage: String,
     errorPresent: Boolean,
     showError: Boolean,
-) {
+
+    ) {
 
     Box {
         OutlinedTextField(
@@ -32,6 +33,7 @@ fun ReadOnlyTextField(
             onValueChange = onValueChange,
             label = label,
             isError = errorPresent && showError,
+            readOnly = true
         )
         if (errorPresent && showError)
             Text(
