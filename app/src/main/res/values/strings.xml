@@ -32,20 +32,31 @@
     <string name="last_name_error_message">Last Name is blank</string>
 
     <!-- First Aid Form -->
-    <string name="firstAider">Name of Responding First Aider</string>
-    <string name="firstAider_error">First Aider can not be blank</string>
+    <string name="firstAider">First Aider</string>
+    <string name="firstAider_error">First not entered</string>
     <string name="location">Location</string>
-    <string name="location_error">Location can not be blank</string>
+    <string name="location_error">Location not entered</string>
     <string name="date">Date</string>
     <string name="date_error">Date not entered</string>
     <string name="time">Time</string>
-    <string name="time_error">Time of incident not entered</string>
-    <string name="injured_party">Name of Injured Party</string>
-    <string name="injured_party_error">The name of the person injured can not be blank</string>
+    <string name="time_error">Time not entered</string>
+    <string name="injured_party">Injured person</string>
+    <string name="injured_party_error">Person injured not entered</string>
     <string name="injury">Injury</string>
-    <string name="injury_error">Injury can not be blank</string>
+    <string name="injury_error">Injury not entered</string>
     <string name="treatment">Treatment Provided</string>
-    <string name="treatment_error">Treatment provided can not be blank</string>
+    <string name="treatment_error">Treatment not entered</string>
     <string name="advice">Advice Provided</string>
-    <string name="advice_error">Advice provided can not be blank</string>
+    <string name="advice_error">Advice provided not entered</string>
+
+    <!-- ToolTipText -->
+    <string name="firstAider_tooltip">Enter the name of the attending first aider</string>
+    <string name="location_tooltip">Enter the location the injury occurred. Please be specific and include room number and building.</string>
+    <string name="date_tooltip">Enter the date the incident occurred.</string>
+    <string name="time_tooltip">Enter the time of the incident. If the specific time is not known please provide the timeframe</string>
+    <string name="injured_party_tooltip">Enter the name of the person(s) who where treated for a injury</string>
+    <string name="injury_tooltip">Enter the injury that the person was treated for</string>
+    <string name="treatment_tooltip">Enter the treatment that was provided</string>
+    <string name="advice_tooltip">Enter any advice that was provided to the person</string>
+
 </resources>

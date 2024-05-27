@@ -2,6 +2,7 @@ package com.example.androidad.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -22,20 +23,20 @@ fun ReadOnlyTextField(
     errorMessage: String,
     errorPresent: Boolean,
     showError: Boolean,
-){
+) {
 
-    Box  {
+    Box {
         OutlinedTextField(
-            modifier = modifier,
+            modifier = Modifier.fillMaxWidth(.8f),
             value = text,
             onValueChange = onValueChange,
             label = label,
             isError = errorPresent && showError,
         )
-        if(errorPresent && showError)
+        if (errorPresent && showError)
             Text(
                 modifier = Modifier.padding(10.dp),
-                text =  errorMessage,
+                text = errorMessage,
                 fontSize = 14.sp,
                 color = Color.Red
             )
