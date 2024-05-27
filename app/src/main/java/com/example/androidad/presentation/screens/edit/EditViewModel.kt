@@ -26,6 +26,7 @@ class EditViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
     var advice by mutableStateOf(String())
 
     var submissionFailed by mutableStateOf(false)
+    fun reportHasBeenSelected(): Boolean = selectedReport != null
 
     fun setSelectedReport(report: Report) {
         id = report.id.toString()
@@ -97,9 +98,18 @@ class EditViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
         }
     }
 
+    fun deleteReport() {
+//        Log.v("OK","calling delete")
+        if (reportHasBeenSelected()) {
+//            Log.v("OK",selectedReport.toString())
+            repo.delete(selectedReport!!, authRepo.currentUser!!.uid)
+            selectedReport = null
+        }
+    }
+
     // Define ViewModel factory in a companion object
     companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory() {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 EditViewModel(
                     authRepo = ContactApplication.container.authRepository,
