@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,6 +32,7 @@ import com.example.androidad.R
 import com.example.androidad.data.report.Report
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
+import com.example.androidad.presentation.screens.home.components.ItemView
 import com.example.androidad.presentation.screens.home.components.LazyColumnWithSelection
 import com.example.androidad.presentation.utils.Util.Companion.showMessage
 
@@ -40,7 +44,7 @@ import com.example.androidad.presentation.utils.Util.Companion.showMessage
 fun HomeScreen(
     vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
     modifier: Modifier = Modifier,
-    onIndexChange: (Report?) -> Unit, // function to change the selected report
+    onIndexChange: (Report?) -> Unit,
     onClickToEdit: () -> Unit,
     navController: NavHostController
 ) {
@@ -51,10 +55,11 @@ fun HomeScreen(
         bottomBar = {
             BottomNavBar(navController = navController)
         }
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
         ) {
             Text(
                 modifier = Modifier
@@ -66,14 +71,35 @@ fun HomeScreen(
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
             )
+
             val userState by vm.userState.collectAsState()
 
-            if (userState.data.isNotEmpty()) // Some data to display
-                LazyColumnWithSelection(vm, onIndexChange)
-
-            if (vm.userState.value.errorMessage.isNotBlank()) { // Problem retrieving data
-                showMessage(context, vm.userState.value.errorMessage)
+            LazyColumn(
+                modifier = Modifier.weight(1f) // Take up available space
+            ) {
+                if (userState.data.isNotEmpty()) {
+                    itemsIndexed(userState.data) { index, item ->
+                        if (item != null) {
+                            ItemView(
+                                index = index,
+                                report = item,
+                                selected = vm.selectedIndex == index,
+                                onClick = { selectedIndex ->
+                                    vm.selectReport(selectedIndex, item)
+                                    onIndexChange(item)
+                                }
+                            )
+                        }
+                    }
+                }
             }
+
+            if (vm.userState.value.errorMessage.isNotBlank()) {
+                LaunchedEffect(key1 = vm.userState.value.errorMessage) {
+                    showMessage(context, vm.userState.value.errorMessage)
+                }
+            }
+
             Row(
                 modifier = Modifier
                     .padding(top = 10.dp)
