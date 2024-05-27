@@ -16,13 +16,13 @@ import com.example.androidad.presentation.screens.login.LoginScreen
 import com.example.androidad.presentation.screens.signup.SignUpScreen
 import kotlin.system.exitProcess
 
-sealed class NavScreen(var icon:Int, var route:String){
-    data object Home: NavScreen(R.drawable.home, "Home")
-    data object Add: NavScreen(R.drawable.add, "Add")
-    data object Edit: NavScreen(R.drawable.add, "Edit")//drawable is not relevant
-    data object Exit: NavScreen(R.drawable.logout, "Logout")
-    data object Login: NavScreen(R.drawable.home, "Login")
-    data object SignUp: NavScreen(R.drawable.home, "SignUp")
+sealed class NavScreen(var icon: Int, var route: String) {
+    data object Home : NavScreen(R.drawable.home, "Home")
+    data object Add : NavScreen(R.drawable.add, "Add")
+    data object Edit : NavScreen(R.drawable.add, "Edit")//drawable is not relevant
+    data object Exit : NavScreen(R.drawable.logout, "Logout")
+    data object Login : NavScreen(R.drawable.home, "Login")
+    data object SignUp : NavScreen(R.drawable.home, "SignUp")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,8 +31,8 @@ fun NavigationGraph(
     navController: NavHostController = rememberNavController(),
 //    datePickerState: DatePickerState = rememberDatePickerState(),
 
-    ) {
-    var selectedReport: Report? =null
+) {
+    var selectedReport: Report? = null
 
     NavHost(navController, startDestination = NavScreen.Login.route) {
 
@@ -48,7 +48,7 @@ fun NavigationGraph(
         }
         composable(NavScreen.SignUp.route) {
             SignUpScreen(
-                navigateBack = {navController.popBackStack()}
+                navigateBack = { navController.popBackStack() }
             )
         }
         composable(NavScreen.Home.route) {
@@ -58,23 +58,23 @@ fun NavigationGraph(
                     selectedReport = it
                 },
                 onClickToEdit = {
-                    if(selectedReport!=null) navController.navigate("edit")
+                    if (selectedReport != null) navController.navigate("edit")
                 }
 
-                )
+            )
         }
         composable(NavScreen.Add.route) {
             AddScreen(
                 navController = navController,
-                onClickToHome ={ navController.popBackStack()},
+                onClickToHome = { navController.popBackStack() },
 //                datePickerState = datePickerState
             )
         }
         composable(NavScreen.Edit.route) {
             EditScreen(navController = navController,
-                selectedReport=selectedReport!!,
+                selectedReport = selectedReport!!,
                 onClickToHome = {
-                    if(selectedReport!=null) {
+                    if (selectedReport != null) {
                         navController.navigate("home")
                     }
                 })
@@ -85,7 +85,6 @@ fun NavigationGraph(
         }
     }
 }
-
 
 
 //Application code below

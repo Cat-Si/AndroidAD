@@ -12,8 +12,8 @@ import com.example.androidad.data.auth.AuthRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
 
-class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRepo) : ViewModel() {
-    private var selectedReport : Report? = null
+class EditViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo) : ViewModel() {
+    private var selectedReport: Report? = null
 
     var id by mutableStateOf(String())
     var firstAider by mutableStateOf(String())
@@ -27,10 +27,10 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
 
     var submissionFailed by mutableStateOf(false)
 
-    fun setSelectedReport(report: Report){
+    fun setSelectedReport(report: Report) {
         id = report.id.toString()
         firstAider = report.firstAider.toString()
-       location = report.location.toString()
+        location = report.location.toString()
         date = report.date.toString()
         time = report.time.toString()
         injuredParty = report.injuredParty.toString()
@@ -40,43 +40,48 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
         selectedReport = report
     }
 
-    fun firstAiderIsValid():Boolean{
+    fun firstAiderIsValid(): Boolean {
         return firstAider.isNotBlank()
     }
-    fun locationIsValid():Boolean{
+
+    fun locationIsValid(): Boolean {
         return location.isNotBlank()
     }
-    fun dateIsValid():Boolean{
+
+    fun dateIsValid(): Boolean {
         return date.isNotBlank()
     }
 
-    fun timeIsValid():Boolean{
+    fun timeIsValid(): Boolean {
         return time.isNotBlank()
     }
 
-    fun injuredPartyIsValid():Boolean{
+    fun injuredPartyIsValid(): Boolean {
         return injuredParty.isNotBlank()
     }
 
-    fun injuryIsValid():Boolean{
+    fun injuryIsValid(): Boolean {
         return injury.isNotBlank()
     }
 
-    fun treatmentIsValid():Boolean{
+    fun treatmentIsValid(): Boolean {
         return treatment.isNotBlank()
     }
-    fun adviceIsValid():Boolean{
+
+    fun adviceIsValid(): Boolean {
         return advice.isNotBlank()
     }
 
-    fun updateReport(){
-        if (firstAiderIsValid()
-            &&locationIsValid()
+    fun updateReport() {
+        if (selectedReport != null
+            && firstAiderIsValid()
+            && locationIsValid()
             && timeIsValid()
             && injuredPartyIsValid()
             && injuryIsValid()
             && treatmentIsValid()
-            && adviceIsValid())  {
+            && adviceIsValid()
+        ) {
             selectedReport!!.location = location
             selectedReport!!.date = date
             selectedReport!!.time = time
@@ -94,7 +99,7 @@ class EditViewModel (private val authRepo: AuthRepo, private val repo: ReportRep
 
     // Define ViewModel factory in a companion object
     companion object {
-        val Factory: ViewModelProvider.Factory= viewModelFactory() {
+        val Factory: ViewModelProvider.Factory = viewModelFactory() {
             initializer {
                 EditViewModel(
                     authRepo = ContactApplication.container.authRepository,

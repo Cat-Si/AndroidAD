@@ -1,4 +1,5 @@
 package com.example.androidad.presentation.screens.signup
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,9 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidad.R
 import com.example.androidad.presentation.components.CustomButton
@@ -21,13 +27,14 @@ import com.example.androidad.presentation.screens.signup.components.SignUp
 import com.example.androidad.presentation.utils.Util.Companion.showMessage
 
 @Composable
-fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Factory),
-                 navigateBack: () -> Unit) {
+fun SignUpScreen(
+    vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Factory),
+    navigateBack: () -> Unit
+) {
     val context = LocalContext.current
     val keyboard = LocalSoftwareKeyboardController.current
     Scaffold(
         content = { padding ->
-            Text(text = "Enter details to sign up")
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -35,6 +42,16 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 15.dp),
+                    text = "Enter details to sign up",
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                )
                 CustomTextField(
                     stringResource(R.string.email),
                     text = vm.email,
