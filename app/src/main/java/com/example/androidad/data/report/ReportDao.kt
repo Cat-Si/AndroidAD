@@ -12,7 +12,7 @@ import java.util.UUID
 
 class ReportDAO(private val database: DatabaseReference) {
 
-    suspend fun getReports(reportUUID: String) : Flow<DatabaseResult<List<Report?>>> = callbackFlow {
+    suspend fun getReports(reportUUID: String): Flow<DatabaseResult<List<Report?>>> = callbackFlow {
         trySend(DatabaseResult.Loading)
         database.child(reportUUID).keepSynced(true)
 
@@ -35,7 +35,8 @@ class ReportDAO(private val database: DatabaseReference) {
         awaitClose { close() }
     }
 
-    fun insert(newReport: Report, userAuthUUID: String) = database.child(userAuthUUID).child(UUID.randomUUID().toString()).setValue(newReport)
+    fun insert(newReport: Report, userAuthUUID: String) =
+        database.child(userAuthUUID).child(UUID.randomUUID().toString()).setValue(newReport)
 
     fun update(editReport: Report, userAuthUUID: String) {
         val reportID = editReport.id.toString() //retrieved for sub folder key
@@ -43,5 +44,6 @@ class ReportDAO(private val database: DatabaseReference) {
         database.child(userAuthUUID).child(reportID).setValue(editReport)
     }
 
-    fun delete(report: Report, uid: String) = database.child(uid).child(report.id.toString()).removeValue()
+    fun delete(report: Report, userAuthUUID: String) =
+        database.child(userAuthUUID).child(report.id.toString()).removeValue()
 }

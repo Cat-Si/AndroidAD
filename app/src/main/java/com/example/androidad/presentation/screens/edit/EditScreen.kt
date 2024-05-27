@@ -3,7 +3,9 @@ package com.example.androidad.presentation.screens.edit
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -36,20 +38,21 @@ fun EditScreen(
     onClickToHome: () -> Unit
 ) {
 
-    LaunchedEffect(key1 = Unit) {//Called on launch
+    LaunchedEffect(key1 = Unit) {
+        // Called on launch
         vm.setSelectedReport(selectedReport)
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         bottomBar = {
             BottomNavBar(navController = navController)
         }
-    )
-    {
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(it)
         ) {
             Text(
                 modifier = Modifier
@@ -61,123 +64,146 @@ fun EditScreen(
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
             )
-            Column {
-                CustomToolTip(
-                    {
-                        CustomTextField(
-                            stringResource(R.string.firstAider),
-                            text = vm.firstAider,
-                            onValueChange = { vm.firstAider = it },
-                            errorMessage = stringResource(R.string.firstAider_error),
-                            errorPresent = !vm.firstAiderIsValid(),
-                            showError = vm.submissionFailed
-                        )
-                    },
-                    text = stringResource(R.string.firstAider_tooltip)
-                )
-                CustomToolTip(
-                    {
-                        CustomTextField(
-                            stringResource(R.string.location),
-                            text = vm.location,
-                            onValueChange = { vm.location = it },
-                            errorMessage = stringResource(R.string.location_error),
-                            errorPresent = !vm.locationIsValid(),
-                            showError = vm.submissionFailed
-                        )
-                    }, text = stringResource(R.string.location_tooltip)
-                )
-
-                CustomToolTip(
-                    {
-                        DatePickerWithDialog(
-                            onDateSelected = { selectedDate ->
-                                vm.date = selectedDate
-                            },
-                            text = vm.date,
-                            onValueChange = { vm.date = it },
-                            label = { androidx.compose.material3.Text(stringResource(R.string.date)) },
-                            errorMessage = stringResource(R.string.date_error),
-                            errorPresent = !vm.dateIsValid(),
-                            showError = vm.submissionFailed
-                        )
-                    }, text = stringResource(R.string.date_tooltip)
-                )
-                CustomToolTip(
-                    {
-                        CustomTextField(
-                            stringResource(R.string.time),
-                            text = vm.time,
-                            onValueChange = { vm.time = it },
-                            errorMessage = stringResource(R.string.time_error),
-                            errorPresent = !vm.timeIsValid(),
-                            showError = vm.submissionFailed
-                        )
-                    },
-                    text = stringResource(R.string.time_tooltip)
-                )
-                CustomToolTip(
-                    {
-                        CustomTextField(
-                            stringResource(R.string.injured_party),
-                            text = vm.injuredParty,
-                            onValueChange = { vm.injuredParty = it },
-                            errorMessage = stringResource(R.string.injured_party_error),
-                            errorPresent = !vm.injuredPartyIsValid(),
-                            showError = vm.submissionFailed
-                        )
-                    }, text = stringResource(R.string.injured_party_tooltip)
-                )
-
-                CustomToolTip(
-                    {
-                        CustomTextField(
-                            stringResource(R.string.injury),
-                            text = vm.injury,
-                            onValueChange = { vm.injury = it },
-                            errorMessage = stringResource(R.string.injury_error),
-                            errorPresent = !vm.injuryIsValid(),
-                            singleLine = false,
-                            showError = vm.submissionFailed
-                        )
-                    },
-                    text = stringResource(R.string.injury_tooltip)
-                )
-                CustomToolTip(
-                    {
-                        CustomTextField(
-                            stringResource(R.string.treatment),
-                            text = vm.treatment,
-                            onValueChange = { vm.treatment = it },
-                            errorMessage = stringResource(R.string.treatment_error),
-                            errorPresent = !vm.treatmentIsValid(),
-                            singleLine = false,
-                            showError = vm.submissionFailed
-                        )
-                    },
-                    text = stringResource(R.string.treatment_tooltip)
-                )
-                CustomToolTip(
-                    {
-                        CustomTextField(
-                            stringResource(R.string.advice),
-                            text = vm.advice,
-                            onValueChange = { vm.advice = it },
-                            errorMessage = stringResource(R.string.advice_error),
-                            errorPresent = !vm.adviceIsValid(),
-                            singleLine = false,
-                            showError = vm.submissionFailed
-                        )
-                    },
-                    text = stringResource(R.string.advice_tooltip)
-                )
-
-                CustomButton(
-                    stringResource(R.string.edit),
-                    clickButton = {
-                        vm.updateReport()
-                        onClickToHome()
-                    })
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+            ) {
+                item {
+                    CustomToolTip(
+                        {
+                            CustomTextField(
+                                stringResource(R.string.firstAider),
+                                text = vm.firstAider,
+                                onValueChange = { vm.firstAider = it },
+                                errorMessage = stringResource(R.string.firstAider_error),
+                                errorPresent = !vm.firstAiderIsValid(),
+                                showError = vm.submissionFailed
+                            )
+                        },
+                        text = stringResource(R.string.firstAider_tooltip)
+                    )
+                }
+                item {
+                    CustomToolTip(
+                        {
+                            CustomTextField(
+                                stringResource(R.string.location),
+                                text = vm.location,
+                                onValueChange = { vm.location = it },
+                                errorMessage = stringResource(R.string.location_error),
+                                errorPresent = !vm.locationIsValid(),
+                                showError = vm.submissionFailed
+                            )
+                        }, text = stringResource(R.string.location_tooltip)
+                    )
+                }
+                item {
+                    CustomToolTip(
+                        {
+                            DatePickerWithDialog(
+                                onDateSelected = { selectedDate ->
+                                    vm.date = selectedDate
+                                },
+                                text = vm.date,
+                                onValueChange = { vm.date = it },
+                                label = { Text(stringResource(R.string.date)) },
+                                errorMessage = stringResource(R.string.date_error),
+                                errorPresent = !vm.dateIsValid(),
+                                showError = vm.submissionFailed
+                            )
+                        }, text = stringResource(R.string.date_tooltip)
+                    )
+                }
+                item {
+                    CustomToolTip(
+                        {
+                            CustomTextField(
+                                stringResource(R.string.time),
+                                text = vm.time,
+                                onValueChange = { vm.time = it },
+                                errorMessage = stringResource(R.string.time_error),
+                                errorPresent = !vm.timeIsValid(),
+                                showError = vm.submissionFailed
+                            )
+                        },
+                        text = stringResource(R.string.time_tooltip)
+                    )
+                }
+                item {
+                    CustomToolTip(
+                        {
+                            CustomTextField(
+                                stringResource(R.string.injured_party),
+                                text = vm.injuredParty,
+                                onValueChange = { vm.injuredParty = it },
+                                errorMessage = stringResource(R.string.injured_party_error),
+                                errorPresent = !vm.injuredPartyIsValid(),
+                                showError = vm.submissionFailed
+                            )
+                        }, text = stringResource(R.string.injured_party_tooltip)
+                    )
+                }
+                item {
+                    CustomToolTip(
+                        {
+                            CustomTextField(
+                                stringResource(R.string.injury),
+                                text = vm.injury,
+                                onValueChange = { vm.injury = it },
+                                errorMessage = stringResource(R.string.injury_error),
+                                errorPresent = !vm.injuryIsValid(),
+                                singleLine = false,
+                                showError = vm.submissionFailed
+                            )
+                        },
+                        text = stringResource(R.string.injury_tooltip)
+                    )
+                }
+                item {
+                    CustomToolTip(
+                        {
+                            CustomTextField(
+                                stringResource(R.string.treatment),
+                                text = vm.treatment,
+                                onValueChange = { vm.treatment = it },
+                                errorMessage = stringResource(R.string.treatment_error),
+                                errorPresent = !vm.treatmentIsValid(),
+                                singleLine = false,
+                                showError = vm.submissionFailed
+                            )
+                        },
+                        text = stringResource(R.string.treatment_tooltip)
+                    )
+                }
+                item {
+                    CustomToolTip(
+                        {
+                            CustomTextField(
+                                stringResource(R.string.advice),
+                                text = vm.advice,
+                                onValueChange = { vm.advice = it },
+                                errorMessage = stringResource(R.string.advice_error),
+                                errorPresent = !vm.adviceIsValid(),
+                                singleLine = false,
+                                showError = vm.submissionFailed
+                            )
+                        },
+                        text = stringResource(R.string.advice_tooltip)
+                    )
+                }
+                item {
+                    CustomButton(
+                        stringResource(R.string.edit),
+                        clickButton = {
+                            vm.updateReport()
+                            onClickToHome()
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp)
+                    )
+                }
             }
         }
     }

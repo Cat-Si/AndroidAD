@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -80,7 +81,7 @@ fun HomeScreen(
             ) {
                 CustomButton(stringResource(R.string.edit), onClickToEdit)
 
-                CustomButton(stringResource(R.string.delete)) {
+                CustomButton(stringResource(R.string.delete), clickButton = {
                     if (!vm.reportHasBeenSelected()) {
                         Toast.makeText(context, "You need to select a report", Toast.LENGTH_LONG)
                             .show()
@@ -88,7 +89,7 @@ fun HomeScreen(
                         vm.deleteReport()
                         onIndexChange(null)
                     }
-                }
+                })
             }
         }
     }
