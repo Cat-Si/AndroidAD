@@ -12,8 +12,9 @@ import com.example.androidad.data.auth.AuthRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
 
-class AddViewModel (private val authRepo: AuthRepo,
-                    private val reportRepo: ReportRepo
+class AddViewModel(
+    private val authRepo: AuthRepo,
+    private val reportRepo: ReportRepo
 ) : ViewModel() {
     var firstAider by mutableStateOf(String())
     var location by mutableStateOf(String())
@@ -26,45 +27,48 @@ class AddViewModel (private val authRepo: AuthRepo,
 
     var submissionFailed by mutableStateOf(false)
 
-    fun firstAiderIsValid():Boolean{
+    fun firstAiderIsValid(): Boolean {
         return firstAider.isNotBlank()
     }
 
-    fun locationIsValid():Boolean{
+    fun locationIsValid(): Boolean {
         return location.isNotBlank()
     }
-    fun dateIsValid():Boolean{
+
+    fun dateIsValid(): Boolean {
         return date.isNotBlank()
     }
 
-    fun timeIsValid():Boolean{
+    fun timeIsValid(): Boolean {
         return time.isNotBlank()
     }
 
-    fun injuredPartyIsValid():Boolean{
+    fun injuredPartyIsValid(): Boolean {
         return injuredParty.isNotBlank()
     }
 
-    fun injuryIsValid():Boolean{
+    fun injuryIsValid(): Boolean {
         return injury.isNotBlank()
     }
 
-    fun treatmentIsValid():Boolean{
+    fun treatmentIsValid(): Boolean {
         return treatment.isNotBlank()
     }
-    fun adviceIsValid():Boolean{
+
+    fun adviceIsValid(): Boolean {
         return advice.isNotBlank()
     }
 
 
-    fun addReport(){
-        if(firstAiderIsValid()
-            &&locationIsValid()
+    fun addReport() {
+        if (firstAiderIsValid()
+            && locationIsValid()
             && timeIsValid()
             && injuredPartyIsValid()
             && injuryIsValid()
             && treatmentIsValid()
-            && adviceIsValid()) {
+            && adviceIsValid()
+        ) {
             var newReport = Report(
                 firstAider,
                 location,
@@ -83,7 +87,7 @@ class AddViewModel (private val authRepo: AuthRepo,
         }
     }
 
-    private fun clear(){
+    private fun clear() {
         firstAider = String()
         location = String()
         date = String()
