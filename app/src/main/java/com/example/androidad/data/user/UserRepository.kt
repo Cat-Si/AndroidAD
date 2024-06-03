@@ -4,9 +4,9 @@ import com.example.androidad.data.DatabaseResult
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 
-interface UserRepo{
+interface UserRepo {
     suspend fun getAll(): Flow<DatabaseResult<List<User?>>>
-    fun add(entry: User, userId: String): Task<Void>
+    fun add(entry: User, userId: String)
 }
 
 class UserRepository(private val dao: UserDAO) : UserRepo {
@@ -14,6 +14,6 @@ class UserRepository(private val dao: UserDAO) : UserRepo {
         return dao.getAll()
     }
 
-    override fun add(entry: User, userId: String)= dao.insert(entry, userId)
+    override fun add(entry: User, userId: String) = dao.addUser(entry, userId)
 
 }

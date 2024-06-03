@@ -35,11 +35,11 @@ class ContactRepository(private val contactDAO: ContactDAO) : ContactRepo {
     override fun getUserName(userAuthUUID: String, callback: (String?) -> Unit) {
         contactDAO.getContactByUserId(userAuthUUID) { contact ->
             if (contact != null) {
-                Log.d("ContactRepository", "Retrieved username: ${contact.userName}")
+                Log.d("ContactRepository", "Retrieved username: ${contact.displayName}")
             } else {
                 Log.d("ContactRepository", "Contact is null for userId: $userAuthUUID")
             }
-            callback(contact?.userName)
+            callback(contact?.displayName)
         }
     }
 }

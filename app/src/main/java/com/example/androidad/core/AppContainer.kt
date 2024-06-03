@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 private const val CONTACT_ROOT_FOLDER = "contacts"
 private const val USER_ROOT_FOLDER = "users"
 private const val REPORT_ROOT_FOLDER = "reports"
+private const val USERNAME_ROOT_FOLDER = "userNames"
 private const val DATABASE_URL =
     "https://androidad-bdfae-default-rtdb.europe-west1.firebasedatabase.app/"
 
@@ -39,11 +40,17 @@ class AppDataContainer : AppContainer {
         val contactDAO = ContactDAO(contactRoot)
         contactRepository = ContactRepository(contactDAO)
 
+        val userNameRoot =
+            FirebaseDatabase.getInstance(DATABASE_URL).getReference(USERNAME_ROOT_FOLDER)
+
         val reportRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(REPORT_ROOT_FOLDER)
         val reportDAO = ReportDAO(reportRoot, contactRoot)
         reportRepository = ReportRepository(reportDAO)
 
         val userRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(USER_ROOT_FOLDER)
-        userRepository = UserRepository(UserDAO(userRoot))
+        val userDAO = UserDAO(userRoot, userNameRoot)
+        userRepository = UserRepository(userDAO)
+
+
     }
 }
