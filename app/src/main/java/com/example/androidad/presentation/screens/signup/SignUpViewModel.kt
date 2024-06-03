@@ -17,8 +17,9 @@ import com.example.androidad.data.user.User
 import com.example.androidad.data.user.UserRepo
 import kotlinx.coroutines.launch
 
-class SignUpViewModel (private val repo: AuthRepo,
-                       private val userRepo: UserRepo, private val contactRepo: ContactRepo
+class SignUpViewModel(
+    private val repo: AuthRepo,
+    private val userRepo: UserRepo, private val contactRepo: ContactRepo
 ) : ViewModel() {
     var email by mutableStateOf(String())
     var password by mutableStateOf(String())
@@ -27,18 +28,19 @@ class SignUpViewModel (private val repo: AuthRepo,
 
     var submissionFailed by mutableStateOf(false)
 
-    fun emailIsValid():Boolean{
+    fun emailIsValid(): Boolean {
         return email.isNotBlank()
     }
 
-    fun passwordIsValid():Boolean{
+    fun passwordIsValid(): Boolean {
         return password.isNotBlank()
     }
-    fun firstNameIsValid():Boolean{
+
+    fun firstNameIsValid(): Boolean {
         return firstName.isNotBlank()
     }
 
-    fun lastNameIsValid():Boolean{
+    fun lastNameIsValid(): Boolean {
         return lastName.isNotBlank()
     }
 
@@ -66,11 +68,14 @@ class SignUpViewModel (private val repo: AuthRepo,
         addContact()
     }
 
-    fun addContact(){
-        if(firstNameIsValid() && lastNameIsValid() ) {
+    fun addContact() {
+        if (firstNameIsValid() && lastNameIsValid()) {
+            var userName = "$firstName $lastName"
             var newContact = Contact(
                 firstName,
-                lastName
+                lastName,
+                userName,
+                report = null
             )
             contactRepo.add(newContact, repo.currentUser!!.uid)
             submissionFailed = false
@@ -79,13 +84,16 @@ class SignUpViewModel (private val repo: AuthRepo,
         }
 
     }
+
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                SignUpViewModel(repo = ContactApplication.container.authRepository,
+                SignUpViewModel(
+                    repo = ContactApplication.container.authRepository,
                     userRepo = ContactApplication.container.userRepository,
-                    contactRepo = ContactApplication.container.contactRepository)
+                    contactRepo = ContactApplication.container.contactRepository
+                )
             }
         }
     }

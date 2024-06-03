@@ -1,5 +1,6 @@
 package com.example.androidad.presentation.screens.add
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,11 +10,16 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.auth.AuthRepo
+import com.example.androidad.data.contact.Contact
+import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
+import com.google.android.play.integrity.internal.c
 
-class AddViewModel (private val authRepo: AuthRepo,
-                    private val reportRepo: ReportRepo
+class AddViewModel(
+    private val authRepo: AuthRepo,
+    private val reportRepo: ReportRepo,
+    private val contactRepo: ContactRepo,
 ) : ViewModel() {
     var firstAider by mutableStateOf(String())
     var location by mutableStateOf(String())
@@ -23,48 +29,79 @@ class AddViewModel (private val authRepo: AuthRepo,
     var injury by mutableStateOf(String())
     var treatment by mutableStateOf(String())
     var advice by mutableStateOf(String())
+    var userName by mutableStateOf(String())
+
 
     var submissionFailed by mutableStateOf(false)
 
-    fun firstAiderIsValid():Boolean{
+
+    init {
+        loadUserName()
+    }
+
+    fun getid(contact: Contact) {
+        var id = contact.id.toString()
+        var currentContact = contact
+    }
+
+
+    private fun loadUserName() {
+        val userId = authRepo.currentUser?.uid
+        if (userId != null) {
+            contactRepo.getUserName(userId) { userName ->
+                Log.d("AddViewModel", "Setting firstAider to: $userName")
+                firstAider = userName ?: ""
+            }
+        } else {
+            Log.d("AddViewModel", "User ID is null")
+        }
+    }
+
+
+    fun firstAiderIsValid(): Boolean {
         return firstAider.isNotBlank()
     }
 
-    fun locationIsValid():Boolean{
+    fun locationIsValid(): Boolean {
         return location.isNotBlank()
     }
-    fun dateIsValid():Boolean{
+
+    fun dateIsValid(): Boolean {
         return date.isNotBlank()
     }
 
-    fun timeIsValid():Boolean{
+    fun timeIsValid(): Boolean {
         return time.isNotBlank()
     }
 
-    fun injuredPartyIsValid():Boolean{
+    fun injuredPartyIsValid(): Boolean {
         return injuredParty.isNotBlank()
     }
 
-    fun injuryIsValid():Boolean{
+    fun injuryIsValid(): Boolean {
         return injury.isNotBlank()
     }
 
-    fun treatmentIsValid():Boolean{
+    fun treatmentIsValid(): Boolean {
         return treatment.isNotBlank()
     }
-    fun adviceIsValid():Boolean{
+
+    fun adviceIsValid(): Boolean {
         return advice.isNotBlank()
     }
 
 
-    fun addReport(){
-        if(firstAiderIsValid()
-            &&locationIsValid()
+    fun addReport() {
+        if (
+            firstAiderIsValid()
+            && locationIsValid()
             && timeIsValid()
             && injuredPartyIsValid()
             && injuryIsValid()
             && treatmentIsValid()
-            && adviceIsValid()) {
+            && adviceIsValid()
+        ) {
+
             var newReport = Report(
                 firstAider,
                 location,
@@ -83,7 +120,7 @@ class AddViewModel (private val authRepo: AuthRepo,
         }
     }
 
-    private fun clear(){
+    private fun clear() {
         firstAider = String()
         location = String()
         date = String()
@@ -101,7 +138,9 @@ class AddViewModel (private val authRepo: AuthRepo,
             initializer {
                 AddViewModel(
                     authRepo = ContactApplication.container.authRepository,
-                    reportRepo = ContactApplication.container.reportRepository
+                    reportRepo = ContactApplication.container.reportRepository,
+                    contactRepo = ContactApplication.container.contactRepository
+
                 )
             }
         }

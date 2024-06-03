@@ -29,7 +29,7 @@ class EditViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
     fun reportHasBeenSelected(): Boolean = selectedReport != null
 
     fun setSelectedReport(report: Report) {
-        id = report.id.toString()
+        id = report.uid.toString()
         firstAider = report.firstAider.toString()
         location = report.location.toString()
         date = report.date.toString()
