@@ -97,13 +97,13 @@ class SignUpViewModel(
 
     }
 
-    private fun addContact(username: String?, displayName: String?) {
+    private fun addContact(displayName: String?, username: String?) {
 
         var newContact = Contact(
             firstName,
             lastName,
-            username,
             displayName,
+            username,
             report = emptyList()
         )
         contactRepo.add(newContact, repo.currentUser!!.uid)

@@ -5,8 +5,8 @@ import com.example.androidad.data.report.Report
 data class Contact(
     var firstName: String? = null,
     var surname: String? = null,
-    var userName: String? = null,
     var displayName: String? = null,
+    var userName: String? = null,
     var report: List<Report>? = null
 ) {
     var id: String? = null //uuid

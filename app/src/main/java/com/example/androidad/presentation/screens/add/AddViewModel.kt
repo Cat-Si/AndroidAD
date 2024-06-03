@@ -14,7 +14,6 @@ import com.example.androidad.data.contact.Contact
 import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
-import com.google.android.play.integrity.internal.c
 
 class AddViewModel(
     private val authRepo: AuthRepo,
@@ -29,26 +28,20 @@ class AddViewModel(
     var injury by mutableStateOf(String())
     var treatment by mutableStateOf(String())
     var advice by mutableStateOf(String())
-    var userName by mutableStateOf(String())
 
 
     var submissionFailed by mutableStateOf(false)
 
 
     init {
-        loadUserName()
-    }
-
-    fun getid(contact: Contact) {
-        var id = contact.id.toString()
-        var currentContact = contact
+        loadDisplayName()
     }
 
 
-    private fun loadUserName() {
+    private fun loadDisplayName() {
         val userId = authRepo.currentUser?.uid
         if (userId != null) {
-            contactRepo.getUserName(userId) { userName ->
+            contactRepo.getDisplayName(userId) { userName ->
                 Log.d("AddViewModel", "Setting firstAider to: $userName")
                 firstAider = userName ?: ""
             }
@@ -110,7 +103,7 @@ class AddViewModel(
                 injuredParty,
                 injury,
                 treatment,
-                advice
+                advice,
             )
             reportRepo.add(newReport, authRepo.currentUser!!.uid)
             submissionFailed = false
