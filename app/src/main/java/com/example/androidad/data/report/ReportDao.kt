@@ -17,42 +17,52 @@ class ReportDAO(
     private val contactRoot: DatabaseReference
 ) {
 
-    suspend fun getReports(reportUUID: String): Flow<DatabaseResult<List<Report?>>> = callbackFlow {
-        trySend(DatabaseResult.Loading)
-        database.child(reportUUID).keepSynced(true)
+    suspend fun getReports(contactUUID: String): Flow<DatabaseResult<List<Report?>>> =
+        callbackFlow {
+            trySend(DatabaseResult.Loading)
+            database.child(contactUUID).keepSynced(true)
+            Log.v("OK", contactUUID)
 
-        val event = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val reports = ArrayList<Report>()
-                for (childSnapshot in snapshot.children) {
-                    val report = childSnapshot.getValue(Report::class.java)
-                    report!!.uid = childSnapshot.key.toString()
-                    reports.add(report)
+            val event = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val reports = ArrayList<Report>()
+                    for (childSnapshot in snapshot.children) {
+                        val report = childSnapshot.getValue(Report::class.java)
+                        report!!.uid = childSnapshot.key.toString()
+                        reports.add(report)
+                    }
+                    trySend(DatabaseResult.Success(reports))
                 }
-                trySend(DatabaseResult.Success(reports))
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                trySend(DatabaseResult.Error(Throwable(error.message)))
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(DatabaseResult.Error(Throwable(error.message)))
+                }
             }
+            database.child(contactUUID).addValueEventListener(event)
+            awaitClose { close() }
         }
-        database.child(reportUUID).addValueEventListener(event)
-        awaitClose { close() }
-    }
 
     fun insert(newReport: Report, userAuthUUID: String) =
         database.child(userAuthUUID).child(UUID.randomUUID().toString()).setValue(newReport)
 
-    fun update(editReport: Report, userAuthUUID: String) {
-        val reportID = editReport.uid.toString() //retrieved for sub folder key
-        editReport.uid = String() //Clear so not saved inside folder
-        val key = database.child(userAuthUUID).child(reportID).push().key
-        if (key == null) {
-            Log.w(TAG, "Couldn't get push key for posts")
-            return
-        }
+    fun update(report: Report, userAuthUUID: String) {
+        val reportID = report.uid.toString()
+        val contactReport = Report(
+            location = report.location, date = report.date, injury = report.injury
+        ).toMap()
+        val editReport = Report(
+            firstAider = report.firstAider,
+            location = report.location,
+            date = report.date,
+            time = report.time,
+            injuredParty = report.injuredParty,
+            injury = report.injury,
+            treatment = report.treatment,
+            advice = report.advice
+        ).toMap() //gets rid of empty id field in database
         database.child(userAuthUUID).child(reportID).setValue(editReport)
-        contactRoot.child(userAuthUUID).child("reports").child(reportID).setValue(editReport)
+        contactRoot.child(userAuthUUID).child("reports").child(reportID)
+            .setValue(contactReport)
     }
 //        database.child(userAuthUUID).child(reportID).setValue(editReport)
 
@@ -67,21 +77,22 @@ class ReportDAO(
     fun addNewReport(
         report: Report, userAuthUUID: String,
     ) {
-        // Create new post at /user-posts/$userid/$postid and at
-        // /posts/$postid simultaneously
         val key = database.child(userAuthUUID).push().key
         if (key == null) {
             Log.w(TAG, "Couldn't get push key for posts")
             return
         }
 
+        val contactReport = Report(
+            location = report.location, date = report.date, injury = report.injury
+        ).toMap()
         val reportValues = report.toMap()
 
         val childUpdates = hashMapOf<String, Any>(
             "/$userAuthUUID/$key" to reportValues,
         )
         val contactChildUpdates = hashMapOf<String, Any>(
-            "/$userAuthUUID/reports/$key" to reportValues,
+            "/$userAuthUUID/reports/$key" to contactReport,
 
             )
 
