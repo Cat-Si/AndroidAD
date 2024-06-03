@@ -1,5 +1,7 @@
 package com.example.androidad.presentation.screens.signup
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,6 +17,7 @@ import com.example.androidad.data.contact.Contact
 import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.user.User
 import com.example.androidad.data.user.UserRepo
+import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
@@ -25,6 +28,7 @@ class SignUpViewModel(
     var password by mutableStateOf(String())
     var firstName by mutableStateOf(String())
     var lastName by mutableStateOf(String())
+    var userName by mutableStateOf(String())
 
     var submissionFailed by mutableStateOf(false)
 
@@ -44,6 +48,13 @@ class SignUpViewModel(
         return lastName.isNotBlank()
     }
 
+    fun validUserName(firstName: String, lastName: String): String {
+        if (firstNameIsValid() && lastNameIsValid()) {
+            userName = "$firstName $lastName"
+        }
+        return userName
+    }
+
     var signUpResponse by mutableStateOf<Response<Boolean>>(Response.Success(false))
         private set
 
@@ -61,29 +72,27 @@ class SignUpViewModel(
     fun sendEmailVerification() = viewModelScope.launch {
         sendEmailVerificationResponse = Response.Loading
         sendEmailVerificationResponse = repo.sendEmailVerification()
-
         //save user record - trusts user will sign up
-        val user = User(repo.currentUser?.email)
+        val user =
+            User(repo.currentUser?.email, validUserName(firstName, lastName))
         userRepo.add(user, repo.currentUser!!.uid)
         addContact()
-    }
-
-    fun addContact() {
-        if (firstNameIsValid() && lastNameIsValid()) {
-            var userName = "$firstName $lastName"
-            var newContact = Contact(
-                firstName,
-                lastName,
-                userName,
-                report = null
-            )
-            contactRepo.add(newContact, repo.currentUser!!.uid)
-            submissionFailed = false
-        } else {
-            submissionFailed = true
-        }
 
     }
+
+    private fun addContact() {
+
+        var newContact = Contact(
+            firstName,
+            lastName,
+            validUserName(firstName, lastName),
+            report = emptyList()
+        )
+        contactRepo.add(newContact, repo.currentUser!!.uid)
+        submissionFailed = false
+
+    }
+
 
     // Define ViewModel factory in a companion object
     companion object {

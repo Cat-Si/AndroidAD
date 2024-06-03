@@ -29,7 +29,7 @@ class ContactRepository(private val contactDAO: ContactDAO) : ContactRepo {
     }
 
     override suspend fun getAll(contactUUID: String): Flow<DatabaseResult<List<Contact?>>> {
-        return contactDAO.getContactReports(contactUUID)
+        return contactDAO.getContacts(contactUUID)
     }
 
     override fun getUserName(userAuthUUID: String, callback: (String?) -> Unit) {
