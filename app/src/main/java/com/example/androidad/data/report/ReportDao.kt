@@ -51,17 +51,16 @@ class ReportDAO(
             Log.w(TAG, "Couldn't get push key for posts")
             return
         }
-
-
         database.child(userAuthUUID).child(reportID).setValue(editReport)
-        contactRoot.child(userAuthUUID).child("reports").setValue(editReport)
+        contactRoot.child(userAuthUUID).child("reports").child(reportID).setValue(editReport)
     }
 //        database.child(userAuthUUID).child(reportID).setValue(editReport)
 
 
     fun delete(report: Report, userAuthUUID: String) {
-        database.child(userAuthUUID).child(report.uid.toString()).removeValue()
-        contactRoot.child(userAuthUUID).child("reports").child(report.uid.toString()).removeValue()
+        val reportID = report.uid.toString()
+        database.child(userAuthUUID).child(reportID).removeValue()
+        contactRoot.child(userAuthUUID).child("reports").child(reportID).removeValue()
     }
 
 
