@@ -17,11 +17,11 @@ class ReportDAO(
     private val contactRoot: DatabaseReference
 ) {
 
-    suspend fun getReports(contactUUID: String): Flow<DatabaseResult<List<Report?>>> =
+    suspend fun getReports(userAuthUUID: String): Flow<DatabaseResult<List<Report?>>> =
         callbackFlow {
             trySend(DatabaseResult.Loading)
-            database.child(contactUUID).keepSynced(true)
-            Log.v("OK", contactUUID)
+            database.child(userAuthUUID).keepSynced(true)
+            Log.v("OK", userAuthUUID)
 
             val event = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -38,7 +38,7 @@ class ReportDAO(
                     trySend(DatabaseResult.Error(Throwable(error.message)))
                 }
             }
-            database.child(contactUUID).addValueEventListener(event)
+            database.child(userAuthUUID).addValueEventListener(event)
             awaitClose { close() }
         }
 

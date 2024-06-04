@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 
 interface ContactRepo {
+
     fun delete(contact: Contact): Task<Void>
 
     fun add(contact: Contact, contactUUID: String)
