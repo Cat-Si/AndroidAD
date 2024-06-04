@@ -44,7 +44,10 @@ class AppDataContainer : AppContainer {
         val reportRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(REPORT_ROOT_FOLDER)
         val reportDAO = ReportDAO(reportRoot, userRoot)
         reportRepository = ReportRepository(reportDAO)
+    }
 
-
+    override fun returnContextForDatabaseListener(report: User): DatabaseReference {
+        return FirebaseDatabase.getInstance(DATABASE_URL).getReference(REPORT_ROOT_FOLDER)
+            .child(report.uuid!!);
     }
 }
