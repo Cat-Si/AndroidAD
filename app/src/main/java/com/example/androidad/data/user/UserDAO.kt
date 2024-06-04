@@ -1,6 +1,8 @@
 package com.example.androidad.data.user
 
+import android.util.Log
 import com.example.androidad.data.DatabaseResult
+import com.example.androidad.data.contact.Contact
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -62,6 +64,27 @@ class UserDAO(
                 // Handle any errors
                 println("Error adding user: ${exception.message}")
             }
+    }
+
+    fun getUserByUserId(userAuthUUID: String, callback: (User?) -> Unit) {
+
+        database.child(userAuthUUID)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val user = dataSnapshot.getValue(User::class.java)
+                    if (user != null) {
+                        Log.d("ReportDAO", "Retrieved contact: ${user.displayName}")
+                    } else {
+                        Log.d("ReportDAO", "Contact is null for userId: $userAuthUUID")
+                    }
+                    callback(user)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.e("ReportDAO", "Error retrieving contact: ${databaseError.message}")
+                    callback(null)
+                }
+            })
     }
 
 }

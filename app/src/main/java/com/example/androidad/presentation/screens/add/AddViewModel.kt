@@ -10,15 +10,14 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.auth.AuthRepo
-import com.example.androidad.data.contact.Contact
-import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
+import com.example.androidad.data.user.UserRepo
 
 class AddViewModel(
     private val authRepo: AuthRepo,
     private val reportRepo: ReportRepo,
-    private val contactRepo: ContactRepo,
+    private val userRepo: UserRepo
 ) : ViewModel() {
     var firstAider by mutableStateOf(String())
     var location by mutableStateOf(String())
@@ -41,7 +40,7 @@ class AddViewModel(
     private fun loadDisplayName() {
         val userId = authRepo.currentUser?.uid
         if (userId != null) {
-            contactRepo.getDisplayName(userId) { userName ->
+            userRepo.getDisplayName(userId) { userName ->
                 Log.d("AddViewModel", "Setting firstAider to: $userName")
                 firstAider = userName ?: ""
             }
@@ -132,7 +131,7 @@ class AddViewModel(
                 AddViewModel(
                     authRepo = ContactApplication.container.authRepository,
                     reportRepo = ContactApplication.container.reportRepository,
-                    contactRepo = ContactApplication.container.contactRepository
+                    userRepo = ContactApplication.container.userRepository
 
                 )
             }
