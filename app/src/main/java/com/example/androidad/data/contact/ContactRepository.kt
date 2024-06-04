@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 
 interface ContactRepo {
+
     fun delete(contact: Contact): Task<Void>
 
     fun add(contact: Contact, contactUUID: String)
@@ -14,7 +15,7 @@ interface ContactRepo {
 
     suspend fun getAll(contactUUID: String): Flow<DatabaseResult<List<Contact?>>>
 
-    fun getUserName(userAuthUUID: String, callback: (String?) -> Unit)
+    fun getDisplayName(userAuthUUID: String, callback: (String?) -> Unit)
 }
 
 class ContactRepository(private val contactDAO: ContactDAO) : ContactRepo {
@@ -32,14 +33,14 @@ class ContactRepository(private val contactDAO: ContactDAO) : ContactRepo {
         return contactDAO.getContacts(contactUUID)
     }
 
-    override fun getUserName(userAuthUUID: String, callback: (String?) -> Unit) {
+    override fun getDisplayName(userAuthUUID: String, callback: (String?) -> Unit) {
         contactDAO.getContactByUserId(userAuthUUID) { contact ->
             if (contact != null) {
-                Log.d("ContactRepository", "Retrieved username: ${contact.userName}")
+                Log.d("ContactRepository", "Retrieved username: ${contact.displayName}")
             } else {
                 Log.d("ContactRepository", "Contact is null for userId: $userAuthUUID")
             }
-            callback(contact?.userName)
+            callback(contact?.displayName)
         }
     }
 }

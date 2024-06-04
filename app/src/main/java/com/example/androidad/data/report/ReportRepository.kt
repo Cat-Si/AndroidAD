@@ -1,7 +1,6 @@
 package com.example.androidad.data.report
 
 import com.example.androidad.data.DatabaseResult
-import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 
 interface ReportRepo {

@@ -57,7 +57,7 @@ class ContactDAO(private val database: DatabaseReference) {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val contact = dataSnapshot.getValue(Contact::class.java)
                     if (contact != null) {
-                        Log.d("ContactDAO", "Retrieved contact: ${contact.userName}")
+                        Log.d("ContactDAO", "Retrieved contact: ${contact.displayName}")
                     } else {
                         Log.d("ContactDAO", "Contact is null for userId: $userAuthUUID")
                     }

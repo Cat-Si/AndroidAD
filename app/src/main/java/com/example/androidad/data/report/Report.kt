@@ -1,6 +1,9 @@
 package com.example.androidad.data.report
 
 import com.google.firebase.database.Exclude
+import com.google.firebase.database.IgnoreExtraProperties
+
+@IgnoreExtraProperties
 
 data class Report(
     var firstAider: String? = null,

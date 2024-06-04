@@ -7,22 +7,31 @@ import kotlinx.coroutines.tasks.await
 
 interface AuthRepo {
     val currentUser: FirebaseUser?
-    suspend fun firebaseSignUpWithEmailAndPassword(email: String, password: String): Response<Boolean>
+    suspend fun firebaseSignUpWithEmailAndPassword(
+        email: String,
+        password: String
+    ): Response<Boolean>
 
     suspend fun sendEmailVerification(): Response<Boolean>
 
-    suspend fun firebaseSignInWithEmailAndPassword(email: String, password: String): Response<Boolean>
+    suspend fun firebaseSignInWithEmailAndPassword(
+        email: String,
+        password: String
+    ): Response<Boolean>
 
     suspend fun sendPasswordResetEmail(email: String): Response<Boolean>
 
     fun signOut()
 }
 
-class AuthRepository(private val auth: FirebaseAuth): AuthRepo {
+class AuthRepository(private val auth: FirebaseAuth) : AuthRepo {
+
+
     override val currentUser get() = auth.currentUser
 
     override suspend fun firebaseSignUpWithEmailAndPassword(
-        email: String, password: String): Response<Boolean> {
+        email: String, password: String
+    ): Response<Boolean> {
         return try {
             auth.createUserWithEmailAndPassword(email, password).await()
             Response.Success(true)
@@ -41,7 +50,8 @@ class AuthRepository(private val auth: FirebaseAuth): AuthRepo {
     }
 
     override suspend fun firebaseSignInWithEmailAndPassword(
-        email: String, password: String): Response<Boolean> {
+        email: String, password: String
+    ): Response<Boolean> {
         return try {
             auth.signInWithEmailAndPassword(email, password).await()
             Response.Success(true)
