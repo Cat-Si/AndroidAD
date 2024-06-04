@@ -24,7 +24,7 @@ import kotlin.random.Random
 
 class SignUpViewModel(
     private val repo: AuthRepo,
-    private val userRepo: UserRepo, private val contactRepo: ContactRepo
+    private val userRepo: UserRepo,
 ) : ViewModel() {
     var email by mutableStateOf(String())
     var password by mutableStateOf(String())
@@ -86,30 +86,39 @@ class SignUpViewModel(
         sendEmailVerificationResponse = Response.Loading
         sendEmailVerificationResponse = repo.sendEmailVerification()
         //save user record - trusts user will sign up
-        val user =
-            User(
-                repo.currentUser?.email,
-                displayName = validDisplayName(firstName, lastName),
-                userName = validUserName(firstName, lastName)
-            )
-        userRepo.add(user, repo.currentUser!!.uid)
-        addContact(user.displayName, user.userName)
+        if (firstNameIsValid() && lastNameIsValid()) {
+            val randomNumber = Random.nextInt(1000, 9999)
+            val user =
+                User(
+                    repo.currentUser?.email,
+                    firstName,
+                    lastName,
+                    "$firstName $lastName",
+                    (lastName + firstName[0]).lowercase() + randomNumber,
+
+                    )
+            userRepo.add(user, repo.currentUser!!.uid)
+            submissionFailed = false
+        } else {
+            submissionFailed = true
+        }
 
     }
 
-    private fun addContact(displayName: String?, username: String?) {
-
-        var newContact = Contact(
-            firstName,
-            lastName,
-            displayName,
-            username,
-            report = emptyList()
-        )
-        contactRepo.add(newContact, repo.currentUser!!.uid)
-        submissionFailed = false
-
-    }
+//        addContact(user.displayName, user.userName)
+//    private fun addContact(displayName: String?, username: String?) {
+//
+//        var newContact = Contact(
+//            firstName,
+//            lastName,
+//            displayName,
+//            username,
+//            report = emptyList()
+//        )
+//        contactRepo.add(newContact, repo.currentUser!!.uid)
+//        submissionFailed = false
+//
+//    }
 
 
     // Define ViewModel factory in a companion object
@@ -119,7 +128,6 @@ class SignUpViewModel(
                 SignUpViewModel(
                     repo = ContactApplication.container.authRepository,
                     userRepo = ContactApplication.container.userRepository,
-                    contactRepo = ContactApplication.container.contactRepository
                 )
             }
         }

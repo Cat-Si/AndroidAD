@@ -14,7 +14,7 @@ import com.example.androidad.data.user.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-private const val CONTACT_ROOT_FOLDER = "contacts"
+//private const val CONTACT_ROOT_FOLDER = "contacts"
 private const val USER_ROOT_FOLDER = "users"
 private const val REPORT_ROOT_FOLDER = "reports"
 private const val USERNAME_ROOT_FOLDER = "userNames"
@@ -22,34 +22,34 @@ private const val DATABASE_URL =
     "https://androidad-bdfae-default-rtdb.europe-west1.firebasedatabase.app/"
 
 interface AppContainer {
-    val contactRepository: ContactRepo
+    //    val contactRepository: ContactRepo
     val userRepository: UserRepo
     val authRepository: AuthRepo
     val reportRepository: ReportRepo
 }
 
 class AppDataContainer : AppContainer {
-    override val contactRepository: ContactRepo
+    //    override val contactRepository: ContactRepo
     override val userRepository: UserRepo
     override val reportRepository: ReportRepo
     override var authRepository: AuthRepo = AuthRepository(FirebaseAuth.getInstance())
 
     init {
-        val contactRoot =
-            FirebaseDatabase.getInstance(DATABASE_URL).getReference(CONTACT_ROOT_FOLDER)
-        val contactDAO = ContactDAO(contactRoot)
-        contactRepository = ContactRepository(contactDAO)
+//        val contactRoot =
+//            FirebaseDatabase.getInstance(DATABASE_URL).getReference(CONTACT_ROOT_FOLDER)
+//        val contactDAO = ContactDAO(contactRoot)
+//        contactRepository = ContactRepository(contactDAO)
 
         val userNameRoot =
             FirebaseDatabase.getInstance(DATABASE_URL).getReference(USERNAME_ROOT_FOLDER)
 
-        val reportRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(REPORT_ROOT_FOLDER)
-        val reportDAO = ReportDAO(reportRoot, contactRoot)
-        reportRepository = ReportRepository(reportDAO)
-
         val userRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(USER_ROOT_FOLDER)
         val userDAO = UserDAO(userRoot, userNameRoot)
         userRepository = UserRepository(userDAO)
+
+        val reportRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(REPORT_ROOT_FOLDER)
+        val reportDAO = ReportDAO(reportRoot, userRoot)
+        reportRepository = ReportRepository(reportDAO)
 
 
     }

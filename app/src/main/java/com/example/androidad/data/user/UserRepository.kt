@@ -1,12 +1,15 @@
 package com.example.androidad.data.user
 
+import android.util.Log
 import com.example.androidad.data.DatabaseResult
-import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepo {
     suspend fun getAll(): Flow<DatabaseResult<List<User?>>>
     fun add(entry: User, userId: String)
+
+    fun getDisplayName(userAuthUUID: String, callback: (String?) -> Unit)
+
 }
 
 class UserRepository(private val dao: UserDAO) : UserRepo {
@@ -15,5 +18,16 @@ class UserRepository(private val dao: UserDAO) : UserRepo {
     }
 
     override fun add(entry: User, userId: String) = dao.addUser(entry, userId)
+
+    override fun getDisplayName(userAuthUUID: String, callback: (String?) -> Unit) {
+        dao.getUserByUserId(userAuthUUID) { user ->
+            if (user != null) {
+                Log.d("ContactRepository", "Retrieved username: ${user.displayName}")
+            } else {
+                Log.d("ContactRepository", "Contact is null for userId: $userAuthUUID")
+            }
+            callback(user?.displayName)
+        }
+    }
 
 }

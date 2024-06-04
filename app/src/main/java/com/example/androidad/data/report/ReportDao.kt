@@ -14,7 +14,7 @@ import java.util.UUID
 
 class ReportDAO(
     private val database: DatabaseReference,
-    private val contactRoot: DatabaseReference
+    private val reportRoot: DatabaseReference
 ) {
 
     suspend fun getReports(userAuthUUID: String): Flow<DatabaseResult<List<Report?>>> =
@@ -47,7 +47,7 @@ class ReportDAO(
 
     fun update(report: Report, userAuthUUID: String) {
         val reportID = report.uid.toString()
-        val contactReport = Report(
+        val userReport = Report(
             location = report.location, date = report.date, injury = report.injury
         ).toMap()
         val editReport = Report(
@@ -61,8 +61,8 @@ class ReportDAO(
             advice = report.advice
         ).toMap() //gets rid of empty id field in database
         database.child(userAuthUUID).child(reportID).setValue(editReport)
-        contactRoot.child(userAuthUUID).child("reports").child(reportID)
-            .setValue(contactReport)
+        reportRoot.child(userAuthUUID).child("reports").child(reportID)
+            .setValue(userReport)
     }
 //        database.child(userAuthUUID).child(reportID).setValue(editReport)
 
@@ -70,7 +70,7 @@ class ReportDAO(
     fun delete(report: Report, userAuthUUID: String) {
         val reportID = report.uid.toString()
         database.child(userAuthUUID).child(reportID).removeValue()
-        contactRoot.child(userAuthUUID).child("reports").child(reportID).removeValue()
+        reportRoot.child(userAuthUUID).child("reports").child(reportID).removeValue()
     }
 
 
@@ -83,7 +83,7 @@ class ReportDAO(
             return
         }
 
-        val contactReport = Report(
+        val userReport = Report(
             location = report.location, date = report.date, injury = report.injury
         ).toMap()
         val reportValues = report.toMap()
@@ -91,13 +91,13 @@ class ReportDAO(
         val childUpdates = hashMapOf<String, Any>(
             "/$userAuthUUID/$key" to reportValues,
         )
-        val contactChildUpdates = hashMapOf<String, Any>(
-            "/$userAuthUUID/reports/$key" to contactReport,
+        val reportChildUpdates = hashMapOf<String, Any>(
+            "/$userAuthUUID/reports/$key" to userReport,
 
             )
 
         database.updateChildren(childUpdates)
-        contactRoot.updateChildren(contactChildUpdates)
+        reportRoot.updateChildren(reportChildUpdates)
     }
 }
 
