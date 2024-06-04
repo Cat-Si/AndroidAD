@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.androidad.R
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.report.Report
+import com.example.androidad.data.user.User
 import com.example.androidad.presentation.screens.add.AddScreen
 import com.example.androidad.presentation.screens.edit.EditScreen
 import com.example.androidad.presentation.screens.home.HomeScreen
@@ -23,6 +24,8 @@ sealed class NavScreen(var icon: Int, var route: String) {
     data object Exit : NavScreen(R.drawable.logout, "Logout")
     data object Login : NavScreen(R.drawable.home, "Login")
     data object SignUp : NavScreen(R.drawable.home, "SignUp")
+    data object ViewReports : NavScreen(R.drawable.home, "ViewReports")
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,6 +36,7 @@ fun NavigationGraph(
 
 ) {
     var selectedReport: Report? = null
+    var selectedUser: User? = null
 
     NavHost(navController, startDestination = NavScreen.Login.route) {
 
@@ -57,11 +61,11 @@ fun NavigationGraph(
                 onIndexChange = {
                     selectedReport = it
                 },
-                onClickToEdit = {
-                    if (selectedReport != null) navController.navigate("edit")
-                }
+                onClickToViewReports = {
+                    if (selectedUser != null) navController.navigate(NavScreen.ViewReports.route)
+                },
 
-            )
+                )
         }
         composable(NavScreen.Add.route) {
             AddScreen(
@@ -77,6 +81,18 @@ fun NavigationGraph(
                 onClickToHome = {
                     navController.navigate(NavScreen.Home.route)
                 })
+        }
+        composable(NavScreen.ViewReports.route) {
+            ViewScreen(
+                selectedUser = selectedUser!!,
+                navController = navController,
+                onIndexChange = {
+                    selectedReport = it
+                },
+                onClickToEdit = {
+                    if (selectedReport != null) navController.navigate("edit")
+                }
+            )
         }
         composable(NavScreen.Exit.route) {
             ContactApplication.container.authRepository.signOut()

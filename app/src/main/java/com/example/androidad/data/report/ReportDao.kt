@@ -7,23 +7,29 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import com.google.protobuf.Value
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import java.util.UUID
 
 class ReportDAO(
-    private val database: DatabaseReference,
-    private val reportRoot: DatabaseReference
+    private var reportRoot: DatabaseReference,
+    private val userRoot: DatabaseReference
 ) {
+    private var event: ValueEventListener? = null;
+
+    fun updateUserListener(userToListenTo: DatabaseReference) {
+        this.reportRoot = userToListenTo
+    }
 
     suspend fun getReports(userAuthUUID: String): Flow<DatabaseResult<List<Report?>>> =
         callbackFlow {
             trySend(DatabaseResult.Loading)
-            database.child(userAuthUUID).keepSynced(true)
-            Log.v("OK", userAuthUUID)
+            reportRoot.child(userAuthUUID).keepSynced(true)
 
-            val event = object : ValueEventListener {
+
+            event = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val reports = ArrayList<Report>()
                     for (childSnapshot in snapshot.children) {
@@ -38,12 +44,12 @@ class ReportDAO(
                     trySend(DatabaseResult.Error(Throwable(error.message)))
                 }
             }
-            database.child(userAuthUUID).addValueEventListener(event)
+            reportRoot.child(userAuthUUID).addValueEventListener(event as ValueEventListener)
             awaitClose { close() }
         }
 
     fun insert(newReport: Report, userAuthUUID: String) =
-        database.child(userAuthUUID).child(UUID.randomUUID().toString()).setValue(newReport)
+        reportRoot.child(userAuthUUID).child(UUID.randomUUID().toString()).setValue(newReport)
 
     fun update(report: Report, userAuthUUID: String) {
         val reportID = report.uid.toString()
@@ -60,8 +66,8 @@ class ReportDAO(
             treatment = report.treatment,
             advice = report.advice
         ).toMap() //gets rid of empty id field in database
-        database.child(userAuthUUID).child(reportID).setValue(editReport)
-        reportRoot.child(userAuthUUID).child("reports").child(reportID)
+        reportRoot.child(userAuthUUID).child(reportID).setValue(editReport)
+        userRoot.child(userAuthUUID).child("reports").child(reportID)
             .setValue(userReport)
     }
 //        database.child(userAuthUUID).child(reportID).setValue(editReport)
@@ -69,15 +75,15 @@ class ReportDAO(
 
     fun delete(report: Report, userAuthUUID: String) {
         val reportID = report.uid.toString()
-        database.child(userAuthUUID).child(reportID).removeValue()
-        reportRoot.child(userAuthUUID).child("reports").child(reportID).removeValue()
+        reportRoot.child(userAuthUUID).child(reportID).removeValue()
+        userRoot.child(userAuthUUID).child("reports").child(reportID).removeValue()
     }
 
 
     fun addNewReport(
         report: Report, userAuthUUID: String,
     ) {
-        val key = database.child(userAuthUUID).push().key
+        val key = reportRoot.child(userAuthUUID).push().key
         if (key == null) {
             Log.w(TAG, "Couldn't get push key for posts")
             return
@@ -96,8 +102,8 @@ class ReportDAO(
 
             )
 
-        database.updateChildren(childUpdates)
-        reportRoot.updateChildren(reportChildUpdates)
+        reportRoot.updateChildren(childUpdates)
+        userRoot.updateChildren(reportChildUpdates)
     }
 }
 

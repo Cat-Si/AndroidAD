@@ -1,6 +1,7 @@
 package com.example.androidad.data.report
 
 import com.example.androidad.data.DatabaseResult
+import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.flow.Flow
 
 interface ReportRepo {
@@ -26,5 +27,9 @@ class ReportRepository(private val reportDAO: ReportDAO) : ReportRepo {
 
     override suspend fun getAll(reportUUID: String): Flow<DatabaseResult<List<Report?>>> {
         return reportDAO.getReports(reportUUID)
+    }
+
+    fun updateUserListener(userToListenTo: DatabaseReference) {
+        reportDAO.updateUserListener(userToListenTo)
     }
 }
