@@ -11,7 +11,9 @@ interface ReportRepo {
 
     fun edit(report: Report, reportUUID: String)
 
-    suspend fun getAll(reportUUID: String): Flow<DatabaseResult<List<Report?>>>
+    suspend fun getAll(): Flow<DatabaseResult<List<Report?>>>
+
+    fun updateUserListener(userToListenTo: DatabaseReference)
 }
 
 class ReportRepository(private val reportDAO: ReportDAO) : ReportRepo {
@@ -25,11 +27,11 @@ class ReportRepository(private val reportDAO: ReportDAO) : ReportRepo {
         reportDAO.update(report, reportUUID)
     }
 
-    override suspend fun getAll(reportUUID: String): Flow<DatabaseResult<List<Report?>>> {
-        return reportDAO.getReports(reportUUID)
+    override suspend fun getAll(): Flow<DatabaseResult<List<Report?>>> {
+        return reportDAO.getReports()
     }
 
-    fun updateUserListener(userToListenTo: DatabaseReference) {
+    override fun updateUserListener(userToListenTo: DatabaseReference) {
         reportDAO.updateUserListener(userToListenTo)
     }
 }

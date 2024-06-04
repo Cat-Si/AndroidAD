@@ -1,4 +1,4 @@
-package com.example.androidad.presentation.screens.home
+package com.example.androidad.presentation.screens.viewReports
 
 import android.annotation.SuppressLint
 import android.widget.Toast
@@ -27,9 +27,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.androidad.R
 import com.example.androidad.data.report.Report
+import com.example.androidad.data.user.User
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
-import com.example.androidad.presentation.screens.home.components.ItemView
+import com.example.androidad.presentation.screens.viewReports.Componants.ItemView
 import com.example.androidad.presentation.utils.Util.Companion.showMessage
 
 @SuppressLint(
@@ -37,13 +38,19 @@ import com.example.androidad.presentation.utils.Util.Companion.showMessage
     "UnusedMaterial3ScaffoldPaddingParameter"
 )
 @Composable
-fun HomeScreen(
-    vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
+fun ViewReportsScreen(
+    vm: ViewReportsViewModel = viewModel(factory = ViewReportsViewModel.Factory),
     modifier: Modifier = Modifier,
+    selectedUser: User,
     onIndexChange: (Report?) -> Unit,
     onClickToEdit: () -> Unit,
     navController: NavHostController
 ) {
+    LaunchedEffect(key1 = Unit) {//Called on launch
+        vm.setSelectedUser(selectedUser)
+    }
+
+
     val context = LocalContext.current
 
     Scaffold(
@@ -61,14 +68,14 @@ fun HomeScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp, bottom = 10.dp),
-                text = "Submitted Reports",
+                text = "Reports Submitted by $selectedUser",
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
             )
 
-            val userState by vm.userState.collectAsState()
+            val userState by vm.reportState.collectAsState()
 
             LazyColumn(
                 modifier = Modifier.weight(1f) // Take up available space
@@ -90,9 +97,9 @@ fun HomeScreen(
                 }
             }
 
-            if (vm.userState.value.errorMessage.isNotBlank()) {
-                LaunchedEffect(key1 = vm.userState.value.errorMessage) {
-                    showMessage(context, vm.userState.value.errorMessage)
+            if (vm.reportState.value.errorMessage.isNotBlank()) {
+                LaunchedEffect(key1 = vm.reportState.value.errorMessage) {
+                    showMessage(context, vm.reportState.value.errorMessage)
                 }
             }
 

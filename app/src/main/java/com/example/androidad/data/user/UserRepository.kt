@@ -10,6 +10,8 @@ interface UserRepo {
 
     fun getDisplayName(userAuthUUID: String, callback: (String?) -> Unit)
 
+    fun getUser(userAuthUUID: String, callback: (User?) -> Unit)
+
 }
 
 class UserRepository(private val dao: UserDAO) : UserRepo {
@@ -29,5 +31,17 @@ class UserRepository(private val dao: UserDAO) : UserRepo {
             callback(user?.displayName)
         }
     }
+
+    override fun getUser(userAuthUUID: String, callback: (User?) -> Unit) {
+        dao.getUserByUserId(userAuthUUID) { user ->
+            if (user != null) {
+                Log.d("UserRepository", "Retrieved user: ${user.displayName}")
+            } else {
+                Log.d("UserRepository", "User is null for userId: $userAuthUUID")
+            }
+            callback(user)
+        }
+    }
+
 
 }

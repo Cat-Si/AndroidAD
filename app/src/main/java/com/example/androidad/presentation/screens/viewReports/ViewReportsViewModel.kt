@@ -1,4 +1,4 @@
-package com.example.androidad.presentation.screens.home
+package com.example.androidad.presentation.screens.viewReports
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -14,18 +14,25 @@ import com.example.androidad.data.DatabaseState
 import com.example.androidad.data.auth.AuthRepo
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.report.ReportRepo
+import com.example.androidad.data.user.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo) : ViewModel() {
-    private val _userState = MutableStateFlow(DatabaseState<Report>())
-    val userState: StateFlow<DatabaseState<Report>> =
-        _userState.asStateFlow()//Monitored by component for recomposition on change
-
+class ViewReportsViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo) :
+    ViewModel() {
     var selectedReport: Report? = null
+    private val _reportState = MutableStateFlow(DatabaseState<Report>())
+    val reportState: StateFlow<DatabaseState<Report>> =
+        _reportState.asStateFlow()//Monitored by component for recomposition on change
+
+    fun setSelectedUser(user: User) {
+        repo.updateUserListener(ContactApplication.container.returnContextForDatabaseListener(user))
+        getListOfReports()
+    }
+
     var selectedIndex by mutableIntStateOf(-1)
     fun selectReport(index: Int, report: Report?) {
         selectedIndex = index
@@ -34,32 +41,33 @@ class HomeViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
 
 
     init {
-        getListOfReports(authRepo.currentUser!!.uid)
+        getListOfReports()
     }
 
     fun reportHasBeenSelected(): Boolean = selectedReport != null
 
-    private fun getListOfReports(userId: String) = viewModelScope.launch {
-        repo.getAll(userId).collect { result ->
+    private fun getListOfReports() = viewModelScope.launch {
+        repo.getAll().collect { result ->
             when (result) {
                 is DatabaseResult.Success -> {
-                    _userState.update { it.copy(data = result.data) }
+                    _reportState.update { it.copy(data = result.data) }
                 }
 
                 is DatabaseResult.Error -> {
-                    _userState.update {
+                    _reportState.update {
                         it.copy(errorMessage = result.exception.message!!)
                     }
                 }
 
                 is DatabaseResult.Loading -> {
-                    _userState.update { it.copy(isLoading = true) }
+                    _reportState.update { it.copy(isLoading = true) }
                 }
             }
         }
     }
 
 
+    //delete is managed in edit
     fun deleteReport() {
 //        Log.v("OK","calling delete")
         if (reportHasBeenSelected()) {
@@ -73,7 +81,7 @@ class HomeViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                HomeViewModel(
+                ViewReportsViewModel(
                     authRepo = ContactApplication.container.authRepository,
                     repo = ContactApplication.container.reportRepository
                 )

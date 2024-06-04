@@ -1,10 +1,10 @@
-package com.example.navigationwithviewmodel1.presentation.screens.home
+package com.example.androidad.presentation.screens.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,19 +18,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.navigationwithviewmodel1.R
-import com.example.navigationwithviewmodel1.data.user.User
-import com.example.navigationwithviewmodel1.presentation.components.BottomNavBar
-import com.example.navigationwithviewmodel1.presentation.components.CustomButton
-import com.example.navigationwithviewmodel1.presentation.screens.home.components.LazyColumnWithSelection
-import com.example.navigationwithviewmodel1.presentation.utils.Utils.Companion.showMessage
+import com.example.androidad.R
+import com.example.androidad.data.user.User
+import com.example.androidad.presentation.components.BottomNavBar
+import com.example.androidad.presentation.components.CustomButton
+import com.example.androidad.presentation.screens.home.components.LazyColumnWithSelection
+import com.example.androidad.presentation.utils.Util.Companion.showMessage
 
-@SuppressLint("CoroutineCreationDuringComposition", "StateFlowValueCalledInComposition")
+@SuppressLint(
+    "CoroutineCreationDuringComposition", "StateFlowValueCalledInComposition",
+    "UnusedMaterial3ScaffoldPaddingParameter"
+)
 @Composable
-fun HomeScreen(vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
-               onClickToViewContacts: () -> Unit,
-               onIndexChange: (User?) -> Unit,
-               navController: NavHostController){
+fun HomeScreen(
+    vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
+    onClickToViewReports: () -> Unit,
+    onIndexChange: (User?) -> Unit,
+    navController: NavHostController
+) {
 
     val context = LocalContext.current
 
@@ -47,7 +52,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
         ) {
             Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(R.string.contacts),
+                text = stringResource(R.string.reports),
                 textAlign = TextAlign.Center,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
@@ -58,12 +63,12 @@ fun HomeScreen(vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
             if (userState.data.isNotEmpty()) //Some data to display
                 LazyColumnWithSelection(vm, onIndexChange)
 
-            if(vm.userState.value.errorMessage.isNotBlank()){ //Problem retrieving data
-                showMessage(context,vm.userState.value.errorMessage)
+            if (vm.userState.value.errorMessage.isNotBlank()) { //Problem retrieving data
+                showMessage(context, vm.userState.value.errorMessage)
             }
             CustomButton(
-                stringResource(R.string.viewContacts),
-                clickButton = {onClickToViewContacts()}
+                stringResource(R.string.viewReports),
+                clickButton = { onClickToViewReports() }
             )
         }
     }
