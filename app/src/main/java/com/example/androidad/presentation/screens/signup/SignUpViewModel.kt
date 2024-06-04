@@ -1,11 +1,8 @@
 package com.example.androidad.presentation.screens.signup
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -14,11 +11,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.Response
 import com.example.androidad.data.auth.AuthRepo
-import com.example.androidad.data.contact.Contact
-import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.user.User
 import com.example.androidad.data.user.UserRepo
-import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
