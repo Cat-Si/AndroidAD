@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -20,18 +21,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.androidad.R
+import com.example.androidad.data.Response
+import com.example.androidad.data.user.User
 import com.example.androidad.presentation.components.CustomButton
 import com.example.androidad.presentation.components.CustomTextField
 import com.example.androidad.presentation.components.SmallSpacer
 import com.example.androidad.presentation.screens.login.components.LogIn
 import com.example.androidad.presentation.utils.Util.Companion.showMessage
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun LoginScreen(
     vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
     navigateToSignUpScreen: () -> Unit,
-    navigateToHomeScreen: () -> Unit
+    onClickToHome: () -> Unit,
+    onClickToViewReports: (User) -> Unit
 ) {
     val context = LocalContext.current
     val message: String by vm.message.observeAsState(String())
@@ -109,11 +115,14 @@ fun LoginScreen(
         }
     }
 
+
+
     LogIn(
         vm = vm,
         showErrorMessage = { errorMessage ->
             showMessage(context, errorMessage)
         },
-        navigateToHomeScreen = navigateToHomeScreen
+        onClickToHome = onClickToHome,
+        onClickToViewReports = { onClickToViewReports(vm.selectedUser!!) }
     )
 }

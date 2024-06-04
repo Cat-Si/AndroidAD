@@ -15,6 +15,7 @@ import com.example.androidad.presentation.screens.edit.EditScreen
 import com.example.androidad.presentation.screens.home.HomeScreen
 import com.example.androidad.presentation.screens.login.LoginScreen
 import com.example.androidad.presentation.screens.signup.SignUpScreen
+import com.example.androidad.presentation.screens.viewReports.ViewReportsScreen
 import kotlin.system.exitProcess
 
 sealed class NavScreen(var icon: Int, var route: String) {
@@ -45,8 +46,12 @@ fun NavigationGraph(
                 navigateToSignUpScreen = {
                     navController.navigate(NavScreen.SignUp.route)
                 },
-                navigateToHomeScreen = {
+                onClickToHome = {
                     navController.navigate(NavScreen.Home.route)
+                },
+                onClickToViewReports = { user -> // Modify the lambda to accept a User parameter
+                    selectedUser = user // Update the selected user
+                    navController.navigate(NavScreen.ViewReports.route)
                 }
             )
         }
@@ -59,13 +64,12 @@ fun NavigationGraph(
             HomeScreen(
                 navController = navController,
                 onIndexChange = {
-                    selectedReport = it
+                    selectedUser = it
                 },
                 onClickToViewReports = {
                     if (selectedUser != null) navController.navigate(NavScreen.ViewReports.route)
-                },
-
-                )
+                }
+            )
         }
         composable(NavScreen.Add.route) {
             AddScreen(
@@ -83,7 +87,7 @@ fun NavigationGraph(
                 })
         }
         composable(NavScreen.ViewReports.route) {
-            ViewScreen(
+            ViewReportsScreen(
                 selectedUser = selectedUser!!,
                 navController = navController,
                 onIndexChange = {

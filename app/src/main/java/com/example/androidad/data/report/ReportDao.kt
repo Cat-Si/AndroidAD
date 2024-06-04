@@ -7,7 +7,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.protobuf.Value
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -23,10 +22,10 @@ class ReportDAO(
         this.reportRoot = userToListenTo
     }
 
-    suspend fun getReports(userAuthUUID: String): Flow<DatabaseResult<List<Report?>>> =
+    suspend fun getReports(): Flow<DatabaseResult<List<Report?>>> =
         callbackFlow {
             trySend(DatabaseResult.Loading)
-            reportRoot.child(userAuthUUID).keepSynced(true)
+            reportRoot.keepSynced(true)
 
 
             event = object : ValueEventListener {
@@ -44,7 +43,7 @@ class ReportDAO(
                     trySend(DatabaseResult.Error(Throwable(error.message)))
                 }
             }
-            reportRoot.child(userAuthUUID).addValueEventListener(event as ValueEventListener)
+            reportRoot.addValueEventListener(event as ValueEventListener)
             awaitClose { close() }
         }
 
