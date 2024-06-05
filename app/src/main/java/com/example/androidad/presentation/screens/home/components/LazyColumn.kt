@@ -19,11 +19,12 @@ fun LazyColumnWithSelection(
 ) {
     var selectedIndexToHighlight by remember { mutableIntStateOf(-1) }
 
+
     LazyColumn {
         itemsIndexed(vm.userState.value.data) { index, item ->
             ItemView(
                 index = index,
-                item = item.toString(),
+                item = "${item?.displayName} (${item?.userName})",
                 selected = selectedIndexToHighlight == index,
                 onClick = { index: Int ->
                     selectedIndexToHighlight =

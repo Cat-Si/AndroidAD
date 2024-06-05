@@ -1,4 +1,4 @@
-package com.example.androidad.presentation.screens.viewReports.Componants
+package com.example.androidad.presentation.screens.viewReports.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.androidad.data.report.Report
 
 @Composable
-fun ItemView(
+fun ReportItemView(
     index: Int,
     report: Report,
     selected: Boolean,

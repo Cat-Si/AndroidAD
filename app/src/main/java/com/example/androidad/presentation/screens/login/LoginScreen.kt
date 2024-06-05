@@ -36,13 +36,13 @@ import com.google.firebase.auth.FirebaseAuth
 fun LoginScreen(
     vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
     navigateToSignUpScreen: () -> Unit,
-    onClickToHome: () -> Unit,
-    onClickToViewReports: (User) -> Unit
+    navigateToHome: () -> Unit,
+    navigateToViewReports: (User) -> Unit
 ) {
     val context = LocalContext.current
     val message: String by vm.message.observeAsState(String())
 
-    if (message.length > 0) { //Only changes when vm message is updated
+    if (message.isNotEmpty()) { //Only changes when vm message is updated
         showMessage(context, vm.message.value)
     }
 
@@ -122,7 +122,7 @@ fun LoginScreen(
         showErrorMessage = { errorMessage ->
             showMessage(context, errorMessage)
         },
-        onClickToHome = onClickToHome,
-        onClickToViewReports = { onClickToViewReports(vm.selectedUser!!) }
+        onClickToHome = navigateToHome,
+        onClickToViewReports = { navigateToViewReports(vm.getCurrentUser()) }
     )
 }

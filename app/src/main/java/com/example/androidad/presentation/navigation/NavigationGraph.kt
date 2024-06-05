@@ -46,12 +46,13 @@ fun NavigationGraph(
                 navigateToSignUpScreen = {
                     navController.navigate(NavScreen.SignUp.route)
                 },
-                onClickToHome = {
+
+                navigateToHome = {
                     navController.navigate(NavScreen.Home.route)
                 },
-                onClickToViewReports = { user -> // Modify the lambda to accept a User parameter
-                    selectedUser = user // Update the selected user
+                navigateToViewReports = {
                     navController.navigate(NavScreen.ViewReports.route)
+                    selectedUser = it
                 }
             )
         }
@@ -74,7 +75,8 @@ fun NavigationGraph(
         composable(NavScreen.Add.route) {
             AddScreen(
                 navController = navController,
-                onClickToHome = { navController.popBackStack() },
+                onClickToViewReport = { navController.navigate(NavScreen.ViewReports.route) }
+                
 //                datePickerState = datePickerState
             )
         }
@@ -82,8 +84,8 @@ fun NavigationGraph(
             EditScreen(navController = navController,
                 selectedReport = selectedReport!!,
 
-                onClickToHome = {
-                    navController.navigate(NavScreen.Home.route)
+                onClickToViewReport = {
+                    navController.navigate(NavScreen.ViewReports.route)
                 })
         }
         composable(NavScreen.ViewReports.route) {
@@ -106,27 +108,3 @@ fun NavigationGraph(
 }
 
 
-//Application code below
-//@Composable
-//fun NavigationGraph(
-//    navController: NavHostController,
-//    context: Context,
-//    simulateLogin: () -> Unit,
-//    modifier: Modifier
-//) {
-//    NavHost(navController,
-//        startDestination = NavScreen.Login.route) {
-//        composable(NavScreen.Login.route) {
-//            LoginScreen(stringResource(R.string.login_button), simulateLogin, modifier)
-//        }
-//        composable(NavScreen.Home.route) {
-//            HomeScreen(stringResource(R.string.home_button), HomeViewModel, context, modifier)
-//        }
-//        composable(NavScreen.Search.route) {
-//            SearchScreen(stringResource(R.string.search_button), modifier)
-//        }
-//        composable(NavScreen.Exit.route) {
-//            exitProcess(0)
-//        }
-//    }
-//}

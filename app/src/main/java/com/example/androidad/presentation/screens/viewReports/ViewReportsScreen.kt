@@ -68,12 +68,13 @@ fun ViewReportsScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp, bottom = 10.dp),
-                text = "Reports Submitted by $selectedUser",
+                text = "Reports submitted by ${selectedUser.displayName} (${selectedUser.userName})",
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
             )
+            Log.v("SELECTEDUSER", selectedUser.toString())
 
             val userState by vm.reportState.collectAsState()
 
@@ -83,7 +84,7 @@ fun ViewReportsScreen(
                 if (userState.data.isNotEmpty()) {
                     itemsIndexed(userState.data) { index, item ->
                         if (item != null) {
-                            ItemView(
+                            ReportItemView(
                                 index = index,
                                 report = item,
                                 selected = vm.selectedIndex == index,

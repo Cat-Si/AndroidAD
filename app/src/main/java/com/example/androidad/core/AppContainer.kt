@@ -42,7 +42,7 @@ class AppDataContainer : AppContainer {
         userRepository = UserRepository(userDAO)
 
         val reportRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(REPORT_ROOT_FOLDER)
-        val reportDAO = ReportDAO(reportRoot, userRoot)
+        val reportDAO = ReportDAO(reportRoot)
         reportRepository = ReportRepository(reportDAO)
     }
 

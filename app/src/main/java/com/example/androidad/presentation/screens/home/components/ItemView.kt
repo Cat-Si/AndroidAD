@@ -19,7 +19,7 @@ fun ItemView(
     onClick: (Int) -> Unit
 ) {
     Text(
-        text = "$item",
+        text = item,
         modifier = Modifier
             .clickable {
                 onClick.invoke(index)

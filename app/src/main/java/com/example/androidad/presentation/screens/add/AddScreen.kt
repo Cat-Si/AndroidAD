@@ -38,7 +38,7 @@ fun AddScreen(
     vm: AddViewModel = viewModel(factory = AddViewModel.Factory),
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    onClickToHome: () -> Unit,
+    onClickToViewReport: () -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -209,7 +209,7 @@ fun AddScreen(
                             vm.addReport()
                             keyboardController?.hide()
                             if (!vm.submissionFailed) {
-                                onClickToHome()
+                                onClickToViewReport()
                             }
                         }
                     )

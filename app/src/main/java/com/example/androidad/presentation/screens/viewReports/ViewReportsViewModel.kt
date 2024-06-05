@@ -68,14 +68,7 @@ class ViewReportsViewModel(private val authRepo: AuthRepo, private val repo: Rep
 
 
     //delete is managed in edit
-    fun deleteReport() {
-//        Log.v("OK","calling delete")
-        if (reportHasBeenSelected()) {
-//            Log.v("OK",selectedReport.toString())
-            repo.delete(selectedReport!!, authRepo.currentUser!!.uid)
-            selectedReport = null
-        }
-    }
+
 
     // Define ViewModel factory in a companion object
     companion object {

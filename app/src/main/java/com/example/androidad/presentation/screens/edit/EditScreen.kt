@@ -37,7 +37,7 @@ fun EditScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     selectedReport: Report,
-    onClickToHome: () -> Unit
+    onClickToViewReport: () -> Unit
 ) {
 
     LaunchedEffect(key1 = Unit) {
@@ -209,7 +209,7 @@ fun EditScreen(
                     stringResource(R.string.edit),
                     clickButton = {
                         vm.updateReport()
-                        onClickToHome()
+                        onClickToViewReport()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -218,7 +218,7 @@ fun EditScreen(
                 CustomButton(stringResource(R.string.delete),
                     clickButton = {
                         vm.deleteReport()
-                        onClickToHome()
+                        onClickToViewReport()
                     })
             }
         }
