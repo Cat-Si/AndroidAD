@@ -1,8 +1,12 @@
 package com.example.androidad.presentation.screens.home
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -34,7 +39,8 @@ fun HomeScreen(
     vm: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
     onClickToViewReports: () -> Unit,
     onIndexChange: (User?) -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    isAdmin: Boolean
 ) {
 
     val context = LocalContext.current
@@ -42,37 +48,60 @@ fun HomeScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(navController = navController, isAdmin = isAdmin)
         }
     )
     {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(it) // Padding from the Scaffold
         ) {
-            Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(R.string.reports),
-                textAlign = TextAlign.Center,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-            )
-            val userState by vm.userState.collectAsState()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 56.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
 
-            if (userState.data.isNotEmpty()) //Some data to display
-                LazyColumnWithSelection(vm, onIndexChange)
+                ) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 10.dp, bottom = 10.dp),
+                    text = stringResource(R.string.reports),
+                    textAlign = TextAlign.Center,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                )
+                val userState by vm.userState.collectAsState()
 
-            if (vm.userState.value.errorMessage.isNotBlank()) { //Problem retrieving data
-                showMessage(context, vm.userState.value.errorMessage)
+                if (userState.data.isNotEmpty()) //Some data to display
+                    LazyColumnWithSelection(vm, onIndexChange)
+
+                if (vm.userState.value.errorMessage.isNotBlank()) { //Problem retrieving data
+                    showMessage(context, vm.userState.value.errorMessage)
+                }
             }
-            CustomButton(
-                stringResource(R.string.viewReports),
-                clickButton = { onClickToViewReports() }
+            Row(
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 5.dp)
             )
+            {
+                CustomButton(
+                    stringResource(R.string.viewReports),
+                    clickButton = { onClickToViewReports() },
+                    modifier = Modifier
+                        .padding(bottom = 30.dp)
+
+
+                )
+            }
         }
     }
 }
+
 
 
 

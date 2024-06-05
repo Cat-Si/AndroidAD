@@ -39,13 +39,14 @@ fun AddScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     onClickToViewReport: () -> Unit,
+    isAdmin: Boolean
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(navController = navController, isAdmin = isAdmin)
         }
     ) {
         Column(

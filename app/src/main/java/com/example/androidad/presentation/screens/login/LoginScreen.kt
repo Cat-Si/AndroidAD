@@ -36,7 +36,7 @@ import com.google.firebase.auth.FirebaseAuth
 fun LoginScreen(
     vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
     navigateToSignUpScreen: () -> Unit,
-    navigateToHome: () -> Unit,
+    navigateToHome: (User) -> Unit,
     navigateToViewReports: (User) -> Unit
 ) {
     val context = LocalContext.current
@@ -122,7 +122,7 @@ fun LoginScreen(
         showErrorMessage = { errorMessage ->
             showMessage(context, errorMessage)
         },
-        onClickToHome = navigateToHome,
-        onClickToViewReports = { navigateToViewReports(vm.getCurrentUser()) }
+        navigateToHome = { navigateToHome(vm.getCurrentUser()) },
+        navigateToViewReports = { navigateToViewReports(vm.getCurrentUser()) }
     )
 }

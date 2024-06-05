@@ -1,6 +1,7 @@
 package com.example.androidad.presentation.screens.viewReports
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,12 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.wear.compose.material.Button
 import com.example.androidad.R
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.user.User
 import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.components.CustomButton
-import com.example.androidad.presentation.screens.viewReports.Componants.ItemView
+import com.example.androidad.presentation.screens.viewReports.components.ReportItemView
 import com.example.androidad.presentation.utils.Util.Companion.showMessage
 
 @SuppressLint(
@@ -44,7 +46,9 @@ fun ViewReportsScreen(
     selectedUser: User,
     onIndexChange: (Report?) -> Unit,
     onClickToEdit: () -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    isAdmin: Boolean,
+    onClickToHome: () -> Unit
 ) {
     LaunchedEffect(key1 = Unit) {//Called on launch
         vm.setSelectedUser(selectedUser)
@@ -56,7 +60,7 @@ fun ViewReportsScreen(
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(navController = navController, isAdmin = isAdmin)
         }
     ) { paddingValues ->
         Column(
@@ -64,6 +68,7 @@ fun ViewReportsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+
             Text(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -126,8 +131,13 @@ fun ViewReportsScreen(
                     },
 //                    modifier.padding(bottom = 5.dp)
                 )
+                if (isAdmin) {
+                    CustomButton(stringResource(R.string.back),
+                        clickButton = {
+                            onClickToHome()
+                        })
+                }
             }
-
 
         }
     }

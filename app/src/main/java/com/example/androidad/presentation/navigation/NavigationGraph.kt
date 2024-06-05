@@ -10,6 +10,7 @@ import com.example.androidad.R
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.report.Report
 import com.example.androidad.data.user.User
+import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.screens.add.AddScreen
 import com.example.androidad.presentation.screens.edit.EditScreen
 import com.example.androidad.presentation.screens.home.HomeScreen
@@ -18,14 +19,14 @@ import com.example.androidad.presentation.screens.signup.SignUpScreen
 import com.example.androidad.presentation.screens.viewReports.ViewReportsScreen
 import kotlin.system.exitProcess
 
-sealed class NavScreen(var icon: Int, var route: String) {
-    data object Home : NavScreen(R.drawable.home, "Home")
-    data object Add : NavScreen(R.drawable.add, "Add")
-    data object Edit : NavScreen(R.drawable.add, "Edit")//drawable is not relevant
-    data object Exit : NavScreen(R.drawable.logout, "Logout")
-    data object Login : NavScreen(R.drawable.home, "Login")
-    data object SignUp : NavScreen(R.drawable.home, "SignUp")
-    data object ViewReports : NavScreen(R.drawable.home, "ViewReports")
+sealed class NavScreen(var icon: Int, var route: String, var label: String) {
+    data object Home : NavScreen(R.drawable.home, "Home", "Home")
+    data object Add : NavScreen(R.drawable.add, "Add", "Add")
+    data object Edit : NavScreen(R.drawable.add, "Edit", "Edit")//drawable is not relevant
+    data object Exit : NavScreen(R.drawable.logout, "Logout", "Logout")
+    data object Login : NavScreen(R.drawable.home, "Login", "Login")
+    data object SignUp : NavScreen(R.drawable.home, "SignUp", "Sign Up")
+    data object ViewReports : NavScreen(R.drawable.home, "ViewReports", "Home")
 
 }
 
@@ -38,6 +39,8 @@ fun NavigationGraph(
 ) {
     var selectedReport: Report? = null
     var selectedUser: User? = null
+    var loggedInUser: User? = null
+
 
     NavHost(navController, startDestination = NavScreen.Login.route) {
 
@@ -49,10 +52,12 @@ fun NavigationGraph(
 
                 navigateToHome = {
                     navController.navigate(NavScreen.Home.route)
+                    loggedInUser = it
                 },
                 navigateToViewReports = {
                     navController.navigate(NavScreen.ViewReports.route)
                     selectedUser = it
+                    loggedInUser = it
                 }
             )
         }
@@ -69,24 +74,29 @@ fun NavigationGraph(
                 },
                 onClickToViewReports = {
                     if (selectedUser != null) navController.navigate(NavScreen.ViewReports.route)
-                }
+                },
+                isAdmin = loggedInUser!!.admin == true
             )
         }
         composable(NavScreen.Add.route) {
             AddScreen(
                 navController = navController,
-                onClickToViewReport = { navController.navigate(NavScreen.ViewReports.route) }
-                
+                onClickToViewReport = { navController.navigate(NavScreen.ViewReports.route) },
+                isAdmin = loggedInUser!!.admin == true
+
 //                datePickerState = datePickerState
             )
         }
         composable(NavScreen.Edit.route) {
-            EditScreen(navController = navController,
+            EditScreen(
+                navController = navController,
                 selectedReport = selectedReport!!,
 
                 onClickToViewReport = {
                     navController.navigate(NavScreen.ViewReports.route)
-                })
+                },
+                isAdmin = loggedInUser!!.admin == true
+            )
         }
         composable(NavScreen.ViewReports.route) {
             ViewReportsScreen(
@@ -97,7 +107,12 @@ fun NavigationGraph(
                 },
                 onClickToEdit = {
                     if (selectedReport != null) navController.navigate("edit")
+                },
+                isAdmin = loggedInUser!!.admin == true,
+                onClickToHome = {
+                    navController.navigate(NavScreen.Home.route)
                 }
+
             )
         }
         composable(NavScreen.Exit.route) {
@@ -105,6 +120,8 @@ fun NavigationGraph(
             exitProcess(0)
         }
     }
+
+
 }
 
 

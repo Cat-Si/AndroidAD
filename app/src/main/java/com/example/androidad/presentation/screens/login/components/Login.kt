@@ -12,8 +12,8 @@ import com.google.firebase.auth.FirebaseAuth
 fun LogIn(
     vm: LoginViewModel,
     showErrorMessage: (errorMessage: String?) -> Unit,
-    onClickToHome: () -> Unit,
-    onClickToViewReports: (User) -> Unit,
+    navigateToHome: (User) -> Unit,
+    navigateToViewReports: (User) -> Unit,
 ) {
 
 
@@ -27,9 +27,9 @@ fun LogIn(
                     vm.userRepo.getUser(userUID) { user ->
                         if (user != null) {
                             if (user.admin == true) {
-                                onClickToHome()
+                                navigateToHome(user)
                             } else {
-                                onClickToViewReports(user)
+                                navigateToViewReports(user)
                             }
                         }
                     }

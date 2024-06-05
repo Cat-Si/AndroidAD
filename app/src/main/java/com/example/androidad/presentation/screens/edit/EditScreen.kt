@@ -37,7 +37,8 @@ fun EditScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     selectedReport: Report,
-    onClickToViewReport: () -> Unit
+    onClickToViewReport: () -> Unit,
+    isAdmin: Boolean
 ) {
 
     LaunchedEffect(key1 = Unit) {
@@ -49,7 +50,7 @@ fun EditScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(navController = navController, isAdmin = isAdmin)
         }
     ) {
         Column(

@@ -33,6 +33,7 @@ class ViewReportsViewModel(private val authRepo: AuthRepo, private val repo: Rep
         getListOfReports()
     }
 
+
     var selectedIndex by mutableIntStateOf(-1)
     fun selectReport(index: Int, report: Report?) {
         selectedIndex = index
