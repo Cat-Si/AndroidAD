@@ -50,12 +50,24 @@ class LoginViewModel(
     }
 
     fun getCurrentUser(): User {
-        val user = User(repo.currentUser!!.email)
-        user.uuid = repo.currentUser!!.uid
-        return user
+        val currentUser = repo.currentUser
+
+        if (currentUser != null) {
+            val user = User(currentUser.email)
+            user.uuid = currentUser.uid
+            userRepo.getUser(currentUser.uid) { userDetails ->
+                userDetails?.let { userDetails ->
+                    user.displayName = userDetails.displayName
+                    user.userName = userDetails.userName
+                    user.admin = userDetails.admin
+                }
+            }
+            return user
+        } else {
+            throw IllegalStateException("Current user is null")
+        }
     }
 
-    var isAdmin = getCurrentUser().admin == true
 
     fun forgotPassword() {
         FirebaseAuth.getInstance()
@@ -75,7 +87,6 @@ class LoginViewModel(
             signInResponse = Response.Loading
             signInResponse = repo.firebaseSignInWithEmailAndPassword(email, password)
 
-            Log.v("ISADMIN??", isAdmin.toString())
         }
 
     companion object {
