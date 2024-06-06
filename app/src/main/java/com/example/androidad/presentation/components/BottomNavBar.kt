@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -22,6 +24,7 @@ import com.example.androidad.presentation.navigation.NavScreen
 @Composable
 fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
     BottomNavigation(
+        modifier = Modifier.semantics { contentDescription = "bottom nav" },
         backgroundColor = colorResource(id = R.color.white),
         contentColor = Color.Black
     ) {
@@ -33,7 +36,7 @@ fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
                 icon = {
                     Icon(
                         painterResource(id = item.icon),
-                        contentDescription = item.label,
+                        contentDescription = "nav" + item.label,
                         Modifier.size(15.dp)
                     )
                 },

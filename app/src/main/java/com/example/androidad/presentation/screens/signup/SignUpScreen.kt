@@ -20,6 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -52,7 +54,7 @@ fun SignUpScreen(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 15.dp),
-                    text = "Enter details to sign up",
+                    text = stringResource(R.string.sign_up_screen_title),
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
@@ -116,6 +118,7 @@ fun SignUpScreen(
                         checked = vm.admin,
                         onCheckedChange =
                         { vm.admin = it },
+                        modifier = Modifier.semantics { contentDescription = "admin switch" },
                         enabled = true
                     )
                 }
