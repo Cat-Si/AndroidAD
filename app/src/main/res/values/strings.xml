@@ -7,7 +7,7 @@
     <string name="tel_no_error_message">Telephone number is blank</string>
     <string name="back_button">Back</string>
     <string name="submit_button">Submit</string>
-
+    <string name="back">Back</string>
     <!-- Add Screen -->
     <string name="add">Add</string>
     <string name="add_form">Report a new incident</string>
@@ -15,6 +15,8 @@
     <string name="edit">Edit</string>
     <string name="edit_form">Change a incident report</string>
     <!-- Home Screen -->
+    <string name="reports">First Aid Reports</string>
+    <string name="viewReports">View Reports</string>
     <string name="home">Home</string>
     <string name="delete">Delete</string>
     <!-- LoginScreen -->

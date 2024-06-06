@@ -6,8 +6,9 @@ data class User(
     var lastName: String? = null,
     var displayName: String? = null,
     var userName: String? = null,
+    var admin: Boolean? = null
 
-    ) {
+) {
     var uuid: String? = null
     override fun toString(): String = "$email"
 }

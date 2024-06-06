@@ -9,20 +9,25 @@ import androidx.navigation.compose.rememberNavController
 import com.example.androidad.R
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.report.Report
+import com.example.androidad.data.user.User
+import com.example.androidad.presentation.components.BottomNavBar
 import com.example.androidad.presentation.screens.add.AddScreen
 import com.example.androidad.presentation.screens.edit.EditScreen
 import com.example.androidad.presentation.screens.home.HomeScreen
 import com.example.androidad.presentation.screens.login.LoginScreen
 import com.example.androidad.presentation.screens.signup.SignUpScreen
+import com.example.androidad.presentation.screens.viewReports.ViewReportsScreen
 import kotlin.system.exitProcess
 
-sealed class NavScreen(var icon: Int, var route: String) {
-    data object Home : NavScreen(R.drawable.home, "Home")
-    data object Add : NavScreen(R.drawable.add, "Add")
-    data object Edit : NavScreen(R.drawable.add, "Edit")//drawable is not relevant
-    data object Exit : NavScreen(R.drawable.logout, "Logout")
-    data object Login : NavScreen(R.drawable.home, "Login")
-    data object SignUp : NavScreen(R.drawable.home, "SignUp")
+sealed class NavScreen(var icon: Int, var route: String, var label: String) {
+    data object Home : NavScreen(R.drawable.home, "Home", "Home")
+    data object Add : NavScreen(R.drawable.add, "Add", "Add")
+    data object Edit : NavScreen(R.drawable.add, "Edit", "Edit")//drawable is not relevant
+    data object Exit : NavScreen(R.drawable.logout, "Logout", "Logout")
+    data object Login : NavScreen(R.drawable.home, "Login", "Login")
+    data object SignUp : NavScreen(R.drawable.home, "SignUp", "Sign Up")
+    data object ViewReports : NavScreen(R.drawable.home, "ViewReports", "Home")
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,6 +38,9 @@ fun NavigationGraph(
 
 ) {
     var selectedReport: Report? = null
+    var selectedUser: User? = null
+    var loggedInUser: User? = null
+
 
     NavHost(navController, startDestination = NavScreen.Login.route) {
 
@@ -41,8 +49,15 @@ fun NavigationGraph(
                 navigateToSignUpScreen = {
                     navController.navigate(NavScreen.SignUp.route)
                 },
-                navigateToHomeScreen = {
+
+                navigateToHome = {
                     navController.navigate(NavScreen.Home.route)
+                    loggedInUser = it
+                },
+                navigateToViewReports = {
+                    navController.navigate(NavScreen.ViewReports.route)
+                    selectedUser = it
+                    loggedInUser = it
                 }
             )
         }
@@ -55,58 +70,58 @@ fun NavigationGraph(
             HomeScreen(
                 navController = navController,
                 onIndexChange = {
-                    selectedReport = it
+                    selectedUser = it
                 },
-                onClickToEdit = {
-                    if (selectedReport != null) navController.navigate("edit")
-                }
-
+                onClickToViewReports = {
+                    if (selectedUser != null) navController.navigate(NavScreen.ViewReports.route)
+                },
+                isAdmin = loggedInUser!!.admin == true
             )
         }
         composable(NavScreen.Add.route) {
             AddScreen(
                 navController = navController,
-                onClickToHome = { navController.popBackStack() },
+                onClickToViewReport = { navController.navigate(NavScreen.ViewReports.route) },
+                isAdmin = loggedInUser!!.admin == true
+
 //                datePickerState = datePickerState
             )
         }
         composable(NavScreen.Edit.route) {
-            EditScreen(navController = navController,
+            EditScreen(
+                navController = navController,
                 selectedReport = selectedReport!!,
 
+                onClickToViewReport = {
+                    navController.navigate(NavScreen.ViewReports.route)
+                },
+                isAdmin = loggedInUser!!.admin == true
+            )
+        }
+        composable(NavScreen.ViewReports.route) {
+            ViewReportsScreen(
+                selectedUser = selectedUser!!,
+                navController = navController,
+                onIndexChange = {
+                    selectedReport = it
+                },
+                onClickToEdit = {
+                    if (selectedReport != null) navController.navigate("edit")
+                },
+                isAdmin = loggedInUser!!.admin == true,
                 onClickToHome = {
                     navController.navigate(NavScreen.Home.route)
-                })
+                }
+
+            )
         }
         composable(NavScreen.Exit.route) {
             ContactApplication.container.authRepository.signOut()
             exitProcess(0)
         }
     }
+
+
 }
 
 
-//Application code below
-//@Composable
-//fun NavigationGraph(
-//    navController: NavHostController,
-//    context: Context,
-//    simulateLogin: () -> Unit,
-//    modifier: Modifier
-//) {
-//    NavHost(navController,
-//        startDestination = NavScreen.Login.route) {
-//        composable(NavScreen.Login.route) {
-//            LoginScreen(stringResource(R.string.login_button), simulateLogin, modifier)
-//        }
-//        composable(NavScreen.Home.route) {
-//            HomeScreen(stringResource(R.string.home_button), HomeViewModel, context, modifier)
-//        }
-//        composable(NavScreen.Search.route) {
-//            SearchScreen(stringResource(R.string.search_button), modifier)
-//        }
-//        composable(NavScreen.Exit.route) {
-//            exitProcess(0)
-//        }
-//    }
-//}

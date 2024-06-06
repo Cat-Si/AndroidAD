@@ -1,7 +1,6 @@
 package com.example.androidad.presentation.screens.edit
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +15,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,7 +37,8 @@ fun EditScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     selectedReport: Report,
-    onClickToHome: () -> Unit
+    onClickToViewReport: () -> Unit,
+    isAdmin: Boolean
 ) {
 
     LaunchedEffect(key1 = Unit) {
@@ -51,7 +50,7 @@ fun EditScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(navController = navController, isAdmin = isAdmin)
         }
     ) {
         Column(
@@ -211,7 +210,7 @@ fun EditScreen(
                     stringResource(R.string.edit),
                     clickButton = {
                         vm.updateReport()
-                        onClickToHome()
+                        onClickToViewReport()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -220,7 +219,7 @@ fun EditScreen(
                 CustomButton(stringResource(R.string.delete),
                     clickButton = {
                         vm.deleteReport()
-                        onClickToHome()
+                        onClickToViewReport()
                     })
             }
         }

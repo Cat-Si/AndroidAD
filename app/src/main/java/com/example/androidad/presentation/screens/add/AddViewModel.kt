@@ -104,7 +104,7 @@ class AddViewModel(
                 treatment,
                 advice,
             )
-            reportRepo.add(newReport, authRepo.currentUser!!.uid)
+            reportRepo.add(newReport)
             submissionFailed = false
             clear()
         } else {

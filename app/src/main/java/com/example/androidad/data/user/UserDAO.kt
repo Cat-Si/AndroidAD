@@ -2,7 +2,6 @@ package com.example.androidad.data.user
 
 import android.util.Log
 import com.example.androidad.data.DatabaseResult
-import com.example.androidad.data.contact.Contact
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference

@@ -1,11 +1,8 @@
 package com.example.androidad.presentation.screens.signup
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -14,11 +11,9 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.Response
 import com.example.androidad.data.auth.AuthRepo
-import com.example.androidad.data.contact.Contact
-import com.example.androidad.data.contact.ContactRepo
 import com.example.androidad.data.user.User
 import com.example.androidad.data.user.UserRepo
-import com.google.firebase.auth.userProfileChangeRequest
+import com.google.android.gms.common.api.BooleanResult
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
@@ -30,8 +25,7 @@ class SignUpViewModel(
     var password by mutableStateOf(String())
     var firstName by mutableStateOf(String())
     var lastName by mutableStateOf(String())
-    var userName by mutableStateOf(String())
-    var displayName by mutableStateOf(String())
+    var admin: Boolean by mutableStateOf(false)
 
     var submissionFailed by mutableStateOf(false)
 
@@ -49,22 +43,6 @@ class SignUpViewModel(
 
     fun lastNameIsValid(): Boolean {
         return lastName.isNotBlank()
-    }
-
-    fun validUserName(firstName: String, lastName: String): String {
-        if (firstNameIsValid() && lastNameIsValid()) {
-            val randomNumber = Random.nextInt(1000, 9999)
-            userName = (lastName + firstName[0]).lowercase() + randomNumber
-        }
-        return userName
-    }
-
-    fun validDisplayName(firstName: String, lastName: String): String {
-        if (firstNameIsValid() && lastNameIsValid()) {
-
-            displayName = "$firstName $lastName"
-        }
-        return displayName
     }
 
 
@@ -95,8 +73,9 @@ class SignUpViewModel(
                     lastName,
                     "$firstName $lastName",
                     (lastName + firstName[0]).lowercase() + randomNumber,
+                    admin
 
-                    )
+                )
             userRepo.add(user, repo.currentUser!!.uid)
             submissionFailed = false
         } else {

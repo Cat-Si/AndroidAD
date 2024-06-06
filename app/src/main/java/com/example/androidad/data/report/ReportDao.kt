@@ -13,17 +13,21 @@ import kotlinx.coroutines.flow.callbackFlow
 import java.util.UUID
 
 class ReportDAO(
-    private val database: DatabaseReference,
-    private val reportRoot: DatabaseReference
+    private var reportRoot: DatabaseReference,
 ) {
+    private var event: ValueEventListener? = null;
 
-    suspend fun getReports(userAuthUUID: String): Flow<DatabaseResult<List<Report?>>> =
+    fun updateUserListener(userToListenTo: DatabaseReference) {
+        this.reportRoot = userToListenTo
+    }
+
+    suspend fun getReports(): Flow<DatabaseResult<List<Report?>>> =
         callbackFlow {
             trySend(DatabaseResult.Loading)
-            database.child(userAuthUUID).keepSynced(true)
-            Log.v("OK", userAuthUUID)
+            reportRoot.keepSynced(true)
 
-            val event = object : ValueEventListener {
+
+            event = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val reports = ArrayList<Report>()
                     for (childSnapshot in snapshot.children) {
@@ -38,18 +42,15 @@ class ReportDAO(
                     trySend(DatabaseResult.Error(Throwable(error.message)))
                 }
             }
-            database.child(userAuthUUID).addValueEventListener(event)
+            reportRoot.addValueEventListener(event as ValueEventListener)
             awaitClose { close() }
         }
 
-    fun insert(newReport: Report, userAuthUUID: String) =
-        database.child(userAuthUUID).child(UUID.randomUUID().toString()).setValue(newReport)
+    fun insert(newReport: Report) =
+        reportRoot.child(UUID.randomUUID().toString()).setValue(newReport)
 
-    fun update(report: Report, userAuthUUID: String) {
+    fun update(report: Report) {
         val reportID = report.uid.toString()
-        val userReport = Report(
-            location = report.location, date = report.date, injury = report.injury
-        ).toMap()
         val editReport = Report(
             firstAider = report.firstAider,
             location = report.location,
@@ -60,44 +61,42 @@ class ReportDAO(
             treatment = report.treatment,
             advice = report.advice
         ).toMap() //gets rid of empty id field in database
-        database.child(userAuthUUID).child(reportID).setValue(editReport)
-        reportRoot.child(userAuthUUID).child("reports").child(reportID)
-            .setValue(userReport)
+        reportRoot.child(reportID).setValue(editReport)
+
     }
 //        database.child(userAuthUUID).child(reportID).setValue(editReport)
 
 
-    fun delete(report: Report, userAuthUUID: String) {
+    fun delete(report: Report) {
         val reportID = report.uid.toString()
-        database.child(userAuthUUID).child(reportID).removeValue()
-        reportRoot.child(userAuthUUID).child("reports").child(reportID).removeValue()
+        reportRoot.child(reportID).removeValue()
     }
 
 
-    fun addNewReport(
-        report: Report, userAuthUUID: String,
-    ) {
-        val key = database.child(userAuthUUID).push().key
-        if (key == null) {
-            Log.w(TAG, "Couldn't get push key for posts")
-            return
-        }
-
-        val userReport = Report(
-            location = report.location, date = report.date, injury = report.injury
-        ).toMap()
-        val reportValues = report.toMap()
-
-        val childUpdates = hashMapOf<String, Any>(
-            "/$userAuthUUID/$key" to reportValues,
-        )
-        val reportChildUpdates = hashMapOf<String, Any>(
-            "/$userAuthUUID/reports/$key" to userReport,
-
-            )
-
-        database.updateChildren(childUpdates)
-        reportRoot.updateChildren(reportChildUpdates)
-    }
+//    fun addNewReport(
+//        report: Report, userAuthUUID: String,
+//    ) {
+//        val key = reportRoot.child(userAuthUUID).push().key
+//        if (key == null) {
+//            Log.w(TAG, "Couldn't get push key for posts")
+//            return
+//        }
+//
+//        val userReport = Report(
+//            location = report.location, date = report.date, injury = report.injury
+//        ).toMap()
+//        val reportValues = report.toMap()
+//
+//        val childUpdates = hashMapOf<String, Any>(
+//            "/$userAuthUUID/$key" to reportValues,
+//        )
+//        val reportChildUpdates = hashMapOf<String, Any>(
+//            "/$userAuthUUID/reports/$key" to userReport,
+//
+//            )
+//
+//        reportRoot.updateChildren(childUpdates)
+//        userRoot.updateChildren(reportChildUpdates)
+//    }
 }
 

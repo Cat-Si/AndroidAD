@@ -91,7 +91,7 @@ class EditViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
             selectedReport!!.treatment = treatment
             selectedReport!!.advice = advice
 
-            repo.edit(selectedReport!!, authRepo.currentUser!!.uid)
+            repo.edit(selectedReport!!)
             submissionFailed = false
         } else {
             submissionFailed = true
@@ -102,7 +102,7 @@ class EditViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
 //        Log.v("OK","calling delete")
         if (reportHasBeenSelected()) {
 //            Log.v("OK",selectedReport.toString())
-            repo.delete(selectedReport!!, authRepo.currentUser!!.uid)
+            repo.delete(selectedReport!!)
             selectedReport = null
         }
     }

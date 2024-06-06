@@ -1,14 +1,17 @@
 package com.example.androidad.presentation.components
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -17,7 +20,7 @@ import com.example.androidad.presentation.navigation.NavScreen
 
 
 @Composable
-fun BottomNavBar(navController: NavController) {
+fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.white),
         contentColor = Color.Black
@@ -25,11 +28,21 @@ fun BottomNavBar(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        createListOfItems().forEach { item ->
+        createListOfItems(isAdmin).forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(painterResource(id = item.icon), contentDescription = item.route) },
-                label = { Text(text = item.route,
-                    fontSize = 9.sp) },
+                icon = {
+                    Icon(
+                        painterResource(id = item.icon),
+                        contentDescription = item.label,
+                        Modifier.size(15.dp)
+                    )
+                },
+                label = {
+                    Text(
+                        text = item.label,
+                        fontSize = 9.sp
+                    )
+                },
                 selectedContentColor = Color.Black,
                 unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,
@@ -51,12 +64,20 @@ fun BottomNavBar(navController: NavController) {
 }
 
 @Composable
-private fun createListOfItems(): List<NavScreen> {
-    return listOf(
-        NavScreen.Home,
-        NavScreen.Add,
-        NavScreen.Exit
-    )
+private fun createListOfItems(isAdmin: Boolean): List<NavScreen> {
+    return if (!isAdmin) {
+        listOf(
+            NavScreen.ViewReports,
+            NavScreen.Add,
+            NavScreen.Exit,
+        )
+    } else {
+        listOf(
+            NavScreen.Home,
+            NavScreen.Add,
+            NavScreen.Exit
+        )
+    }
 }
 
 /*@Composable
@@ -76,11 +97,6 @@ private fun createListOfItems(enabled: Boolean): List<NavScreen> {
         )
     }
 }*/
-
-
-
-
-
 
 
 //@Composable
@@ -125,8 +141,6 @@ private fun createListOfItems(enabled: Boolean): List<NavScreen> {
 //        NavScreen.Exit
 //    )
 //}
-
-
 
 
 /*   APPLICATION CODE
