@@ -68,9 +68,19 @@ fun HomeScreen(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 10.dp, bottom = 10.dp),
-                    text = stringResource(R.string.reports),
+                    text = stringResource(R.string.home_screen_title),
                     textAlign = TextAlign.Center,
                     fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                )
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 10.dp, bottom = 10.dp),
+                    text = stringResource(R.string.selectUser),
+                    textAlign = TextAlign.Left,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
                 )

@@ -60,7 +60,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp),
-                text = "First Aid Report Portal",
+                text = stringResource(R.string.login_screen_title),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,

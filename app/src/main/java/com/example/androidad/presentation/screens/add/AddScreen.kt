@@ -58,7 +58,7 @@ fun AddScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp),
-                text = stringResource(R.string.add_form),
+                text = stringResource(R.string.add_screen_title),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
