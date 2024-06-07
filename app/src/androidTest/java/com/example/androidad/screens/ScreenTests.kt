@@ -40,12 +40,21 @@ open abstract class ScreenTests {
     //Data for add screen
     val FIRSTAIDER = "first1"
     val LOCATION = "location"
-    val DATE = "20 January 2024"
-    val TIME = "noon"
+    val DATE = "Thursday, June 13, 2024"
+    val TIME = "between 12 and 1pm"
     val INJUREDPARTY = "Person injured"
     val INJURY = "Injury"
     val TREATMENT = "treatment"
     val ADVICE = "advice"
+
+    //Data for edit screen
+    val EDIT_LOCATION = "EDIT LOCATION"
+    val EDIT_DATE = "Wednesday, 12 June, 2024"
+    val EDIT_TIME = "Edit TIme"
+    val EDIT_INJUREDPARTY = "Edit Person"
+    val EDIT_INJURY = "Edit Injury"
+    val EDIT_TREATMENT = "Edit Treatment"
+    val EDIT_ADVICE = "Edit Advice"
 
     //Buttons
     lateinit var addButton: SemanticsMatcher
@@ -54,6 +63,8 @@ open abstract class ScreenTests {
     lateinit var deleteButton: SemanticsMatcher
     lateinit var signUpButton: SemanticsMatcher
     lateinit var forgotPasswordButton: SemanticsMatcher
+    lateinit var editButton: SemanticsMatcher
+    lateinit var confirmChangesButton: SemanticsMatcher
 
 
     lateinit var firstaiderTextField: SemanticsMatcher
@@ -73,15 +84,19 @@ open abstract class ScreenTests {
     lateinit var lastNameTextField: SemanticsMatcher
     lateinit var adminSwitch: SemanticsMatcher
 
+//    val PATTERN = Pattern.compile((0-9){6}))
+    //    val regexUserName = Regex.((0 - 9){ 6 })
+
     //For home screen
-    val userItem = hasText("$FIRST")
+    val userItem = hasText("$VALID_FIRST_NAME $VALID_LAST_NAME")
 
     //For reports view screem
     val listItem =
-        hasText("$FIRSTAIDER $LOCATION $DATE $TIME $INJUREDPARTY $INJURY $TREATMENT $ADVICE")
+        hasText("First Aider: $FIRSTAIDER \n Date: $DATE \n Location: $LOCATION \n Injury: $INJURY")
 
     //For edit screen
-
+    val editListItem =
+        hasText("First Aider: $FIRSTAIDER \n Date: $EDIT_DATE \n Location: $EDIT_LOCATION \n Injury: $EDIT_INJURY")
 
     //Screen Titles
     lateinit var homeScreenTitle: SemanticsMatcher
@@ -89,6 +104,7 @@ open abstract class ScreenTests {
     lateinit var editScreenTitle: SemanticsMatcher
     lateinit var addScreenTitle: SemanticsMatcher
     lateinit var viewReportsTitle: SemanticsMatcher
+    lateinit var viewReportsSubHeading: SemanticsMatcher
 
 
     @Before
@@ -109,7 +125,10 @@ open abstract class ScreenTests {
             hasContentDescription(rule.activity.getString(R.string.add) + BUTTON_POSTFIX)
         viewReportsButton =
             hasContentDescription(rule.activity.getString(R.string.viewReports) + BUTTON_POSTFIX) and hasClickAction()
-
+        editButton =
+            hasContentDescription(rule.activity.getString(R.string.edit) + BUTTON_POSTFIX)
+        confirmChangesButton =
+            hasContentDescription(rule.activity.getString(R.string.confirmChanges))
 //            emailAddressTextField = hasContentDescription(rule.activity.getString(R.string.email))
 //            passwordTextField = hasContentDescription(rule.activity.getString(R.string.password))
         emailAddressTextField =
@@ -143,7 +162,7 @@ open abstract class ScreenTests {
     }
 
     //Use for valid and invalid sign ins - use default values for generic log in
-    fun `log in not admin`(email: String = "newuser@email.com", password: String = "password") {
+    fun loginNotAdmin(email: String = "newuser@email.com", password: String = "password") {
         //rule.onNode(emailAddressTextField).printToLog("UI_TEST");
         rule.onNode(emailAddressTextField).performTextInput(email)
         rule.onNode(passwordTextField).performTextInput(password)
@@ -152,7 +171,7 @@ open abstract class ScreenTests {
         Thread.sleep(1000)//pause or the following will fail - recommendation is an idle call back (not demonstrated here)
     }
 
-    fun `log in as admin`(email: String = "newadmin@email.com", password: String = "password") {
+    fun loginAsAdmin(email: String = "newadmin@email.com", password: String = "password") {
         //rule.onNode(emailAddressTextField).printToLog("UI_TEST");
         rule.onNode(emailAddressTextField).performTextInput(email)
         rule.onNode(passwordTextField).performTextInput(password)
@@ -163,6 +182,8 @@ open abstract class ScreenTests {
 
     //Used by add screen + home screen creating a user before editing
     fun `enter_a_valid_report`() {
+        rule.onNode(addNavBarItem).performClick()
+
         rule.onNode(firstaiderTextField).performTextInput(FIRSTAIDER)
         rule.onNode(locationTextField).performTextInput(LOCATION)
         rule.onNode(dateTextField).performTextInput(DATE)

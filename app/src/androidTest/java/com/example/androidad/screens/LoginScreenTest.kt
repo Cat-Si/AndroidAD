@@ -1,18 +1,11 @@
 package com.example.androidad.screens
 
-import androidx.compose.ui.test.SemanticsMatcher
-import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.androidad.R
-import com.example.androidad.core.MainActivity
 import org.junit.Before
 import org.junit.FixMethodOrder
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
@@ -54,13 +47,13 @@ open class LoginScreenTest : ScreenTests() {
 
     @Test
     fun `Can admin user sign in and go to home page`() {
-        `log in as admin`()
+        loginAsAdmin()
         rule.onNode(homeScreenTitle).assertExists()
     }
 
     @Test
     fun `Can non admin user sign in and go to reports page`() {
-        `log in not admin`()
+        loginNotAdmin()
         rule.onNode(viewReportsTitle).assertExists()
     }
 
@@ -77,7 +70,7 @@ open class LoginScreenTest : ScreenTests() {
 
     @Test
     fun `forgotten password button is clicked`() {
-        
+
     }
 
 

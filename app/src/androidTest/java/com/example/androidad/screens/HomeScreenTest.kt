@@ -1,12 +1,12 @@
 package com.example.androidad.screens
 
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.performClick
 import org.junit.Before
 import org.junit.Test
 
 class HomeScreenTest : ScreenTests() {
 
-    val DISPLAYNAME = "First Admin"
 
     @Before
     override fun setUp() {
@@ -15,7 +15,7 @@ class HomeScreenTest : ScreenTests() {
 
     @Test
     fun `check default state of home screen`() {
-        `log in as admin`()
+        loginAsAdmin()
         rule.onNode(homeScreenTitle).assertExists()
         rule.onNode(homeScreenSubHeading).assertExists()
         rule.onNode(bottomNavBar).assertExists()
@@ -26,13 +26,13 @@ class HomeScreenTest : ScreenTests() {
 
     @Test
     fun `go to the add screen`() {
-        `log in as admin`()
+        loginAsAdmin()
         rule.onNode(addNavBarItem).performClick()
     }
 
     @Test
     fun `can select a user and view their reports`() {
-        `log in as admin`()
+        loginAsAdmin()
         rule.onNode(userItem).performClick()
         rule.onNode(viewReportsButton).performClick()
         rule.onNode(viewReportsTitle).assertExists()

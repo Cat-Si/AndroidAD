@@ -24,12 +24,12 @@ class CustomDatePickerTest {
     private val errorMessageText = hasText(ERROR_MESSAGE_TEXT)
 
     @Test
-    fun `date picker dialog is not shown initially`(){
+    fun `date picker dialog is not shown initially`() {
         rule.setContent {
             DatePickerWithDialog(
                 text = DATE_TEXT,
                 onDateSelected = {},
-                onValueChange = { dateInput = it},
+                onValueChange = { dateInput = it },
                 label = { LABEL_TEXT },
                 errorMessage = ERROR_MESSAGE_TEXT,
                 errorPresent = false,
@@ -42,12 +42,12 @@ class CustomDatePickerTest {
     }
 
     @Test
-    fun `date picker dialog opens on click`(){
+    fun `date picker dialog opens on click`() {
         rule.setContent {
             DatePickerWithDialog(
                 text = DATE_TEXT,
                 onDateSelected = {},
-                onValueChange = { dateInput = it},
+                onValueChange = { dateInput = it },
                 label = { LABEL_TEXT },
                 errorMessage = ERROR_MESSAGE_TEXT,
                 errorPresent = false,
@@ -60,12 +60,12 @@ class CustomDatePickerTest {
     }
 
     @Test
-    fun `date picker dialog closes on cancel`(){
+    fun `date picker dialog closes on cancel`() {
         rule.setContent {
             DatePickerWithDialog(
                 text = DATE_TEXT,
                 onDateSelected = {},
-                onValueChange = { dateInput = it},
+                onValueChange = { dateInput = it },
                 label = { LABEL_TEXT },
                 errorMessage = ERROR_MESSAGE_TEXT,
                 errorPresent = false,
@@ -79,13 +79,13 @@ class CustomDatePickerTest {
     }
 
     @Test
-    fun `date picker selects date on confirm`(){
+    fun `date picker selects date on confirm`() {
         var selectedDate = ""
         rule.setContent {
             DatePickerWithDialog(
                 text = DATE_TEXT,
-                onDateSelected = {selectedDate = it},
-                onValueChange = { dateInput = it},
+                onDateSelected = { selectedDate = it },
+                onValueChange = { dateInput = it },
                 label = { LABEL_TEXT },
                 errorMessage = ERROR_MESSAGE_TEXT,
                 errorPresent = false,
@@ -93,6 +93,7 @@ class CustomDatePickerTest {
             )
         }
         rule.onNode(placeholderText).performClick()
+        rule.onNodeWithText("Thursday, June 13, 2024").performClick()
         rule.onNodeWithText("OK").performClick()
         rule.runOnIdle {
             assert(selectedDate.isNotEmpty()) { "Selected date should not be empty" }
