@@ -41,6 +41,8 @@ class LoginViewModel(
     private var _message = MutableLiveData(String())
     var message: LiveData<String> = _message
 
+    val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
+
     fun emailIsValid(): Boolean {
         return email.isNotBlank()
     }

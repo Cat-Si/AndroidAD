@@ -62,7 +62,7 @@ fun EditScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp),
-                text = stringResource(R.string.edit),
+                text = stringResource(R.string.edit_screen_title),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
