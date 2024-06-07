@@ -33,7 +33,6 @@
     <string name="first_name_error_message">Firstname is blank</string>
     <string name="last_name_hint">Last Name</string>
     <string name="last_name_error_message">Last Name is blank</string>
-    <string name="sign_up_screen_title">"Enter details to sign up"</string>
 
     <!-- First Aid Form -->
     <string name="firstAider">First Aider</string>

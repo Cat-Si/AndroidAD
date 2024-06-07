@@ -19,11 +19,7 @@ open class SignUpScreenTest {
     var rule = createAndroidComposeRule<MainActivity>()
 
     //Valid admin user details
-<<<<<<< Updated upstream
-    val VALID_ADMIN_EMAIL = "newuseradmin@email.com"
-=======
     val VALID_ADMIN_EMAIL = "newadmin@email.com"
->>>>>>> Stashed changes
     val VALID_PASSWORD = "password"
     val VALID_FIRST_NAME = "first"
     val VALID_LAST_NAME = "last"
@@ -31,11 +27,7 @@ open class SignUpScreenTest {
     //valid non admin user details
     val VALID_USER_EMAIL = "newuser@email.com"
 
-<<<<<<< Updated upstream
-
-=======
     //Screen Elements
->>>>>>> Stashed changes
     lateinit var signUpButton: SemanticsMatcher
     lateinit var emailAddressTextField: SemanticsMatcher
     lateinit var passwordTextField: SemanticsMatcher
@@ -92,10 +84,6 @@ open class SignUpScreenTest {
         rule.onNode(emailAddressTextField).performTextInput(VALID_ADMIN_EMAIL)
         rule.onNode(firstNameTextField).performTextInput(VALID_FIRST_NAME)
         rule.onNode(lastNameTextField).performTextInput(VALID_LAST_NAME)
-<<<<<<< Updated upstream
-//must be a valid email or firebase will put up an error via toast
-=======
->>>>>>> Stashed changes
         rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
         rule.onNode(adminSwitch).performClick()
         rule.onNode(submitButton).performClick()
@@ -107,41 +95,13 @@ open class SignUpScreenTest {
         rule.onNode(emailAddressTextField).performTextInput(VALID_USER_EMAIL)
         rule.onNode(firstNameTextField).performTextInput(VALID_FIRST_NAME)
         rule.onNode(lastNameTextField).performTextInput(VALID_LAST_NAME)
-<<<<<<< Updated upstream
-//must be a valid email or firebase will put up an error via toast
-=======
->>>>>>> Stashed changes
         rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
         rule.onNode(submitButton).performClick()
     }
 
-<<<<<<< Updated upstream
-    @Test
-    fun `enter invalid sign up details`() {
-        rule.onNode(signUpButton).performClick()
-        rule.onNode(emailAddressTextField).performTextInput("")
-        rule.onNode(firstNameTextField).performTextInput("")
-        rule.onNode(lastNameTextField).performTextInput("")
-//must be a valid email or firebase will put up an error via toast
-        rule.onNode(passwordTextField).performTextInput("")
-        rule.onNode(submitButton).performClick()
-
-        rule.onNode(emailAddressTextField).performTextInput("")
-        rule.onNode(firstNameTextField).performTextInput("")
-        rule.onNode(lastNameTextField).performTextInput("")
-        rule.onNode(emailAddressTextField)
-            .assertTextEquals(rule.activity.getString(R.string.email_error_message))
-
-
-        // USES TOAST CANNOT TEST
-
-
-    }
-=======
     /*@Test
     fun `enter invalid sign up details`() {
         // USES TOAST CANNOT TEST
 
     }*/
->>>>>>> Stashed changes
 }
