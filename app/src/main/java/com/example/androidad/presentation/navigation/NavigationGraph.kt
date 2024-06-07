@@ -49,7 +49,6 @@ fun NavigationGraph(
                 navigateToSignUpScreen = {
                     navController.navigate(NavScreen.SignUp.route)
                 },
-
                 navigateToHome = {
                     navController.navigate(NavScreen.Home.route)
                     loggedInUser = it
@@ -75,27 +74,21 @@ fun NavigationGraph(
                 onClickToViewReports = {
                     if (selectedUser != null) navController.navigate(NavScreen.ViewReports.route)
                 },
-                isAdmin = loggedInUser!!.admin == true
             )
         }
         composable(NavScreen.Add.route) {
             AddScreen(
                 navController = navController,
                 onClickToViewReport = { navController.navigate(NavScreen.ViewReports.route) },
-                isAdmin = loggedInUser!!.admin == true
-
-//                datePickerState = datePickerState
             )
         }
         composable(NavScreen.Edit.route) {
             EditScreen(
                 navController = navController,
                 selectedReport = selectedReport!!,
-
                 onClickToViewReport = {
                     navController.navigate(NavScreen.ViewReports.route)
                 },
-                isAdmin = loggedInUser!!.admin == true
             )
         }
         composable(NavScreen.ViewReports.route) {

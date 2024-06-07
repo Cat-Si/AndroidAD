@@ -6,34 +6,24 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.androidad.R
 import com.example.androidad.core.MainActivity
 import org.junit.Before
+import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters
 
-class LoginScreenTest {
-    @get:Rule
-    var rule = createAndroidComposeRule<MainActivity>()
-
-    private lateinit var emailAddressTextField: SemanticsMatcher
-    private lateinit var passwordTextField: SemanticsMatcher
-    private lateinit var submitButton: SemanticsMatcher
-    private lateinit var forgotPasswordButton: SemanticsMatcher
-    private lateinit var signUpButton: SemanticsMatcher
+@FixMethodOrder(MethodSorters.DEFAULT)
+@RunWith(AndroidJUnit4::class)
+open class LoginScreenTest : ScreenTests() {
 
     @Before
-    fun setUp() {
-        emailAddressTextField =
-            hasText(rule.activity.getString(R.string.email))
-        passwordTextField =
-            hasText(rule.activity.getString(R.string.password))
-        submitButton =
-            hasText(rule.activity.getString(R.string.submit_button)) and hasClickAction()
-        forgotPasswordButton =
-            hasText(rule.activity.getString(R.string.forgot_password)) and hasClickAction()
-        signUpButton =
-            hasText(rule.activity.getString(R.string.sign_up_button)) and hasClickAction()
+    override fun setUp() {
+        super.setUp()
     }
     /*
     * email: CustomText
@@ -52,12 +42,27 @@ class LoginScreenTest {
         rule.onNode(passwordTextField).assertExists()
     }
 
+//    @Test
+//    fun `log in as admin`(email: String = "newadmin@email.com", password: String = "password") {
+//        //rule.onNode(emailAddressTextField).printToLog("UI_TEST");
+//        rule.onNode(emailAddressTextField).performTextInput(email)
+//        rule.onNode(passwordTextField).performTextInput(password)
+//        rule.onNode(submitButton).performClick()
+//
+//        Thread.sleep(1000)//pause or the following will fail - recommendation is an idle call back (not demonstrated here)
+//    }
+
     @Test
     fun `Can admin user sign in and go to home page`() {
+        `log in as admin`()
+        rule.onNode(bottomNavBar).assertExists()
+
     }
 
     @Test
     fun `Can non admin user sign in and go to reports page`() {
+        `log in not admin`()
+        rule.onNode(viewReportsTitle).assertExists()
     }
 
     @Test

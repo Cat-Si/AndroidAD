@@ -40,15 +40,15 @@ fun HomeScreen(
     onClickToViewReports: () -> Unit,
     onIndexChange: (User?) -> Unit,
     navController: NavHostController,
-    isAdmin: Boolean
-) {
+
+    ) {
 
     val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavBar(navController = navController, isAdmin = isAdmin)
+            BottomNavBar(navController = navController)
         }
     )
     {

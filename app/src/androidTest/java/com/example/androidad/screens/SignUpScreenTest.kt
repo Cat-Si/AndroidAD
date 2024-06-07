@@ -82,9 +82,9 @@ open class SignUpScreenTest {
     fun `enter valid admin sign up details`() {
         rule.onNode(signUpButton).performClick()
         rule.onNode(emailAddressTextField).performTextInput(VALID_ADMIN_EMAIL)
+        rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
         rule.onNode(firstNameTextField).performTextInput(VALID_FIRST_NAME)
         rule.onNode(lastNameTextField).performTextInput(VALID_LAST_NAME)
-        rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
         rule.onNode(adminSwitch).performClick()
         rule.onNode(submitButton).performClick()
     }
@@ -93,9 +93,9 @@ open class SignUpScreenTest {
     fun `enter valid non admin sign up details`() {
         rule.onNode(signUpButton).performClick()
         rule.onNode(emailAddressTextField).performTextInput(VALID_USER_EMAIL)
+        rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
         rule.onNode(firstNameTextField).performTextInput(VALID_FIRST_NAME)
         rule.onNode(lastNameTextField).performTextInput(VALID_LAST_NAME)
-        rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
         rule.onNode(submitButton).performClick()
     }
 

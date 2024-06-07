@@ -60,7 +60,7 @@ fun ViewReportsScreen(
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            BottomNavBar(navController = navController, isAdmin = isAdmin)
+            BottomNavBar(navController = navController)
         }
     ) { paddingValues ->
         Column(
@@ -73,13 +73,23 @@ fun ViewReportsScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp, bottom = 10.dp),
-                text = "Reports submitted by ${selectedUser.displayName} (${selectedUser.userName})",
+                text = "Reports submitted by",
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
             )
-            Log.v("SELECTEDUSER", selectedUser.toString())
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 5.dp, bottom = 10.dp),
+                text = "${selectedUser.displayName} (${selectedUser.userName})",
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+            )
+//            Log.v("SELECTEDUSER", selectedUser.toString())
 
             val userState by vm.reportState.collectAsState()
 

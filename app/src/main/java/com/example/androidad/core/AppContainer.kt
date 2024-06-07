@@ -63,6 +63,7 @@ class AppDataContainer : AppContainer {
     }
 
     override fun returnContextForDatabaseListener(report: User): DatabaseReference {
+
         return FirebaseDatabase.getInstance(DATABASE_URL).getReference(REPORT_ROOT_FOLDER)
             .child(report.uuid!!);
     }
