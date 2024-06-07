@@ -14,54 +14,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-open class SignUpScreenTest {
-    @get:Rule
-    var rule = createAndroidComposeRule<MainActivity>()
+open class SignUpScreenTest : ScreenTests() {
 
-    //Valid admin user details
-    val VALID_ADMIN_EMAIL = "newadmin@email.com"
-    val VALID_PASSWORD = "password"
-    val VALID_FIRST_NAME = "first"
-    val VALID_LAST_NAME = "last"
-
-    //valid non admin user details
-    val VALID_USER_EMAIL = "newuser@email.com"
-
-    //Screen Elements
-    lateinit var signUpButton: SemanticsMatcher
-    lateinit var emailAddressTextField: SemanticsMatcher
-    lateinit var passwordTextField: SemanticsMatcher
-    lateinit var firstNameTextField: SemanticsMatcher
-    lateinit var lastNameTextField: SemanticsMatcher
-    lateinit var submitButton: SemanticsMatcher
-
-    //Nav bar items
-    val bottomNavBar = hasContentDescription("bottom nav")
-
-    val adminSwitch = hasContentDescription("admin switch")
 
     @Before
-    open fun setUp() {
-        val BUTTON_POSTFIX = " button"
-        submitButton =
-            hasContentDescription(
-                rule.activity.getString(R.string.submit_button) +
-                        BUTTON_POSTFIX
-            )
-        signUpButton =
-            hasContentDescription(
-                rule.activity.getString(R.string.sign_up_button) +
-                        BUTTON_POSTFIX
-            )
-        emailAddressTextField =
-            hasText(rule.activity.getString(R.string.email))
-        passwordTextField =
-            hasText(rule.activity.getString(R.string.password))
-        firstNameTextField =
-            hasText(rule.activity.getString(R.string.first_name_hint))
-        lastNameTextField =
-            hasText(rule.activity.getString(R.string.last_name_hint))
-
+    override fun setUp() {
+        super.setUp()
     }
 
     @Test

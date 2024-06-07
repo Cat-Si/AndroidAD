@@ -55,8 +55,7 @@ open class LoginScreenTest : ScreenTests() {
     @Test
     fun `Can admin user sign in and go to home page`() {
         `log in as admin`()
-        rule.onNode(bottomNavBar).assertExists()
-
+        rule.onNode(homeScreenTitle).assertExists()
     }
 
     @Test
@@ -74,6 +73,11 @@ open class LoginScreenTest : ScreenTests() {
         rule.onNode(signUpButton).performClick()
         val pageTitle = hasText(rule.activity.getString(R.string.sign_up_screen_title))
         rule.onNode(pageTitle).assertExists()
+    }
+
+    @Test
+    fun `forgotten password button is clicked`() {
+        
     }
 
 
