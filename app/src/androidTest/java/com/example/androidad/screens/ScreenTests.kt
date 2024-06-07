@@ -15,7 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 
 class ScreenTests {
-    open abstract class ScreenTests {
+    abstract class ScreenTests {
         @get:Rule
         var rule = createAndroidComposeRule<MainActivity>()
 
@@ -59,6 +59,10 @@ class ScreenTests {
         //For login + sign up screen
         lateinit var emailAddressTextField: SemanticsMatcher
         lateinit var passwordTextField: SemanticsMatcher
+        lateinit var firstNameTextField: SemanticsMatcher
+        lateinit var lastNameTextField: SemanticsMatcher
+        var adminSwitch = hasContentDescription("admin switch")
+
         lateinit var backButton: SemanticsMatcher
 
         //For edit screen
@@ -80,8 +84,16 @@ class ScreenTests {
             addButton =
                 hasContentDescription(rule.activity.getString(R.string.add) + BUTTON_POSTFIX)
 
-            emailAddressTextField = hasContentDescription(rule.activity.getString(R.string.email))
-            passwordTextField = hasContentDescription(rule.activity.getString(R.string.password))
+//            emailAddressTextField = hasContentDescription(rule.activity.getString(R.string.email))
+//            passwordTextField = hasContentDescription(rule.activity.getString(R.string.password))
+            emailAddressTextField =
+                hasText(rule.activity.getString(R.string.email))
+            passwordTextField =
+                hasText(rule.activity.getString(R.string.password))
+            firstNameTextField =
+                hasText(rule.activity.getString(R.string.first_name_hint))
+            lastNameTextField =
+                hasText(rule.activity.getString(R.string.last_name_hint))
 
             firstaiderTextField =
                 hasContentDescription(rule.activity.getString(R.string.firstAider))
@@ -101,7 +113,16 @@ class ScreenTests {
         }
 
         //Use for valid and invalid sign ins - use default values for generic log in
-        fun `sign in`(email: String = "newuser@email.com", password: String = "password") {
+        fun `log in not admin`(email: String = "newuser@email.com", password: String = "password") {
+            //rule.onNode(emailAddressTextField).printToLog("UI_TEST");
+            rule.onNode(emailAddressTextField).performTextInput(email)
+            rule.onNode(passwordTextField).performTextInput(password)
+            rule.onNode(submitButton).performClick()
+
+            Thread.sleep(1000)//pause or the following will fail - recommendation is an idle call back (not demonstrated here)
+        }
+
+        fun `log in as admin`(email: String = "newadmin@email.com", password: String = "password") {
             //rule.onNode(emailAddressTextField).printToLog("UI_TEST");
             rule.onNode(emailAddressTextField).performTextInput(email)
             rule.onNode(passwordTextField).performTextInput(password)

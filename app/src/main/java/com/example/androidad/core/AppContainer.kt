@@ -26,22 +26,38 @@ interface AppContainer {
     val reportRepository: ReportRepo
     fun returnContextForDatabaseListener(report: User): DatabaseReference
 
+    val isRunningTest: Boolean
 }
 
 class AppDataContainer : AppContainer {
+
+    override val isRunningTest: Boolean by lazy {
+        try {
+            Class.forName("androidx.test.espresso.Espresso")
+            true
+        } catch (e: ClassNotFoundException) {
+            false
+        }
+    }
+
     override val userRepository: UserRepo
     override val reportRepository: ReportRepo
     override var authRepository: AuthRepo = AuthRepository(FirebaseAuth.getInstance())
 
     init {
-        val userNameRoot =
-            FirebaseDatabase.getInstance(DATABASE_URL).getReference(USERNAME_ROOT_FOLDER)
+        val APPENDED_TEST_PATH = if (isRunningTest) "test" else String()
 
-        val userRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(USER_ROOT_FOLDER)
+        val userNameRoot =
+            FirebaseDatabase.getInstance(DATABASE_URL)
+                .getReference("$APPENDED_TEST_PATH$USERNAME_ROOT_FOLDER")
+
+        val userRoot = FirebaseDatabase.getInstance(DATABASE_URL)
+            .getReference("$APPENDED_TEST_PATH$USER_ROOT_FOLDER")
         val userDAO = UserDAO(userRoot, userNameRoot)
         userRepository = UserRepository(userDAO)
 
-        val reportRoot = FirebaseDatabase.getInstance(DATABASE_URL).getReference(REPORT_ROOT_FOLDER)
+        val reportRoot = FirebaseDatabase.getInstance(DATABASE_URL)
+            .getReference("$APPENDED_TEST_PATH$REPORT_ROOT_FOLDER")
         val reportDAO = ReportDAO(reportRoot)
         reportRepository = ReportRepository(reportDAO)
     }
