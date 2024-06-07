@@ -76,8 +76,8 @@ fun HomeScreen(
                 )
                 Text(
                     modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 10.dp, bottom = 10.dp),
+                        .align(Alignment.Start)
+                        .padding(top = 5.dp, bottom = 10.dp, start = 10.dp),
                     text = stringResource(R.string.selectUser),
                     textAlign = TextAlign.Left,
                     fontSize = 15.sp,

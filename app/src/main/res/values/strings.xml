@@ -14,6 +14,7 @@
     <!-- Add Screen -->
     <string name="add">Add</string>
     <!-- Edit Screen -->
+    <string name="confirmChanges">Confirm Changes</string>
     <string name="edit">Edit</string>
     <!-- Home Screen -->
     <string name="selectUser">Select a first aider:</string>
