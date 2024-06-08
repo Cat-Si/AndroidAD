@@ -57,9 +57,9 @@ open class LoginScreenTest : ScreenTests() {
         rule.onNode(viewReportsTitle).assertExists()
     }
 
-    @Test
+    /*@Test
     fun `attempt to sign in with invalid details`() {
-    }
+    }*/
 
     @Test
     fun `move to the sign up page`() {
@@ -68,10 +68,10 @@ open class LoginScreenTest : ScreenTests() {
         rule.onNode(pageTitle).assertExists()
     }
 
-    @Test
-    fun `forgotten password button is clicked`() {
+    /* @Test
+     fun `forgotten password button is clicked`() {
 
-    }
+     }*/
 
 
 }
