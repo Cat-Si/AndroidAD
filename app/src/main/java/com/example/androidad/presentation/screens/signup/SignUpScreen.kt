@@ -37,7 +37,7 @@ import com.example.androidad.presentation.utils.Util.Companion.showMessage
 @Composable
 fun SignUpScreen(
     vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Factory),
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
 ) {
     val context = LocalContext.current
     val keyboard = LocalSoftwareKeyboardController.current

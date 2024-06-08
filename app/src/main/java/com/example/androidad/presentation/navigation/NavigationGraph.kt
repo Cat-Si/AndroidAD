@@ -74,12 +74,15 @@ fun NavigationGraph(
                 onClickToViewReports = {
                     if (selectedUser != null) navController.navigate(NavScreen.ViewReports.route)
                 },
+                isAdmin = loggedInUser!!.admin == true
             )
         }
         composable(NavScreen.Add.route) {
             AddScreen(
                 navController = navController,
                 onClickToViewReport = { navController.navigate(NavScreen.ViewReports.route) },
+                isAdmin = loggedInUser!!.admin == true
+
             )
         }
         composable(NavScreen.Edit.route) {
@@ -89,6 +92,8 @@ fun NavigationGraph(
                 onClickToViewReport = {
                     navController.navigate(NavScreen.ViewReports.route)
                 },
+                isAdmin = loggedInUser!!.admin == true
+
             )
         }
         composable(NavScreen.ViewReports.route) {
@@ -104,6 +109,9 @@ fun NavigationGraph(
                 isAdmin = loggedInUser!!.admin == true,
                 onClickToHome = {
                     navController.navigate(NavScreen.Home.route)
+                },
+                onClickToAdd = {
+                    navController.navigate(NavScreen.Add.route)
                 }
 
             )

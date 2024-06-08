@@ -48,7 +48,8 @@ fun ViewReportsScreen(
     onClickToEdit: () -> Unit,
     navController: NavHostController,
     isAdmin: Boolean,
-    onClickToHome: () -> Unit
+    onClickToHome: () -> Unit,
+    onClickToAdd: () -> Unit
 ) {
     LaunchedEffect(key1 = Unit) {//Called on launch
         vm.setSelectedUser(selectedUser)
@@ -60,7 +61,7 @@ fun ViewReportsScreen(
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(navController = navController, isAdmin = isAdmin)
         }
     ) { paddingValues ->
         Column(
@@ -141,12 +142,22 @@ fun ViewReportsScreen(
                     },
 //                    modifier.padding(bottom = 5.dp)
                 )
+                if (isAdmin == selectedUser.admin) {
+                    CustomButton(
+                        stringResource(R.string.add),
+                        clickButton = {
+                            onClickToAdd()
+                        })
+                }
                 if (isAdmin) {
-                    CustomButton(stringResource(R.string.back),
+                    CustomButton(
+                        stringResource(R.string.back),
                         clickButton = {
                             onClickToHome()
                         })
                 }
+
+
             }
 
         }

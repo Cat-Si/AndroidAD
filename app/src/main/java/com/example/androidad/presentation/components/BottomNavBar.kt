@@ -22,7 +22,7 @@ import com.example.androidad.presentation.navigation.NavScreen
 
 
 @Composable
-fun BottomNavBar(navController: NavController) {
+fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
     BottomNavigation(
         modifier = Modifier.semantics { contentDescription = "bottom nav" },
         backgroundColor = colorResource(id = R.color.white),
@@ -31,7 +31,7 @@ fun BottomNavBar(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        createListOfItems().forEach { item ->
+        createListOfItems(isAdmin).forEach { item ->
             BottomNavigationItem(
                 icon = {
                     Icon(
@@ -67,14 +67,18 @@ fun BottomNavBar(navController: NavController) {
 }
 
 @Composable
-private fun createListOfItems(): List<NavScreen> {
-
-    return listOf(
-        NavScreen.ViewReports,
-        NavScreen.Add,
-        NavScreen.Exit,
-    )
-
+private fun createListOfItems(isAdmin: Boolean): List<NavScreen> {
+    return if (isAdmin) {
+        listOf(
+            NavScreen.Home,
+            NavScreen.Exit,
+        )
+    } else {
+        listOf(
+            NavScreen.Add,
+            NavScreen.Exit,
+        )
+    }
 }
 
 /*@Composable
