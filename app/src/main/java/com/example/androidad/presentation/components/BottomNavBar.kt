@@ -15,7 +15,9 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.credentials.playservices.HiddenActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.androidad.R
 import com.example.androidad.presentation.navigation.NavScreen
@@ -52,10 +54,8 @@ fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { screen_route ->
-                            popUpTo(screen_route) {
-                                saveState = true
-                            }
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
                         }
                         launchSingleTop = true
                         restoreState = true
@@ -70,15 +70,26 @@ fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
 private fun createListOfItems(isAdmin: Boolean): List<NavScreen> {
     return if (isAdmin) {
         listOf(
-            NavScreen.Home,
+            NavScreen.ViewReports,
             NavScreen.Exit,
         )
     } else {
         listOf(
+            NavScreen.ViewReports,
             NavScreen.Add,
             NavScreen.Exit,
         )
     }
+//    return listOf(
+//        if (isAdmin) {
+//            NavScreen.ViewReports
+//            NavScreen.Exit
+//        } else {
+//            NavScreen.ViewReports
+//            NavScreen.Add
+//            NavScreen.Exit
+//        }
+//    )
 }
 
 /*@Composable

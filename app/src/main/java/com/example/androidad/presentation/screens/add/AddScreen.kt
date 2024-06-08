@@ -214,6 +214,11 @@ fun AddScreen(
                             }
                         }
                     )
+                    CustomButton(
+                        stringResource(R.string.back),
+                        clickButton = {
+                            onClickToViewReport()
+                        })
                 }
             }
         }
