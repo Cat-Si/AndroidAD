@@ -11,9 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.credentials.playservices.HiddenActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.androidad.R
 import com.example.androidad.presentation.navigation.NavScreen
@@ -22,6 +26,7 @@ import com.example.androidad.presentation.navigation.NavScreen
 @Composable
 fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
     BottomNavigation(
+        modifier = Modifier.semantics { contentDescription = "bottom nav" },
         backgroundColor = colorResource(id = R.color.white),
         contentColor = Color.Black
     ) {
@@ -33,7 +38,7 @@ fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
                 icon = {
                     Icon(
                         painterResource(id = item.icon),
-                        contentDescription = item.label,
+                        contentDescription = "nav" + item.label,
                         Modifier.size(15.dp)
                     )
                 },
@@ -49,10 +54,8 @@ fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { screen_route ->
-                            popUpTo(screen_route) {
-                                saveState = true
-                            }
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
                         }
                         launchSingleTop = true
                         restoreState = true
@@ -65,19 +68,28 @@ fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
 
 @Composable
 private fun createListOfItems(isAdmin: Boolean): List<NavScreen> {
-    return if (!isAdmin) {
+    return if (isAdmin) {
+        listOf(
+            NavScreen.ViewReports,
+            NavScreen.Exit,
+        )
+    } else {
         listOf(
             NavScreen.ViewReports,
             NavScreen.Add,
             NavScreen.Exit,
         )
-    } else {
-        listOf(
-            NavScreen.Home,
-            NavScreen.Add,
-            NavScreen.Exit
-        )
     }
+//    return listOf(
+//        if (isAdmin) {
+//            NavScreen.ViewReports
+//            NavScreen.Exit
+//        } else {
+//            NavScreen.ViewReports
+//            NavScreen.Add
+//            NavScreen.Exit
+//        }
+//    )
 }
 
 /*@Composable

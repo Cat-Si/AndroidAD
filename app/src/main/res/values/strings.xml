@@ -6,6 +6,7 @@
     <string name="add_screen_title">Report a new incident</string>
     <string name="edit_screen_title">Edit Report</string>
     <string name="home_screen_title">First Aid Reports</string>
+    <string name="view_reports_screen_title">Reports submitted by:</string>
 
 
     <string name="back_button">Back</string>
@@ -14,6 +15,7 @@
     <!-- Add Screen -->
     <string name="add">Add</string>
     <!-- Edit Screen -->
+    <string name="confirmChanges">Confirm Changes</string>
     <string name="edit">Edit</string>
     <!-- Home Screen -->
     <string name="selectUser">Select a first aider:</string>

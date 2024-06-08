@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ViewReportsViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo) :
+class ViewReportsViewModel(val authRepo: AuthRepo, private val repo: ReportRepo) :
     ViewModel() {
     var selectedReport: Report? = null
     private val _reportState = MutableStateFlow(DatabaseState<Report>())

@@ -1,0 +1,64 @@
+import com.example.androidad.R
+
+
+val pageTitle = hasText(rule.activity.getString(R.string.sign_up_screen_title))
+
+val addScreenText = hasText(rule.activity.getString(R.string.add)) and hasNoClickAction()
+
+val homeNavBarItem = hasText(NavScreen.Home.route) and hasAnySibling(exitNavBarItem)
+
+
+
+by String = hasText(rule.activity.getString(R.string.add)
+by no Click = hasNoClickAction()
+by sibling = hasAnySibling(exitNavBarItem)
+by content description = asContentDescription(rule.activity.getString(R.string.email))
+
+
+
+onNode
+    .onNodeWithText("text" or TEXT)
+    .onNode(value)
+
+inputs
+    .performTextInput()
+
+
+    .replaceRange()
+    .plus()
+
+asserts
+    .assertDoesNotExist()
+    .assertTrue()
+    .assertEquals()
+    .assertExists()
+
+ private val
+
+@Test
+fun `test test`(){}
+
+val emailError = hasText(rule.activity.getString(R.string.email_error_message))
+val passwordError = hasText(rule.activity.getString(R.string.password_error_message))
+val firstNameError = hasText(rule.activity.getString(R.string.first_name_error_message))
+val lastNameError = hasText(rule.activity.getString(R.string.last_name_error_message))
+
+# @Test
+    fun `enter invalid sign up details`() {
+        rule.onNode(signUpButton).performClick()
+        rule.onNode(emailAddressTextField).performTextInput("")
+        rule.onNode(firstNameTextField).performTextInput("")
+        rule.onNode(lastNameTextField).performTextInput("")
+#//must be a valid email or firebase will put up an error via toast
+        rule.onNode(passwordTextField).performTextInput("")
+        rule.onNode(submitButton).performClick()
+
+
+        rule.onNode(emailAddressTextField)
+            .assertTextEquals(rule.activity.getString(R.string.email_error_message))
+
+
+
+
+
+    }

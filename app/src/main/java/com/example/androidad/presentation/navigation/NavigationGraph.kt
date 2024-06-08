@@ -26,7 +26,7 @@ sealed class NavScreen(var icon: Int, var route: String, var label: String) {
     data object Exit : NavScreen(R.drawable.logout, "Logout", "Logout")
     data object Login : NavScreen(R.drawable.home, "Login", "Login")
     data object SignUp : NavScreen(R.drawable.home, "SignUp", "Sign Up")
-    data object ViewReports : NavScreen(R.drawable.home, "ViewReports", "Home")
+    data object ViewReports : NavScreen(R.drawable.home, "ViewReports", "Reports")
 
 }
 
@@ -49,7 +49,6 @@ fun NavigationGraph(
                 navigateToSignUpScreen = {
                     navController.navigate(NavScreen.SignUp.route)
                 },
-
                 navigateToHome = {
                     navController.navigate(NavScreen.Home.route)
                     loggedInUser = it
@@ -84,18 +83,17 @@ fun NavigationGraph(
                 onClickToViewReport = { navController.navigate(NavScreen.ViewReports.route) },
                 isAdmin = loggedInUser!!.admin == true
 
-//                datePickerState = datePickerState
             )
         }
         composable(NavScreen.Edit.route) {
             EditScreen(
                 navController = navController,
                 selectedReport = selectedReport!!,
-
                 onClickToViewReport = {
                     navController.navigate(NavScreen.ViewReports.route)
                 },
                 isAdmin = loggedInUser!!.admin == true
+
             )
         }
         composable(NavScreen.ViewReports.route) {
@@ -111,6 +109,9 @@ fun NavigationGraph(
                 isAdmin = loggedInUser!!.admin == true,
                 onClickToHome = {
                     navController.navigate(NavScreen.Home.route)
+                },
+                onClickToAdd = {
+                    navController.navigate(NavScreen.Add.route)
                 }
 
             )

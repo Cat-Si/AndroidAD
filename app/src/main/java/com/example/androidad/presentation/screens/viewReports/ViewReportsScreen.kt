@@ -48,7 +48,8 @@ fun ViewReportsScreen(
     onClickToEdit: () -> Unit,
     navController: NavHostController,
     isAdmin: Boolean,
-    onClickToHome: () -> Unit
+    onClickToHome: () -> Unit,
+    onClickToAdd: () -> Unit
 ) {
     LaunchedEffect(key1 = Unit) {//Called on launch
         vm.setSelectedUser(selectedUser)
@@ -73,13 +74,23 @@ fun ViewReportsScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp, bottom = 10.dp),
-                text = "Reports submitted by ${selectedUser.displayName} (${selectedUser.userName})",
+                text = "Reports submitted by",
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
             )
-            Log.v("SELECTEDUSER", selectedUser.toString())
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 5.dp, bottom = 10.dp),
+                text = "${selectedUser.displayName} (${selectedUser.userName})",
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+            )
+//            Log.v("SELECTEDUSER", selectedUser.toString())
 
             val userState by vm.reportState.collectAsState()
 
@@ -131,12 +142,22 @@ fun ViewReportsScreen(
                     },
 //                    modifier.padding(bottom = 5.dp)
                 )
+                if (isAdmin == selectedUser.admin) {
+                    CustomButton(
+                        stringResource(R.string.add),
+                        clickButton = {
+                            onClickToAdd()
+                        })
+                }
                 if (isAdmin) {
-                    CustomButton(stringResource(R.string.back),
+                    CustomButton(
+                        stringResource(R.string.back),
                         clickButton = {
                             onClickToHome()
                         })
                 }
+
+
             }
 
         }

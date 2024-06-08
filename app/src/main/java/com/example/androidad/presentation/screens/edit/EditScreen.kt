@@ -207,7 +207,7 @@ fun EditScreen(
             ) {
 
                 CustomButton(
-                    stringResource(R.string.edit),
+                    stringResource(R.string.confirmChanges),
                     clickButton = {
                         vm.updateReport()
                         onClickToViewReport()

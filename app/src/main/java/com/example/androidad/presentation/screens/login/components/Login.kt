@@ -2,6 +2,7 @@ package com.example.androidad.presentation.screens.login.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.example.androidad.core.ContactApplication
 import com.example.androidad.data.Response
 import com.example.androidad.data.user.User
 import com.example.androidad.presentation.components.ProgressBar
@@ -21,23 +22,27 @@ fun LogIn(
         is Response.Startup -> Unit
         is Response.Loading -> ProgressBar()
         is Response.Success -> {
-            val userUID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-            if (userUID.isNotEmpty()) {
-                LaunchedEffect(signInResponse) {
-                    vm.userRepo.getUser(userUID) { user ->
-                        if (user != null) {
-                            if (user.admin == true) {
-                                navigateToHome(user)
-                            } else {
-                                navigateToViewReports(user)
+            if (ContactApplication.container.isRunningTest || vm.isEmailVerified) {
+                val userUID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+                if (userUID.isNotEmpty()) {
+                    LaunchedEffect(signInResponse) {
+                        vm.userRepo.getUser(userUID) { user ->
+                            if (user != null) {
+                                if (user.admin == true) {
+                                    navigateToHome(user)
+                                } else {
+                                    navigateToViewReports(user)
+                                }
                             }
                         }
                     }
                 }
+            } else {
+                showErrorMessage("Email not authorised")
             }
         }
 
-        is Response.Failure -> {
+        is Response.Failure -> signInResponse.apply {
             LaunchedEffect(signInResponse.e) {
                 showErrorMessage(signInResponse.e.message)
             }
