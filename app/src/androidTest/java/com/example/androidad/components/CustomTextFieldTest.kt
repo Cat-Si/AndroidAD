@@ -14,7 +14,7 @@ class CustomTextFieldTest {
 
     //Initialise Data
     private val HINT_TEXT = "hint text"
-    private val DISPLAY_TEXT = "Display Text"
+    private val DISPLAY_TEXT = "display text"
     private var textInput = ""
     private val ERROR_MESSAGE_TEXT = "error displayed"
     private val errorIsNotPresent = true
@@ -47,7 +47,7 @@ class CustomTextFieldTest {
     }
 
     @Test
-    fun `test with additoinal text`() {
+    fun `test with additional text`() {
         rule.setContent {
             CustomTextField(
                 hintText = HINT_TEXT,
@@ -124,7 +124,7 @@ class CustomTextFieldTest {
         assertTrue(errorIsNotPresent)
 
         assertEquals(textInput, "")
-        assertEquals("Display Text", DISPLAY_TEXT)
+        assertEquals("display text", DISPLAY_TEXT)
     }
 
 

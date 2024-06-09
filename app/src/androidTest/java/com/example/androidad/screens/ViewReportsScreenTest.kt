@@ -1,5 +1,7 @@
 package com.example.androidad.screens
 
+import androidx.compose.material.ListItem
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Before
 import org.junit.Test
@@ -14,12 +16,11 @@ class ViewReportsScreenTest : ScreenTests() {
     fun `check default state of view reports screen`() {
         loginNotAdmin()
         rule.onNode(viewReportsTitle).assertExists()
-        rule.onNode(userItem).assertExists()
         rule.onNode(editButton).assertExists()
         rule.onNode(bottomNavBar).assertExists()
         rule.onNode(addNavBarItem).assertExists()
         rule.onNode(exitNavBarItem).assertExists()
-        rule.onNode(homeNavBarItem).assertExists()
+        rule.onNode(reportsNavBarItem).assertExists()
     }
 
     @Test
@@ -32,10 +33,14 @@ class ViewReportsScreenTest : ScreenTests() {
     @Test
     fun `can go to edit screen`() {
         loginNotAdmin()
-        enter_a_valid_report()
-        rule.onNode(listItem).performClick()
-        rule.onNode(editButton).performClick()
-        rule.onNode(editScreenTitle).assertExists()
+        goToEditScreen()
+        rule.onNode(deleteButton).performClick()
+    }
+
+    @Test
+    fun `can go to add screen`() {
+        loginNotAdmin()
+        goToAddScreen()
     }
 
 

@@ -14,6 +14,7 @@ data class Report(
     var injury: String? = null,
     var treatment: String? = null,
     var advice: String? = null,
+    var userID: String? = null
 ) {
     var uid: String? = null //uuid
 
@@ -28,8 +29,9 @@ data class Report(
             "injury" to injury,
             "treatment" to treatment,
             "advice" to advice,
+            "userID" to userID
 
-            )
+        )
     }
 
     override fun toString(): String =

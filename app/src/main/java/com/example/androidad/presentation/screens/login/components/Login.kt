@@ -22,24 +22,24 @@ fun LogIn(
         is Response.Startup -> Unit
         is Response.Loading -> ProgressBar()
         is Response.Success -> {
-            if (ContactApplication.container.isRunningTest || vm.isEmailVerified) {
-                val userUID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-                if (userUID.isNotEmpty()) {
-                    LaunchedEffect(signInResponse) {
-                        vm.userRepo.getUser(userUID) { user ->
-                            if (user != null) {
-                                if (user.admin == true) {
-                                    navigateToHome(user)
-                                } else {
-                                    navigateToViewReports(user)
-                                }
+//            if (ContactApplication.container.isRunningTest || vm.isEmailVerified) {
+            val userUID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+            if (userUID.isNotEmpty()) {
+                LaunchedEffect(signInResponse) {
+                    vm.userRepo.getUser(userUID) { user ->
+                        if (user != null) {
+                            if (user.admin == true) {
+                                navigateToHome(user)
+                            } else {
+                                navigateToViewReports(user)
                             }
                         }
                     }
                 }
-            } else {
-                showErrorMessage("Email not authorised")
             }
+//            } else {
+//                showErrorMessage("Email not authorised")
+//            }
         }
 
         is Response.Failure -> signInResponse.apply {

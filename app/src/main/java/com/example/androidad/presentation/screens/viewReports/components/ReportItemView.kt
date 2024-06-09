@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.androidad.data.report.Report
 
@@ -27,7 +29,11 @@ fun ReportItemView(
             .clickable { onClick.invoke(index) }
             .background(if (selected) MaterialTheme.colorScheme.background else Color.Transparent)
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(10.dp)
+            .semantics {
+                contentDescription =
+                    "${report.firstAider} ${report.date} ${report.location} ${report.injury}"
+            },
         colors = CardDefaults.cardColors(
             containerColor = if (selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer,
         ),

@@ -74,7 +74,7 @@ fun ViewReportsScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 15.dp, bottom = 10.dp),
-                text = "Reports submitted by",
+                text = stringResource(R.string.view_reports_screen_title),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,

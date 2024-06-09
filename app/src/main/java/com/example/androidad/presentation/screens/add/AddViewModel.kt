@@ -27,6 +27,7 @@ class AddViewModel(
     var injury by mutableStateOf(String())
     var treatment by mutableStateOf(String())
     var advice by mutableStateOf(String())
+    var userID: String = authRepo.currentUser?.uid!!
 
 
     var submissionFailed by mutableStateOf(false)
@@ -103,6 +104,7 @@ class AddViewModel(
                 injury,
                 treatment,
                 advice,
+                userID
             )
             reportRepo.add(newReport)
             submissionFailed = false
