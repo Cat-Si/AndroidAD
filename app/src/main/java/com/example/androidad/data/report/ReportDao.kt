@@ -51,7 +51,7 @@ class ReportDAO(
 
     fun update(report: Report) {
         val reportID = report.uid.toString()
-        val editReport = Report(
+        var reportEdit = Report(
             firstAider = report.firstAider,
             location = report.location,
             date = report.date,
@@ -59,9 +59,10 @@ class ReportDAO(
             injuredParty = report.injuredParty,
             injury = report.injury,
             treatment = report.treatment,
-            advice = report.advice
+            advice = report.advice,
+            userID = report.userID
         ).toMap() //gets rid of empty id field in database
-        reportRoot.child(reportID).setValue(editReport)
+        reportRoot.child(reportID).setValue(reportEdit)
 
     }
 //        database.child(userAuthUUID).child(reportID).setValue(editReport)

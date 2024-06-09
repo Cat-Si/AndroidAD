@@ -1,5 +1,6 @@
 package com.example.androidad.presentation.screens.edit
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,6 +25,8 @@ class EditViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
     var injury by mutableStateOf(String())
     var treatment by mutableStateOf(String())
     var advice by mutableStateOf(String())
+    var userID by mutableStateOf(String())
+
 
     var submissionFailed by mutableStateOf(false)
     fun reportHasBeenSelected(): Boolean = selectedReport != null
@@ -38,6 +41,7 @@ class EditViewModel(private val authRepo: AuthRepo, private val repo: ReportRepo
         injury = report.injury.toString()
         treatment = report.treatment.toString()
         advice = report.advice.toString()
+        userID = report.userID!!
         selectedReport = report
     }
 
