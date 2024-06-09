@@ -1,17 +1,10 @@
 package com.example.androidad.screens
 
-import androidx.compose.ui.test.SemanticsMatcher
-import androidx.compose.ui.test.assertTextEquals
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import androidx.test.espresso.matcher.ViewMatchers.hasContentDescription
 import com.example.androidad.R
-import com.example.androidad.core.MainActivity
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 
 open class SignUpScreenTest : ScreenTests() {
@@ -41,8 +34,8 @@ open class SignUpScreenTest : ScreenTests() {
         rule.onNode(signUpButton).performClick()
         rule.onNode(emailAddressTextField).performTextInput(VALID_ADMIN_EMAIL)
         rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
-        rule.onNode(firstNameTextField).performTextInput(VALID_FIRST_NAME)
-        rule.onNode(lastNameTextField).performTextInput(VALID_LAST_NAME)
+        rule.onNode(firstNameTextField).performTextInput(VALID_ADMIN_FIRST_NAME)
+        rule.onNode(lastNameTextField).performTextInput(VALID_ADMIN_LAST_NAME)
         rule.onNode(adminSwitch).performClick()
         rule.onNode(submitButton).performClick()
     }
@@ -52,8 +45,8 @@ open class SignUpScreenTest : ScreenTests() {
         rule.onNode(signUpButton).performClick()
         rule.onNode(emailAddressTextField).performTextInput(VALID_USER_EMAIL)
         rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
-        rule.onNode(firstNameTextField).performTextInput(VALID_FIRST_NAME)
-        rule.onNode(lastNameTextField).performTextInput(VALID_LAST_NAME)
+        rule.onNode(firstNameTextField).performTextInput(VALID_ADMIN_FIRST_NAME)
+        rule.onNode(lastNameTextField).performTextInput(VALID_ADMIN_LAST_NAME)
         rule.onNode(submitButton).performClick()
     }
 

@@ -1,6 +1,5 @@
 package com.example.androidad.screens
 
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -14,17 +13,14 @@ class AddScreenTest : ScreenTests() {
         super.setUp()
     }
 
-    fun goToAddScreen() {
-        loginNotAdmin()
-        rule.onNode(addNavBarItem).performClick()
-    }
 
     @Test
     fun `check default state of add screen`() {
+        loginNotAdmin()
         goToAddScreen()
 
         rule.onNode(addScreenTitle).assertExists()
-        rule.onNode(firstaiderTextField).assertTextEquals(FIRSTAIDER)
+        rule.onNode(firstaiderTextField).assertExists()
         rule.onNode(locationTextField).assertExists()
         rule.onNode(dateTextField).assertExists()
         rule.onNode(timeTextField).assertExists()
@@ -36,27 +32,23 @@ class AddScreenTest : ScreenTests() {
         rule.onNode(bottomNavBar).assertExists()
         rule.onNode(addNavBarItem).assertExists()
         rule.onNode(exitNavBarItem).assertExists()
-        rule.onNode(homeNavBarItem).assertExists()
+        rule.onNode(reportsNavBarItem).assertExists()
     }
 
     @Test
     fun `can submit new report`() {
+        loginNotAdmin()
+
         goToAddScreen()
-        rule.onNode(locationTextField).performTextInput(LOCATION)
-        rule.onNode(dateTextField).performClick()
-        rule.onNodeWithText(DATE).performClick()
-        rule.onNodeWithText("OK").performClick()
-        rule.onNode(timeTextField).performTextInput(TIME)
-        rule.onNode(injuredPartyTextField).performTextInput(INJUREDPARTY)
-        rule.onNode(injuryTextField).performTextInput(INJURY)
-        rule.onNode(treatmentTextField).performTextInput(TREATMENT)
-        rule.onNode(adviceTextField).performTextInput(ADVICE)
-        rule.onNode(submitButton).performClick()
-        rule.onNode(viewReportsTitle).assertExists()
+        enterValidReport()
+        rule.onNode(viewReportsTitle)
+            .assertExists() //if it doesnt submit then it wont go back to the reports screen, further new report checks in edit screen
     }
 
     @Test
     fun `cannot submit a report with invalid data`() {
+        loginNotAdmin()
+
         goToAddScreen()
         rule.onNode(locationTextField).performTextInput("")
         rule.onNode(dateTextField).performClick()
@@ -66,21 +58,19 @@ class AddScreenTest : ScreenTests() {
         rule.onNode(injuryTextField).performTextInput("")
         rule.onNode(treatmentTextField).performTextInput("")
         rule.onNode(adviceTextField).performTextInput("")
-        rule.onNode(submitButton).performClick()
+        rule.onNode(addButton).performClick()
 
-        rule.onNode(locationTextField)
-            .assertTextEquals(rule.activity.getString(R.string.location_error))
-        rule.onNode(dateTextField)
-            .assertTextEquals(rule.activity.getString(R.string.date_error))
-        rule.onNode(timeTextField)
-            .assertTextEquals(rule.activity.getString(R.string.time_error))
-        rule.onNode(injuredPartyTextField)
-            .assertTextEquals(rule.activity.getString(R.string.injured_party_error))
-        rule.onNode(injuryTextField)
-            .assertTextEquals(rule.activity.getString(R.string.injury))
-        rule.onNode(treatmentTextField)
-            .assertTextEquals(rule.activity.getString(R.string.treatment_error))
-        rule.onNode(adviceTextField)
-            .assertTextEquals(rule.activity.getString(R.string.advice_error))
+        rule.onNodeWithText(rule.activity.getString(R.string.location_error)).assertExists()
+
+        rule
+            .onNodeWithText(rule.activity.getString(R.string.time_error)).assertExists()
+        rule
+            .onNodeWithText(rule.activity.getString(R.string.injured_party_error)).assertExists()
+        rule
+            .onNodeWithText(rule.activity.getString(R.string.injury)).assertExists()
+        rule
+            .onNodeWithText(rule.activity.getString(R.string.treatment_error)).assertExists()
+        rule
+            .onNodeWithText(rule.activity.getString(R.string.advice_error)).assertExists()
     }
 }

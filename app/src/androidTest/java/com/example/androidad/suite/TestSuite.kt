@@ -21,11 +21,11 @@ import org.junit.runners.Suite
     CustomTextFieldTest::class,
     CustomToolTipTest::class,
     ReadOnlyTextFieldTest::class,
-    AddScreenTest::class,
-    EditScreenTest::class,
-    HomeScreenTest::class,
     LoginScreenTest::class,
     SignUpScreenTest::class,
-    ViewReportsScreenTest::class
+    HomeScreenTest::class,
+    ViewReportsScreenTest::class,
+    AddScreenTest::class,
+    EditScreenTest::class,
 )
 class TestSuite {}
