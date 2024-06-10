@@ -4,8 +4,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -23,8 +26,9 @@ fun ReadOnlyTextField(
     errorMessage: String,
     errorPresent: Boolean,
     showError: Boolean,
+    color: TextFieldColors
 
-    ) {
+) {
 
     Box {
         OutlinedTextField(
@@ -33,14 +37,17 @@ fun ReadOnlyTextField(
             onValueChange = onValueChange,
             label = label,
             isError = errorPresent && showError,
-            readOnly = true
+            readOnly = true,
+            colors = color
+
+
         )
         if (errorPresent && showError)
             Text(
                 modifier = Modifier.padding(10.dp),
                 text = errorMessage,
                 fontSize = 14.sp,
-                color = Color.Red
+                color = MaterialTheme.colorScheme.onErrorContainer
             )
 
         Box(

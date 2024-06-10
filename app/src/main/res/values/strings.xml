@@ -2,7 +2,7 @@
     <string name="app_name">AndroidAD</string>
     <!-- Page Titles -->
     <string name="sign_up_screen_title">Enter details to sign up</string>
-    <string name="login_screen_title">First Aid Report Portals</string>
+    <string name="login_screen_title">First Aid Report Portal</string>
     <string name="add_screen_title">Report a new incident</string>
     <string name="edit_screen_title">Edit Report</string>
     <string name="home_screen_title">First Aid Reports</string>

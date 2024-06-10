@@ -9,17 +9,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.androidad.presentation.navigation.NavigationGraph
-import com.example.androidad.ui.theme.AndroidADTheme
+import com.example.compose.AppTheme2
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AndroidADTheme {
-                Surface( // A surface container using the 'background' color from the theme
+            AppTheme2 {
+                Surface(
+                    // A surface container using the 'background' color from the theme
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background,
+                    color = MaterialTheme.colorScheme.surface,
                 ) {
                     NavigationGraph()
                 }

@@ -5,6 +5,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
@@ -47,7 +49,17 @@ fun DatePickerWithDialog(
             onClick = { showDialog = true },
             errorMessage = errorMessage,
             errorPresent = errorPresent,
-            showError = showError
+            showError = showError,
+            color = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+                unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedTextColor = MaterialTheme.colorScheme.primary,
+                errorContainerColor = MaterialTheme.colorScheme.errorContainer,
+                errorLabelColor = MaterialTheme.colorScheme.error,
+
+                )
         )
     }
     if (showDialog) {

@@ -21,6 +21,7 @@ UserValues as required. The tests will automatically read the values from user v
 ScreenTests to initialize the test values.
 
 Figma Design:
+https://www.figma.com/design/1ZlSDL5fzdi0Xf37G9w7fp/Android-AD-First-Aid?node-id=54805-25148&t=jc69tKxHIUgpIOGW-1
 ![img_4.png](img_4.png)
 colours/styling not definitive
 

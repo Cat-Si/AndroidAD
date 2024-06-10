@@ -41,20 +41,27 @@ fun ReportItemView(
         Column(modifier = Modifier.padding(10.dp)) {
             Text(
                 text = "First Aider: ${report.firstAider ?: "N/A"}",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (selected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimaryContainer,
             )
             Text(
                 text = "Date: ${report.date ?: "N/A"}",
-                style = MaterialTheme.typography.bodyMedium
-            )
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (selected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimaryContainer,
+
+                )
             Text(
                 text = "Location: ${report.location ?: "N/A"}",
-                style = MaterialTheme.typography.bodyMedium
-            )
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (selected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimaryContainer,
+
+                )
             Text(
                 text = "Injury: ${report.injury ?: "N/A"}",
-                style = MaterialTheme.typography.bodyMedium
-            )
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (selected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimaryContainer,
+
+                )
         }
     }
 }

@@ -1,13 +1,11 @@
 package com.example.androidad.components
 
-import androidx.compose.material3.Text
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import com.example.androidad.presentation.components.CustomTextField
 import com.example.androidad.presentation.components.ReadOnlyTextField
 import org.junit.Assert
 import org.junit.Assert.assertTrue

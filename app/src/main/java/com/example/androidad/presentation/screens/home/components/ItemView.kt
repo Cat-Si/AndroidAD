@@ -27,9 +27,10 @@ fun ItemView(
             .clickable {
                 onClick.invoke(index)
             }
-            .background(if (selected) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primaryContainer)
+            .background(if (selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer)
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(10.dp),
+        color = if (selected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimaryContainer
 
     )
 }

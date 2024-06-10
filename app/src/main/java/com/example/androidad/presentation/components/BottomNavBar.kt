@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,8 +28,8 @@ import com.example.androidad.presentation.navigation.NavScreen
 fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
     BottomNavigation(
         modifier = Modifier.semantics { contentDescription = "bottom nav" },
-        backgroundColor = colorResource(id = R.color.white),
-        contentColor = Color.Black
+        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -39,17 +40,19 @@ fun BottomNavBar(navController: NavController, isAdmin: Boolean) {
                     Icon(
                         painterResource(id = item.icon),
                         contentDescription = "nav" + item.label,
-                        Modifier.size(15.dp)
+                        Modifier.size(15.dp),
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 },
                 label = {
                     Text(
                         text = item.label,
-                        fontSize = 9.sp
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        fontSize = 10.sp
                     )
                 },
-                selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Black.copy(0.4f),
+                selectedContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                unselectedContentColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
