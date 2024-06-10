@@ -45,8 +45,8 @@ open class SignUpScreenTest : ScreenTests() {
         rule.onNode(signUpButton).performClick()
         rule.onNode(emailAddressTextField).performTextInput(VALID_USER_EMAIL)
         rule.onNode(passwordTextField).performTextInput(VALID_PASSWORD)
-        rule.onNode(firstNameTextField).performTextInput(VALID_ADMIN_FIRST_NAME)
-        rule.onNode(lastNameTextField).performTextInput(VALID_ADMIN_LAST_NAME)
+        rule.onNode(firstNameTextField).performTextInput(VALID_USER_FIRST_NAME)
+        rule.onNode(lastNameTextField).performTextInput(VALID_USER_LAST_NAME)
         rule.onNode(submitButton).performClick()
     }
 

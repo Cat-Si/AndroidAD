@@ -22,15 +22,15 @@ open abstract class ScreenTests {
     var rule = createAndroidComposeRule<MainActivity>()
 
     //Valid admin user details
-    val VALID_ADMIN_EMAIL = "catherinesheendevelopment@gmail.com"
-    val VALID_PASSWORD = "Password"
-    val VALID_ADMIN_FIRST_NAME = "Catherine"
-    val VALID_ADMIN_LAST_NAME = "Sheen"
+    val VALID_ADMIN_EMAIL = UserValues.ADMIN_EMAIL
+    val VALID_PASSWORD = UserValues.PASSWORD
+    val VALID_ADMIN_FIRST_NAME = UserValues.ADMIN_FIRST_NAME
+    val VALID_ADMIN_LAST_NAME = UserValues.ADMIN_LAST_NAME
 
     //valid non admin user details
-    val VALID_USER_EMAIL = "kasiasheen@outlook.com"
-    val VALID_USER_FIRST_NAME = "Kasia"
-    val VALID_USER_LAST_NAME = "Sheen"
+    val VALID_USER_EMAIL = UserValues.USER_EMAIL
+    val VALID_USER_FIRST_NAME = UserValues.USER_FIRST_NAME
+    val VALID_USER_LAST_NAME = UserValues.USER_LAST_NAME
 
     //Nav bar items
     val bottomNavBar = hasContentDescription("bottom nav")
@@ -43,7 +43,7 @@ open abstract class ScreenTests {
     lateinit var submitButton: SemanticsMatcher
 
     //Data for add screen
-    val FIRSTAIDER = "Kasia Sheen"
+    val FIRSTAIDER = UserValues.FIRSTAIDER
     val LOCATION = "location"
     val DATEPICKER = "Thursday, June 13, 2024"
     val DATE = "Thursday, 13 June, 2024" //date structure is different for selector and reading back
@@ -97,8 +97,8 @@ open abstract class ScreenTests {
     //    val regexUserName = Regex.((0 - 9){ 6 })
 
     //For home screen
-    val adminTestUserItem = hasText("Catherine Sheen (sheenc6253)")
-    val userTestUserItem = hasText("Kasia Sheen (sheenk3610)")
+    val adminTestUserItem = hasText(UserValues.ADMINUSERITEM)
+    val userTestUserItem = hasText(UserValues.USERITEM)
 
     //For reports view screem
 //    val listItem =
@@ -150,7 +150,8 @@ open abstract class ScreenTests {
 //        listItem = hasContentDescription("Kasia Sheen Thursday, 13 June, 2024 TEST Injury")
         listItem = hasContentDescription("$FIRSTAIDER $DATE $LOCATIONEDIT $INJURY")
         listItemEdit = hasContentDescription("$FIRSTAIDER $EDIT_DATE $EDIT_LOCATION $EDIT_INJURY")
-        adminListItem = hasContentDescription("Catherine Sheen $DATE $LOCATION $INJURY")
+        adminListItem =
+            hasContentDescription("${UserValues.ADMIN_FIRSTAIDER} $DATE $LOCATION $INJURY")
         emailAddressTextField =
             hasText(rule.activity.getString(R.string.email))
         passwordTextField =
