@@ -21,7 +21,7 @@ UserValues as required. The tests will automatically read the values from user v
 ScreenTests to initialize the test values.
 
 Figma Design:
-![img_1.png](img_1.png)
+![img_4.png](img_4.png)
 colours/styling not definitive
 
 Decision to keep time as free text as people dont usually know the exact time of a incident
