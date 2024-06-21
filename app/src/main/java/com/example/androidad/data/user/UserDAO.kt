@@ -40,13 +40,9 @@ class UserDAO(
     fun insert(newUser: User, userId: String) = database.child(userId).setValue(newUser)
 
     fun addUser(newUser: User, userUID: String) {
-
         // Add user to "users" node
         database.child(userUID).setValue(newUser)
             .addOnSuccessListener {
-                // Create username mapping
-
-
                 // Add username mapping to "usernames" node
                 userNameRoot.child(newUser.userName.toString())
                     .setValue(userUID)

@@ -97,7 +97,7 @@ open abstract class ScreenTests {
     //    val regexUserName = Regex.((0 - 9){ 6 })
 
     //For home screen
-    val adminTestUserItem = hasText("Catherine Sheen (sheenc6253)")
+    val adminTestUserItem = hasText("Catherine Sheen (sheenc6030)")
     val userTestUserItem = hasText("Kasia Sheen (sheenk3610)")
 
     //For reports view screem
