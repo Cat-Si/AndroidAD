@@ -30,5 +30,3 @@ Decision to keep time as free text as people dont usually know the exact time of
 
 Testing all passed!
 ![img_3.png](img_3.png)
-
-Will require commit combing before making public due to personal details within test 
